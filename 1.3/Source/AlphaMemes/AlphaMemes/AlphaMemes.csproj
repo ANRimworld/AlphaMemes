@@ -347,6 +347,7 @@
     <Compile Include="Rituals\FuneralFramework\Harmony\HarmonyInstance.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\IdeoUIUtility_CanAddPrecept.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Ideo_AddPrecept.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_Constructor.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_ShouldBeCalledOff.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_Setup.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />

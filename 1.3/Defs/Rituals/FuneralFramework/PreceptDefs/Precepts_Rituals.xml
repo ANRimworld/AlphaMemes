@@ -17,11 +17,12 @@
 		<ignoreLimitsInEditMode>false</ignoreLimitsInEditMode>
 		<receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
 		<skipOpportunityLettersBeforeDay>0</skipOpportunityLettersBeforeDay>
+		<alsoAdds>FF_FuneralNoCorpse</alsoAdds>	
 		<extraTextPawnDeathLetter>{PAWN_nameDef} should be cremated and their dust scattered so {PAWN_possessive} friends and family can move on.</extraTextPawnDeathLetter>
 		<modExtensions>
 		<li Class="FuneralFramework.FuneralPreceptExtension">
 			<isColonistFuneral>true</isColonistFuneral>
-			<addNoCorpseFuneral>false</addNoCorpseFuneral>
+			<addNoCorpseFuneral>true</addNoCorpseFuneral>
 			<conflictingPreceptDefs>
 				<li>Funeral</li>
 			</conflictingPreceptDefs>
@@ -29,5 +30,19 @@
 		</modExtensions>
 	</PreceptDef>
 	
+		<PreceptDef ParentName="FuneralBase">
+		<defName>FF_FuneralNoCorpse</defName>
+		<canGenerateAsSpecialPrecept>false</canGenerateAsSpecialPrecept>
+		<label>funeral (no corpse)</label>
+		<visible>false</visible>
+		<listedForRoles>false</listedForRoles>
+		<ritualPatternBase>FuneralNoCorpse</ritualPatternBase>
+		<takeNameFrom>Funeral</takeNameFrom>
+		<modExtensions>
+		<li Class="FuneralFramework.FuneralPreceptExtension">
+			<addNoCorpseFuneral>false</addNoCorpseFuneral>
+		</li>
+		</modExtensions>
+	</PreceptDef>
 
 </Defs>

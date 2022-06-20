@@ -173,10 +173,11 @@
 	</li>
 	<li Class="FuneralFramework.RitualOutcomeComp_FuneralFramework">
 		<thingDefToSpawn>Urn</thingDefToSpawn>
+		<stuffDefToSpawn>BlocksMarble</stuffDefToSpawn>
 		<thingCount>1</thingCount>
-		<bestOutcomeMulti>0</bestOutcomeMulti>
-		<worstOutcomeMulti>1</worstOutcomeMulti>
-		<stripcorpse>false</stripcorpse>
+		<roleToSpawnOn>FF_RitualRoleCorpse</roleToSpawnOn>
+		<extraDefDescription>{DEFDESC} Contains the last remains of {CORPSE}</extraDefDescription>
+		<extraDefLabel>{DEFLABEL} Containing:{CORPSE}</extraDefLabel>
 	</li>
     </comps>
   </RitualOutcomeEffectDef>

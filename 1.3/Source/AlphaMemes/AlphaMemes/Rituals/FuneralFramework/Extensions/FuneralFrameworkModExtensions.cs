@@ -40,8 +40,10 @@ namespace FuneralFramework
             //Used to make No Corpse Funeral have the same name as main funeral
             Precept_Ritual ritual = ideo.GetAllPreceptsOfType<Precept_Ritual>().First(
                 x => x.def.HasModExtension<FuneralPreceptExtension>() ? x.def.GetModExtension<FuneralPreceptExtension>().addNoCorpseFuneral : false);
-            precept.takeNameFrom = ritual.def;
-
+            if (ritual != null) { 
+                
+                precept.takeNameFrom = ritual.def;
+            }
 
         }
     }

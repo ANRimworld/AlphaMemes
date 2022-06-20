@@ -23,7 +23,7 @@ namespace FuneralFramework
 			{
 				return null;
 			}
-			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.InteractionCell;
+			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.Position;
 
 			Job job = JobMaker.MakeJob(InternalDefOf.FF_DeliverCorpseToCell, pawn2, cell, pawn.mindState.duty.focusThird);
 			job.locomotionUrgency = PawnUtility.ResolveLocomotion(pawn, this.locomotionUrgency);

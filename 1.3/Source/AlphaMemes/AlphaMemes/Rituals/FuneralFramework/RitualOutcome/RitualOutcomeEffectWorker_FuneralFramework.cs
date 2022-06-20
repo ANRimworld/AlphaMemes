@@ -20,23 +20,26 @@ namespace FuneralFramework
         //Extends the functionality of apply extra outcome
         protected override void ApplyExtraOutcome(Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, out string extraOutcomeDesc, ref LookTargets letterLookTargets)
         {
-            //Get comp data
+            
+
             comp = (RitualOutcomeComp_FuneralFramework)def.comps.Find(x => x.GetType() == typeof(RitualOutcomeComp_FuneralFramework));
             extraOutcomeDesc = null;
-            Pawn corpsePawn = jobRitual.PawnWithRole("FF_RitualRoleCorpse");      
-            Corpse corpse = corpsePawn.Corpse;
+            string extraDefDescription = comp.extraDefDescription;
+            Pawn pawn = jobRitual.PawnWithRole(comp.roleToSpawnOn);
+            Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse
             ThingDef thingDef = comp.thingDefToSpawn;
-            CustomThingDef(corpsePawn, totalPresence, jobRitual, outcome, ref thingDef); //Not used in base behavior
-            ExtraOutcomeDesc(corpsePawn,corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
-            Thing thingToSpawn = ThingtoSpawn(corpsePawn, outcome, jobRitual, thingDef);
-            ApplyOn(corpsePawn, corpse, thingToSpawn, totalPresence, jobRitual, outcome);
+            CustomThingDef(pawn, corpse,totalPresence, jobRitual, outcome, ref thingDef); //Not used in base behavior
+
+            ExtraOutcomeDesc(pawn, corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
+            Thing thingToSpawn = ThingtoSpawn(pawn, corpse, totalPresence,outcome, jobRitual, thingDef, extraDefDescription);
+            ApplyOn(pawn, corpse, thingToSpawn, totalPresence, jobRitual, outcome);
 
         }
-        public virtual ThingDef CustomThingDef(Pawn corpsePawn, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref ThingDef thingDef)
+        public virtual ThingDef CustomThingDef(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref ThingDef thingDef)
         {
-            return thingDef;
+            return thingDef; //Not used but hook for easy harmony patch or override
         }
-        public virtual Thing ThingtoSpawn(Pawn corpsePawn,OutcomeChance outcome, LordJob_Ritual jobRitual,ThingDef thingDef)
+        public virtual Thing ThingtoSpawn(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, OutcomeChance outcome, LordJob_Ritual jobRitual,ThingDef thingDef, string extraDefDescription)
         {
 
             if (thingDef == null)
@@ -44,7 +47,20 @@ namespace FuneralFramework
                 return null;
             }
             int stacksize = comp.thingCount;
-            Thing thingToSpawn = ThingMaker.MakeThing(thingDef);
+            ThingDef stuff = comp.stuffDefToSpawn;
+            if(thingDef.MadeFromStuff & stuff == null)
+            {
+                stuff = GenStuff.DefaultStuffFor(thingDef);
+            }
+            Thing thingToSpawn = ThingMaker.MakeThing(thingDef, stuff);       
+                
+            //comp.ExtraDescription(pawn, corpse, totalPresence, jobRitual, outcome, thingToSpawn);                
+
+            if (thingToSpawn is Building)
+            {
+                thingToSpawn = thingToSpawn.MakeMinified();
+            }
+
             if (OutcomeChanceWorst(jobRitual, outcome))
             {
                 stacksize = (int)Math.Round(stacksize * comp.worstOutcomeMulti);
@@ -63,14 +79,24 @@ namespace FuneralFramework
             
 
         }
-        public virtual void ApplyOn(Pawn corpsePawn, Corpse corpse, Thing thingToSpawn, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome)
+        public virtual void ApplyOn(Pawn pawn, Corpse corpse, Thing thingToSpawn, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome)
         {
             if (comp.stripcorpse == true)
             {
                 corpse.Strip();
             }
+            IntVec3 cell = pawn.Position;
+            if (pawn.Dead)
+            {
+                cell = pawn.Corpse.Position;
+            }
+            if (thingToSpawn != null)
+            {
+                GenPlace.TryPlaceThing(thingToSpawn, cell, jobRitual.Map, ThingPlaceMode.Near);
+            }
             corpse.Destroy();
-            GenPlace.TryPlaceThing(thingToSpawn, corpse.Position, corpse.Map, ThingPlaceMode.Near);
+           
+            
 
         }
         public virtual void ExtraOutcomeDesc(Pawn corpsePawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref string extraOutcomeDesc, ref LookTargets letterLookTargets)
@@ -103,7 +129,7 @@ namespace FuneralFramework
         }
         public override void ExposeData()
         {
-
+            base.ExposeData();
         }
         public RitualOutcomeComp_FuneralFramework comp;
 

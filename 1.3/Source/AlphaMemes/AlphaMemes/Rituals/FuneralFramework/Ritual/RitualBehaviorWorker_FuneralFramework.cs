@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Verse;
 using Verse.Sound;
 using Verse.AI;
+using HarmonyLib;
 using Verse.AI.Group;
 using RimWorld;
 
@@ -31,7 +32,8 @@ namespace FuneralFramework
             {
                 return;
             }
-            LordJob_Ritual lordJob = (LordJob_Ritual)this.CreateLordJob(target, organizer, ritual, obligation, assignments);
+           
+            LordJob_Ritual lordJob = (LordJob_Ritual)this.CreateLordJob(target, organizer, ritual, obligation, assignments);            
             LordMaker.MakeNewLord(Faction.OfPlayer, lordJob, target.Map, assignments.Participants.Where(delegate (Pawn p)
             {
                 bool flag = p.Dead;
@@ -108,7 +110,7 @@ namespace FuneralFramework
             }
             if(effecter != null)
             {
-                effecter.EffectTick(ritual.PawnWithRole(leader.id), ritual.selectedTarget);
+                effecter.EffectTick(effecterpawn, ritual.selectedTarget);
             }
         }
         public override Sustainer SoundPlaying
