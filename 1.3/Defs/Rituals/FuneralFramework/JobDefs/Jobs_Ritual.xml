@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <JobDef>
+    <defName>FF_DeliverCorpseToCell</defName>
+    <driverClass>FuneralFramework.JobDriver_DeliverCorpseToCell</driverClass>
+    <reportString>delivering TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+</Defs>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+		<!--Precepts-->
+	<PreceptDef>
+		<defName>FF_CremateFuneral</defName>
+		<label>Cremation Funeral</label>
+		<description>A gathering to witness the cremation of our friend.</description>
+		<issue>Ritual</issue>		
+		<iconPath>UI/Icons/Rituals/RitualFuneral</iconPath>
+		<preceptClass>Precept_Ritual</preceptClass>
+		<ritualPatternBase>FF_CremateFuneralPattern</ritualPatternBase>
+		<allowDuplicates>false</allowDuplicates>
+		<countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
+		<selectionWeight>1.0</selectionWeight>
+		<displayOrderInImpact>100</displayOrderInImpact>
+		<impact>Medium</impact>
+		<ignoreLimitsInEditMode>false</ignoreLimitsInEditMode>
+		<receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
+		<skipOpportunityLettersBeforeDay>0</skipOpportunityLettersBeforeDay>
+		<alsoAdds>FF_FuneralNoCorpse</alsoAdds>		
+		<extraTextPawnDeathLetter>{PAWN_nameDef} should be cremated and their dust scattered so {PAWN_possessive} friends and family can move on.</extraTextPawnDeathLetter>
+		<modExtensions>
+		<li Class="FuneralFramework.FuneralPreceptExtension">
+			<isColonistFuneral>true</isColonistFuneral>
+			<addNoCorpseFuneral>true</addNoCorpseFuneral>
+			<conflictingPreceptDefs>
+				<li>Funeral</li>
+			</conflictingPreceptDefs>
+		</li>
+		</modExtensions>
+	</PreceptDef>
+	
+	<PreceptDef ParentName="FuneralBase">
+		<defName>FF_FuneralNoCorpse</defName>
+		<canGenerateAsSpecialPrecept>false</canGenerateAsSpecialPrecept>
+		<label>funeral (no corpse)</label>
+		<visible>false</visible>
+		<listedForRoles>false</listedForRoles>
+		<ritualPatternBase>FuneralNoCorpse</ritualPatternBase>
+		<modExtensions>
+		<li Class="FuneralFramework.FuneralPreceptExtension">
+			<addNoCorpseFuneral>false</addNoCorpseFuneral>
+		</li>
+	</PreceptDef>
+</Defs>

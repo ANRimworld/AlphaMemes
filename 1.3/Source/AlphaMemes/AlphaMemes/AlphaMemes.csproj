@@ -14,8 +14,8 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -338,6 +338,25 @@
     <Compile Include="Precepts\Precept_DespisedAnimal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rituals\Behaviours\RitualBehaviorWorker_MaddeningChant.cs" />
+    <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverCorpseToCell.cs" />
+    <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverCorpseToCell.cs" />
+    <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFrameworkModExtensions.cs" />
+    <Compile Include="Rituals\FuneralFramework\Extensions\InternalDefsOf.cs" />
+    <Compile Include="Rituals\FuneralFramework\Extensions\ModCompatibilityCheck.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_CalculatePawnPortraitIcons.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\HarmonyInstance.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\IdeoUIUtility_CanAddPrecept.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\Ideo_AddPrecept.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_ShouldBeCalledOff.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_Setup.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_FuneralFramework.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralFramework.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualPositions\RitualPosition_InterctingOnCell.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingNeedsPower.cs" />
+    <Compile Include="Rituals\FuneralFramework\Ritual\RitualBehaviorWorker_FuneralFramework.cs" />
     <Compile Include="Rituals\Outcomes\RitualOutcomeEffectWorker_MaddeningChant.cs" />
     <Compile Include="Rituals\Outcomes\RitualOutcomeEffectWorker_RelicDestruction.cs" />
     <Compile Include="Rituals\TargetWorkers\RitualObligationTargetWorker_DestructionAltar.cs" />
@@ -364,8 +383,9 @@
   <ItemGroup />
   <ItemGroup>
     <PackageReference Include="Lib.Harmony">
-      <Version>2.1.1</Version>
+      <Version>2.2.1</Version>
       <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
