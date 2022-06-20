@@ -33,7 +33,8 @@
 			<precept>IdeoRole_Moralist</precept>
 			<tag>Moralist</tag>
 			<maxCount>1</maxCount>
-			<substitutable>true</substitutable>
+			<substitutable>True</substitutable>
+			<required>True</required>
 			<countsAsParticipant>False</countsAsParticipant>
 		  </li>
 		  <li Class="FuneralFramework.RitualRoleFuneralCorpse">
@@ -75,10 +76,10 @@
 				<roleBehaviors>
 				  <li>
 					<roleId>moralist</roleId>
-					<dutyDef>SpeakOnCellFuneral</dutyDef>
-				  <speakerInteraction>Speech_Funeral</speakerInteraction>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_Funeral</speakerInteraction>
 					<customPositions>					  
-					  <li Class="RitualPosition_BesideThing" />
+					  <li Class="FuneralFramework.RitualPosition_BesideInteract" />
 					</customPositions>
 				  </li>
 				</roleBehaviors>
@@ -127,28 +128,28 @@
       <li>
         <label>Terrible</label>
         <chance>0.05</chance>
-        <memory>FF_TerribleExtraction</memory>
+        <memory>FF_TerribleFuneral</memory>
         <description>The {0} was a terrible! The speech was boring and the crematorium wasn't hot enough.</description>
         <positivityIndex>-2</positivityIndex>
       </li>
       <li>
         <label>Lackluster</label>
         <chance>0.15</chance>
-        <memory>FF_LacklusterExtraction</memory>
+        <memory>FF_LacklusterFuneral</memory>
         <description>The {0} was lackluster. The speech was long-winded and did not honor them</description>
         <positivityIndex>-1</positivityIndex>
       </li>
       <li>
         <label>Good</label>
         <chance>0.6</chance>
-        <memory>FF_GoodExtraction</memory>
+        <memory>FF_GoodFuneral</memory>
         <description>The {0} was good.  The speaker's final words provided a path for everyone move on.</description>
         <positivityIndex>1</positivityIndex>
       </li>
       <li>
         <label>Amazing</label>
         <chance>0.2</chance>
-        <memory>FF_AmazingExtraction</memory>
+        <memory>FF_AmazingFuneral</memory>
         <description>The {0} was heartwarming. The speech was captivating and heartfelt, and everyone came away focused on good memories.</description>
         <positivityIndex>2</positivityIndex>
       </li>

@@ -24,13 +24,14 @@ namespace FuneralFramework
         //Prefix is for a vanilla bug with required memes and Ideo reformation
         public static bool Prefix(Ideo __instance, Precept precept, ref RitualPatternDef fillWith, ref bool init)
         {
-            
-            if(precept.def.issue.defName != "Ritual")
+
+            if (precept.def.issue.defName != "Ritual")
             {
                 return true;
             }
+            //**No longer trying to fix vanilla bug. To many headaches know issue Reform Ideology adds null rituals if they have required memes have to remove the one it adds and add back happens with gladiator in vanilla
             //Fix for vanilla bug, adding arguments for rituals that dont get passed during reform when they are need
-            if (fillWith == null) 
+            if (fillWith == null)
             {
                 Precept_Ritual ritual;
                 if ((ritual = (precept as Precept_Ritual)) != null)
@@ -42,7 +43,7 @@ namespace FuneralFramework
             //Determination Logic for multiple funerals
             if (precept.def.HasModExtension<FuneralPreceptExtension>())
             {
-                if(precept.def == InternalDefOf.FF_FuneralNoCorpse)
+                if (precept.def == InternalDefOf.FF_FuneralNoCorpse)
                 {
                     precept.def.GetModExtension<FuneralPreceptExtension>().SetNoCorpseFuneralDefName(__instance, precept.def);
                 }
@@ -64,35 +65,34 @@ namespace FuneralFramework
         }
         //Moved it all to prefix with thought of dont add a precept just to immediately remove it
         //Pretty sure there's no situation where it can cause compatability issues I hope
-/*        [HarmonyPostfix]
-        public static void Postfix(Ideo __instance, Precept precept)
-        {
-            if (precept.def.issue.defName != "Ritual") return;
-
-
-            if (precept.def.HasModExtension<FuneralPrecetExtension>() || precept.def == PreceptDefOf.Funeral)
-            {
-                Precept ffRitual = __instance.GetAllPreceptsOfType<Precept_Ritual>().Where(r => r.def.HasModExtension<FuneralPrecetExtension>()).FirstOrDefault();//Shouldnt return more then 1/null
-                if (__instance.GetAllPreceptsOfType<Precept_Ritual>().Any(r => r.def.HasModExtension<FuneralPrecetExtension>()) && __instance.GetPrecept(PreceptDefOf.Funeral) != null)
+        //[HarmonyPostfix]
+        /*        public static void Postfix(Ideo __instance, Precept precept)
                 {
-                    //Have 2 funerals gotta remove one, removing vanilla
-                    if (precept.def.GetModExtension<FuneralPrecetExtension>().replaceVanillaF)
-                    {
-                        __instance.RemovePrecept(__instance.GetPrecept(PreceptDefOf.Funeral));
-                    }
-                    else
-                    {
-                        __instance.RemovePrecept(__instance.GetPrecept(PreceptDefOf.Funeral));
-                    }
-                    
-                    return;
-                }
-                
-            }
-            return;
+                    if (precept.def.issue.defName != "Ritual") return;
 
-        }*/
 
+                    if (precept.def.HasModExtension<FuneralPreceptExtension>())
+                    {
+                        if (precept.def == InternalDefOf.FF_FuneralNoCorpse)
+                        {
+                            precept.def.GetModExtension<FuneralPreceptExtension>().SetNoCorpseFuneralDefName(__instance, precept.def);
+                        }
+                        //This will add a 2nd funeral, have to decide who wins
+                        bool replaceRituals = precept.def.GetModExtension<FuneralPreceptExtension>().replaceConflictRituals;
+                        List<PreceptDef> preceptConflicts = precept.def.GetModExtension<FuneralPreceptExtension>().PreceptConflicts(__instance);
+                        if (!replaceRituals && preceptConflicts.Count > 0)
+                        {
+                            __instance.RemovePrecept(__instance.GetPrecept(precept.def)); //There's a conflict and we aren't replacing so dont add
+                        }
+                        foreach (PreceptDef p in preceptConflicts)
+                        {
+                            __instance.RemovePrecept(__instance.GetPrecept(p));//Remove Conflicts
+                        }
+                        return;
+                    }
+
+                }*/
     }
-
 }
+
+

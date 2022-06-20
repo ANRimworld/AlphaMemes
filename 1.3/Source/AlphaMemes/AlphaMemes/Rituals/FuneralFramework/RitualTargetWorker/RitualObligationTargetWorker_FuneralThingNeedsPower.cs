@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Verse;
+using System.Linq;
 using RimWorld;
 
 namespace FuneralFramework
@@ -39,7 +40,7 @@ namespace FuneralFramework
         public override IEnumerable<string> GetTargetInfos(RitualObligation obligation)
         {
             
-            yield return "Funeral_ThingInfo".Translate(obligation.targetA.Thing.def.label);
+            yield return "Funeral_ThingInfoPower".Translate(string.Join(", ",this.def.thingDefs.Select(x=> x.label)));
             yield break;
         }
     }

@@ -27,8 +27,17 @@ namespace FuneralFramework
 				behavior.soundPlaying = sustainer;
 			}
 			//Start Effect
-			Pawn pawn = ritual.PawnWithRole(behavior.leader.id);
-			ApplyToPawn(ritual, pawn);
+			foreach (Pawn p in ritual.lord.ownedPawns)//Why is it so hard to get leading pawn without a hardcoded tag...
+            {
+                if (!ritual.assignments.SpectatorsForReading.Contains(p))
+                {
+					//Should only be the pawn running it as corpse doesnt get added to lord.ownedpawns and if thats not true then fuck me
+					//Future me will hate this
+					ApplyToPawn(ritual, p);
+				}
+            }
+			
+			
 
 
 		}
@@ -40,6 +49,7 @@ namespace FuneralFramework
 			{
 				effecter = effect.Spawn();
 				effecter.Trigger(pawn, selectedtarget);
+				behavior.effecterpawn = pawn;
 				behavior.effecter = effecter;
 			}
 

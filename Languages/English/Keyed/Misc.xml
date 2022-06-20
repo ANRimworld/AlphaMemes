@@ -29,12 +29,11 @@
 	<AM_MakeChangeStyleAbilityUseAllStyles>Make the "Change Style" ability use styles not possessed by the player's main ideoligion</AM_MakeChangeStyleAbilityUseAllStyles>
 	<AM_MakeChangeStyleAbilityUseAllStyles_Tooltip>Make the "Change Style" ability use styles not possessed by the player's main ideoligion. By default this leader role ability will swap an item's style through the styles present in the colony's main ideo. By activating this toggle you will make it use ALL styles currently present in the game (vanilla or modded)</AM_MakeChangeStyleAbilityUseAllStyles_Tooltip>
 	<Funeral_NeedsPower>{0} is not powered</Funeral_NeedsPower>
-	<Funeral_ThingInfo>A {0} for last rites. Which must be powered</Funeral_ThingInfo>
+	<Funeral_ThingInfoPower>Needs {0} for last rites. Which must be powered</Funeral_ThingInfoPower>
 	<Funeral_WorstResult>{RITUAL} was a disaster!</Funeral_WorstResult>
-	<Funeral_BestResult>{RITUAL} was spectacular!</GR_RitaulExtractAmazing>
+	<Funeral_BestResult>{RITUAL} was spectacular!</Funeral_BestResult>
 	<Funeral_RoleNotDead>{0} Requires the pawn to be dead</Funeral_RoleNotDead>
-	<Funeral_CantHaveTwoFuneralTagged>(Can't have two funerals remove {FUNERAL})</GR_CantHaveVanillaFuneral>
-	<Funeral_CantHaveTwoFunerals>(Can't have two funerals remove the existing one)</Funeral_CantHaveTwoFunerals>
+	<Funeral_ConflictingPrecepts> (Conflicts with Precepts: {CONFLICTS})</Funeral_ConflictingPrecepts>
 	<Funeral_DisabledCorpseInaccessible>No accessible dead colonists, recover their body if possible</Funeral_DisabledCorpseInaccessible>
 	
 </LanguageData>

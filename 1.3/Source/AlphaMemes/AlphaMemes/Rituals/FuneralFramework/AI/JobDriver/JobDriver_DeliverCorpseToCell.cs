@@ -27,7 +27,7 @@ namespace FuneralFramework
 			Toil toil = Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.Touch).FailOnSomeonePhysicallyInteracting(TargetIndex.A);
 			yield return toil;
 			Toil startCarrying = Toils_Haul.StartCarryThing(TargetIndex.A, false, false, false);
-			Toil gotoCell = Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.Touch);
+			Toil gotoCell = Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.ClosestTouch);
 			yield return Toils_Jump.JumpIf(gotoCell, () => this.pawn.IsCarryingThing(this.Takee));
 			yield return startCarrying;
 			yield return gotoCell;

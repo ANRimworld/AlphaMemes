@@ -15,7 +15,8 @@ namespace FuneralFramework
         public bool isColonistFuneral = false; //Can only have 1 colonist funeral type
         public bool replaceConflictRituals = false; //Decides whether to replace vanilla funeral on generation
         public bool addNoCorpseFuneral = true;//Adds the base game funeral for no corpse (empty grave)
-        public List<PreceptDef> conflictingPreceptDefs;
+        public string RitualRoleID; //I give up, tell the p
+        public List<PreceptDef> conflictingPreceptDefs = new List<PreceptDef>();
         public List<PreceptDef> PreceptConflicts(Ideo ideo)
         {
 

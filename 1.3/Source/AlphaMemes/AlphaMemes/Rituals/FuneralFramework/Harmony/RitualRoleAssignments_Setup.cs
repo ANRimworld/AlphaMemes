@@ -34,7 +34,7 @@ namespace FuneralFramework
                     if (innerPawn.CanBeBuried() && (innerPawn.IsColonist||(ritual.def.GetModExtension<FuneralPreceptExtension>().allowanimals && innerPawn.Faction.IsPlayer))) 
                     {
                         ;
-                        if (ritual.def.GetModExtension<FuneralPreceptExtension>().requiresMeme && (ritual.def.requiredMemes.Any(meme => innerPawn.Ideo.memes.Contains(meme))))
+                        if (ritual.def.GetModExtension<FuneralPreceptExtension>().requiresMeme ? (ritual.def.requiredMemes.Any(meme => innerPawn.Ideo.memes.Contains(meme))):true)
                         {                            
                             if (!allPawns.Contains(innerPawn))
                             {                               

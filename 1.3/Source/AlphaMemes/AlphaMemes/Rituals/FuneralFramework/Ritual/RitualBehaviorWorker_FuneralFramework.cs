@@ -160,6 +160,7 @@ namespace FuneralFramework
         public Sustainer soundPlaying; //Cant override set        
         public Effecter effecter;
         public RitualRole leader;
+        public Pawn effecterpawn;
 
 
     }
