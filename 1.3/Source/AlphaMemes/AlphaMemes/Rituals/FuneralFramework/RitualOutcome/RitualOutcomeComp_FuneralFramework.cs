@@ -24,6 +24,8 @@ namespace FuneralFramework
         public string roleToSpawnOn = "FF_RitualRoleCorpse";
         public string extraDefDescription = null;
         public string extraDefLabel = null;
+        public string bestOutcomeDesc = null;
+        public string worstOutcomeDesc = null;
 
         public void ExtraDescription(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, Thing thingToSpawn)
         {

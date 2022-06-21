@@ -29,7 +29,6 @@ namespace FuneralFramework
             Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse
             ThingDef thingDef = comp.thingDefToSpawn;
             CustomThingDef(pawn, corpse,totalPresence, jobRitual, outcome, ref thingDef); //Not used in base behavior
-
             ExtraOutcomeDesc(pawn, corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
             Thing thingToSpawn = ThingtoSpawn(pawn, corpse, totalPresence,outcome, jobRitual, thingDef, extraDefDescription);
             ApplyOn(pawn, corpse, thingToSpawn, totalPresence, jobRitual, outcome);
@@ -99,17 +98,16 @@ namespace FuneralFramework
             
 
         }
-        public virtual void ExtraOutcomeDesc(Pawn corpsePawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref string extraOutcomeDesc, ref LookTargets letterLookTargets)
+        public virtual void ExtraOutcomeDesc(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref string extraOutcomeDesc, ref LookTargets letterLookTargets)
         {
-            if (OutcomeChanceWorst(jobRitual, outcome))
+            if (OutcomeChanceWorst(jobRitual, outcome) && comp.worstOutcomeDesc != null)
             {
                
-                extraOutcomeDesc = "Funeral_WorstResult".Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpsePawn.Name.Named("CORPSE"));
+                extraOutcomeDesc = comp.worstOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"),pawn.Name.Named("SPAWNPAWN"));
             }
             if (outcome.BestPositiveOutcome(jobRitual))
             {
-
-                extraOutcomeDesc = "Funeral_BestResult".Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpsePawn.Name.Named("CORPSE"));
+                extraOutcomeDesc = comp.bestOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"), pawn.Name.Named("SPAWNPAWN"));
             }
         }
 

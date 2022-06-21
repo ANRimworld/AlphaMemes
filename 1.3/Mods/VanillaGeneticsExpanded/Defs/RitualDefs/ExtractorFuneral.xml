@@ -19,7 +19,7 @@
 	</RitualPatternDef>
 
 	<!--Ritual Behavior-->
-	<RitualBehaviorDef>
+		<RitualBehaviorDef>
 		<defName>GR_ExtractorFuneralBehavior</defName>
 		<durationTicks>5000</durationTicks>
 		<workerClass>FuneralFramework.RitualBehaviorWorker_FuneralFramework</workerClass>
@@ -33,24 +33,25 @@
 			<precept>IdeoRole_Moralist</precept>
 			<tag>Moralist</tag>
 			<maxCount>1</maxCount>
-			<substitutable>true</substitutable>
+			<substitutable>True</substitutable>
+			<required>True</required>
 			<countsAsParticipant>False</countsAsParticipant>
 		  </li>
 		  <li Class="FuneralFramework.RitualRoleFuneralCorpse">
 			<label>Corpse</label>
-			<id>GR_RitualRoleCorpse</id>        
+			<id>FF_RitualRoleCorpse</id>        
 			<maxCount>1</maxCount>
 			<allowOtherIdeos>false</allowOtherIdeos>
 			<allowNonAggroMentalState>true</allowNonAggroMentalState>
-			<required>True</required>		
-			<corpse>True</corpse>
+			<required>True</required>
+			<corpse>True</corpse>			
 			<countsAsParticipant>False</countsAsParticipant>
 		  </li>
 		</roles>
 		<stages>
 			<li Class="RitualStage_InteractWithRole">
 				<defaultDuty>Spectate</defaultDuty>
-				<targetId>GR_RitualRoleCorpse</targetId> 
+				<targetId>FF_RitualRoleCorpse</targetId> 
 				<endTriggers>
 					<li Class="StageEndTrigger_RolesArrived">
 						<roleIds>
@@ -61,7 +62,7 @@
 				<roleBehaviors>
 				  <li>
 					<roleId>moralist</roleId>
-					<dutyDef>GR_DeliverCorpseToCellDuty</dutyDef>
+					<dutyDef>FF_DeliverCorpseToCellDuty</dutyDef>
 				  </li>				  
 				</roleBehaviors>
 			</li>    
@@ -75,10 +76,10 @@
 				<roleBehaviors>
 				  <li>
 					<roleId>moralist</roleId>
-					<dutyDef>SpeakOnCellFuneral</dutyDef>
-				  <speakerInteraction>Speech_Funeral</speakerInteraction>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_Funeral</speakerInteraction>
 					<customPositions>					  
-					  <li Class="RitualPosition_BesideThing" />
+					  <li Class="FuneralFramework.RitualPosition_BesideInteract" />
 					</customPositions>
 				  </li>
 				</roleBehaviors>
@@ -87,9 +88,9 @@
 					<text>{0}: The speech is over, and the extraction is beginning.</text>
 					<messageTypeDef>NeutralEvent</messageTypeDef>
 				</postAction>
-				<preAction Class="GeneticRim.RitualStageAction_GRExtractGenome">				
+				<preAction Class="FuneralFramework.RitualStageAction_FuneralEffectSound">				
 					  <sound>Recipe_Cremate</sound>
-					  <effect>ButcherFlesh</effect>
+					  <effect>Cremate</effect>
 				</preAction>				
 			</li>
 			<li>
@@ -104,12 +105,11 @@
 					<roleId>moralist</roleId>
 					<dutyDef>ArriveToCell</dutyDef>				  
 					<customPositions>					  
-					  <li Class="RitualPosition_OnInteractionCell"/>
+					  <li Class="FuneralFramework.RitualPosition_InterctingOnCell"/>
 					</customPositions>
 				  </li>
 				</roleBehaviors>
 				<visualEffectDef>Funeral</visualEffectDef>
-
 			</li>
 		</stages>
   </RitualBehaviorDef>
@@ -122,19 +122,19 @@
     <RitualOutcomeEffectDef>
 	<defName>GR_ExtractorFuneralOutcome</defName>
     <description>Depending on ritual quality, participants will get between {MINMOOD} and {MAXMOOD} mood for {MOODDAYS} days.</description>
-    <workerClass>GeneticRim.RitualOutcomeEffectWorker_GRExtractGenome</workerClass>
+    <workerClass>FuneralFramework.RitualOutcomeEffectWorker_FuneralFramework</workerClass>
     <allowAttachableOutcome>false</allowAttachableOutcome>
     <outcomeChances>
       <li>
         <label>Terrible</label>
-        <chance>0.05</chance>
+        <chance>0.1</chance>
         <memory>GR_TerribleExtraction</memory>
         <description>The {0} was a terrible! Everyone felt devestated for having to see the genomes destroyed.</description>
         <positivityIndex>-2</positivityIndex>
       </li>
       <li>
         <label>Lackluster</label>
-        <chance>0.15</chance>
+        <chance>0.1</chance>
         <memory>GR_LacklusterExtraction</memory>
         <description>The {0} was lackluster. The speech was long-winded and failed to invoke the imagination.</description>
         <positivityIndex>-1</positivityIndex>
@@ -155,29 +155,37 @@
       </li>
     </outcomeChances>
 	<comps>
-      <li Class="RitualOutcomeComp_RolePresentNotSubstituted">
-        <roleId>moralist</roleId>
-        <label>moral guide present</label>
-        <qualityOffset>0.2</qualityOffset>
-        <disableInClassicMode>true</disableInClassicMode>
-      </li>
-      <li Class="RitualOutcomeComp_ParticipantCount">
-        <label>participant count</label>
-        <curve>
-          <points>
-            <li>(1,  0.0)</li>
-            <li>(5,  0.4)</li>
-            <li>(10, 0.6)</li>
-          </points>
-        </curve>
-      </li>
+	<li Class="RitualOutcomeComp_RolePresentNotSubstituted">
+		<roleId>moralist</roleId>
+		<label>moral guide present</label>
+		<qualityOffset>0.2</qualityOffset>
+		<disableInClassicMode>true</disableInClassicMode>
+		</li>
+	<li Class="RitualOutcomeComp_ParticipantCount">
+		<label>participant count</label>
+		<curve>
+		  <points>
+			<li>(1,  0.0)</li>
+			<li>(5,  0.4)</li>
+			<li>(10, 0.6)</li>
+		  </points>
+		</curve>
+	</li>
+	<li Class="FuneralFramework.RitualOutcomeComp_FuneralFramework">
+		<thingDefToSpawn>GR_HumanoidGenetic</thingDefToSpawn>
+		<bestOutcomeMulti>2</bestOutcomeMulti>
+		<worstOutcomeMulti>0</worstOutcomeMulti>
+		<thingCount>1</thingCount>
+		<bestOutcomeDesc>{RITUAL} was spectacular! {CORPSE} miraculously produced 2 genomes, perhaps they did eat their twin in the womb</bestOutcomeDesc>
+		<worstOutcomeDesc>{{RITUAL} was a disaster! {CORPSE}'s genome was destroyed; colonists are having to say goodbye</worstOutcomeDesc>
+	</li>
     </comps>
   </RitualOutcomeEffectDef>
  
    <!--Ritual Obligation-->
 	<RitualObligationTargetFilterDef>
 		<defName>GR_ExtractGenomeObligation</defName>
-		<workerClass>GeneticRim.RitualObligationTargetWorker_GR_GeneticExtractionTable</workerClass>		
+		<workerClass>FuneralFramework.RitualObligationTargetWorker_FuneralThingNeedsPower</workerClass>		
 		<thingDefs>
 		  <li>GR_GeneticExtractionTable</li>		  
 		</thingDefs>

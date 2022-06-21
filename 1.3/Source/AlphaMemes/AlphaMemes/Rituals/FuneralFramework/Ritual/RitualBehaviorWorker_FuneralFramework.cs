@@ -24,6 +24,7 @@ namespace FuneralFramework
         //Overcomes checks on corpses
         public override void TryExecuteOn(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments, bool playerForced = false)
         {
+            extension = ritual.def.GetModExtension<FuneralPreceptExtension>();
             if (CanStartRitualNow(target, ritual, null, assignments.ForcedRolesForReading) != null)
             {
                 return;
@@ -56,48 +57,41 @@ namespace FuneralFramework
         }
         public override string CanStartRitualNow(TargetInfo target, Precept_Ritual ritual, Pawn selectedPawn = null, Dictionary<string, Pawn> forcedForRole = null)
         {
+            extension = ritual.def.GetModExtension<FuneralPreceptExtension>();
             if (ritual.activeObligations == null)
             {
                 return null;
             }
-            bool flag = false;
+            using (List<LordJob_Ritual>.Enumerator enumerator = Find.IdeoManager.GetActiveRituals(target.Map).GetEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    if (enumerator.Current.Ritual == ritual)
+                    {
+                        return "CantStartRitualAlreadyInProgress".Translate(ritual.Label).CapitalizeFirst();
+                    }
+                }
+            }
             List<Thing> list = target.Map.listerThings.ThingsInGroup(ThingRequestGroup.Corpse);
+            bool flag = false;
             for (int i = 0; i < list.Count; i++)
             {
                 Pawn innerPawn = ((Corpse)list[i]).InnerPawn;
                 if (innerPawn.CanBeBuried() && innerPawn.IsColonist)
-                {
- 
-                    if(!ritual.def.GetModExtension<FuneralPreceptExtension>().requiresMeme || (ritual.def.requiredMemes.Any(meme => innerPawn.Ideo.memes.Contains(meme))))
+                { 
+                    if(!extension.requiresMeme || (ritual.def.requiredMemes.Any(meme => innerPawn.Ideo.memes.Contains(meme))))
                     {
-                        if (forcedForRole == null)
-                        {
-                            forcedForRole = new Dictionary<string, Pawn>();
-                        }
-                        if (forcedForRole.TryGetValue("FF_RitualRoleCorpse") ==null)
-                        {
-                            forcedForRole.Add("FF_RitualRoleCorpse", innerPawn);                           
-                        }
                         flag = true;
-                        break;
+                        
                     }
                 }
             }
             if (!flag)
             {
-                //Redo this
-                foreach (RitualObligation obligation in ritual.activeObligations)
-                {
-                    if(obligation.targetB.ThingDestroyed) //Corpse was destroyed don't have great handling for this atm. Just removing from active obligations. In future possibly add standard emptygrave funeral like base game?
-                    {
-                        ritual.activeObligations.Remove(obligation); //Would also prefer this to be on a trigger, nothing in standard rituals for remove obligation trigger. Maybe with custom ritual obligation trigger for not adding.
-
-                    }
-                }
-                return "Funeral_DisabledCorpseInaccessible".Translate(); 
-
+                return "Funeral_DisabledCorpseInaccessible".Translate();
             }
-            return base.CanStartRitualNow(target, ritual, selectedPawn, forcedForRole); //Forced role just to by pass first set of no corpse checks
+           
+            return null; 
         }
       
         public override void Tick(LordJob_Ritual ritual)
@@ -163,7 +157,7 @@ namespace FuneralFramework
         public Effecter effecter;
         public RitualRole leader;
         public Pawn effecterpawn;
-
+        public FuneralPreceptExtension extension;
 
     }
 }
