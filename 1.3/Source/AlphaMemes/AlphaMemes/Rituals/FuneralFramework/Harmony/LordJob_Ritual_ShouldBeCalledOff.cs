@@ -22,9 +22,12 @@ namespace FuneralFramework
         [HarmonyPostfix]        
         public static void Postfix(LordJob_Ritual __instance, ref bool __result)
         {
-
+            if (__instance.Ritual == null)
+            {
+                return;
+            }
             Precept_Ritual ritual = __instance.Ritual;
-            
+
             if (ritual.def.HasModExtension<FuneralPreceptExtension>())
             {
                 if (__result == true)

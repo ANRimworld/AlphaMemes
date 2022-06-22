@@ -22,9 +22,13 @@ namespace FuneralFramework
         public static void SelectViableCorpse(RitualRoleAssignments __instance, ref List<Pawn> allPawns, ref Dictionary<string, Pawn> forcedRoles)
         {
             //Access tools
-            Precept_Ritual ritual = (Precept_Ritual)AccessTools.Field(typeof(RitualRoleAssignments),"ritual").GetValue(__instance);          
+            if(__instance.Ritual == null)
+            {
+                return; //Not all rituals are rituals neat.
+            }
+            Precept_Ritual ritual = __instance.Ritual;
 
-            if(ritual.def.HasModExtension<FuneralPreceptExtension>())
+            if (ritual.def.HasModExtension<FuneralPreceptExtension>())
             {
                 Map map = allPawns[0].Map; //Grab the map of the pawns to rebuild it
                 List<Thing> list = map.listerThings.ThingsInGroup(ThingRequestGroup.Corpse);
