@@ -72,20 +72,20 @@ namespace AlphaMemes
                     }
                 }
             }
-            List<Thing> list = target.Map.listerThings.ThingsInGroup(ThingRequestGroup.Corpse);
             bool flag = false;
-            for (int i = 0; i < list.Count; i++)
+            //Same as harmony patch use obligation as that basically saved our criteria for animals so no need to recheck everything
+            foreach (RitualObligation obligation in ritual.activeObligations)
             {
-                Pawn innerPawn = ((Corpse)list[i]).InnerPawn;
-                if (innerPawn.CanBeBuried() && innerPawn.IsColonist)
-                { 
-                    if(!extension.requiresMeme || (ritual.def.requiredMemes.Any(meme => innerPawn.Ideo.memes.Contains(meme))))
+                Corpse corpse = (Corpse)obligation.targetA.Thing;
+                if (corpse != null)
+                {
+                    if (corpse.InnerPawn.CanBeBuried())
                     {
                         flag = true;
-                        
                     }
                 }
             }
+
             if (!flag)
             {
                 return "Funeral_DisabledCorpseInaccessible".Translate();

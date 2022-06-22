@@ -4,8 +4,16 @@
 	<Operation Class="PatchOperationAddModExtension">
 		<xpath>/Defs/PreceptDef[defName="Funeral"]</xpath>
 		<value>
-			<li Class="FuneralFramework.FuneralPreceptExtension">
+			<li Class="AlphaMemes.FuneralPreceptExtension">
 				<isColonistFuneral>true</isColonistFuneral>
+							<!--Animals-->
+				<allowAnimals>true</allowAnimals>			
+				<animalObligationTrigger Class="AlphaMemes.RitualObiligationTrigger_Animals">
+					<bondedAnimals>true</bondedAnimals>
+					<veneratedAnimals>true</veneratedAnimals>
+					<namedanimals>true</namedanimals><!--This is pushing it-->
+					<allAnimals>false</allAnimals> <!--Probably shouldnt turn this on but you do you-->
+				</animalObligationTrigger>
 			</li>
 		</value>
 	</Operation>

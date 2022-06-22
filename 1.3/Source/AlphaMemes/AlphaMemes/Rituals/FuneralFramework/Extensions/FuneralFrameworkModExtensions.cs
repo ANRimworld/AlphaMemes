@@ -10,13 +10,17 @@ namespace AlphaMemes
     public class FuneralPreceptExtension : DefModExtension
     {
        
-        public bool allowanimals = false; //Not working theoretical
-        public bool requiresMeme = false; //allows for use for none ideo members that has same memes
         public bool isColonistFuneral = false; //Can only have 1 colonist funeral type
         public bool replaceConflictRituals = false; //Decides whether to replace vanilla funeral on generation
         public bool addNoCorpseFuneral = true;//Adds the base game funeral for no corpse (empty grave)
         public string corpseRitualRoleID = "AM_RitualRoleCorpse"; //add the role here if its not default
         public List<PreceptDef> conflictingPreceptDefs = new List<PreceptDef>();
+
+        //Animals
+        public RitualObiligationTrigger_Animals animalObligationTrigger;
+        public bool allowAnimals = false;
+
+        
         public List<PreceptDef> PreceptConflicts(Ideo ideo)
         {
 
@@ -44,8 +48,8 @@ namespace AlphaMemes
                 
                 precept.takeNameFrom = ritual.def;
             }
-
         }
+
     }
 
 

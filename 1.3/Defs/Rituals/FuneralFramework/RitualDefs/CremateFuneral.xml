@@ -8,8 +8,8 @@
 		<defName>AM_CremateFuneralPattern</defName>
 		<nameMaker>NamerRitualFuneral</nameMaker>
 		<ritualExpectedDesc>Once a {IDEO} member dies, other {MEMBERS} witnesss {RITUAL_labelDef} return to dust.</ritualExpectedDesc>
-		<ritualObligationTriggers>
-		  <li Class="RitualObligationTrigger_MemberDiedProperties">
+		<ritualObligationTriggers> <!--Only does colonists, animal trigger in prcepept def mod ext-->
+		  <li Class="RitualObligationTrigger_MemberDiedProperties"> 
 			<mustBePlayerIdeo>true</mustBePlayerIdeo>
 		  </li>
 		</ritualObligationTriggers>

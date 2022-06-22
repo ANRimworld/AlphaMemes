@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<ThoughtDef>
-    <defName>FF_TerribleFuneral</defName>
+    <defName>AM_TerribleFuneral</defName>
     <thoughtClass>Thought_AttendedRitual</thoughtClass>
     <durationDays>6</durationDays>
     <stackLimit>3</stackLimit>
@@ -15,7 +15,7 @@
   </ThoughtDef>
 
   <ThoughtDef>
-    <defName>FF_LacklusterFuneral</defName>
+    <defName>AM_LacklusterFuneral</defName>
     <thoughtClass>Thought_AttendedRitual</thoughtClass>
     <durationDays>6</durationDays>
     <stackLimit>3</stackLimit>
@@ -29,7 +29,7 @@
   </ThoughtDef>
 
   <ThoughtDef>
-    <defName>FF_GoodFuneral</defName>
+    <defName>AM_GoodFuneral</defName>
     <thoughtClass>Thought_AttendedRitual</thoughtClass>
     <durationDays>6</durationDays>
     <stackLimit>3</stackLimit>
@@ -43,7 +43,7 @@
   </ThoughtDef>
 
   <ThoughtDef>
-    <defName>FF_AmazingFuneral</defName>
+    <defName>AM_AmazingFuneral</defName>
     <thoughtClass>Thought_AttendedRitual</thoughtClass>
     <durationDays>6</durationDays>
     <stackLimit>3</stackLimit>

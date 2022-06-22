@@ -27,27 +27,37 @@ namespace AlphaMemes
                 return; //Not all rituals are rituals neat.
             }
             Precept_Ritual ritual = __instance.Ritual;
-
-            if (ritual.def.HasModExtension<FuneralPreceptExtension>())
+            
+            if (ritual.def.HasModExtension<FuneralPreceptExtension>()&& ritual.def != PreceptDefOf.Funeral)
             {
-                Map map = allPawns[0].Map; //Grab the map of the pawns to rebuild it
+                //Better idea then to recheck all criteria
+                foreach (RitualObligation obligation in ritual.activeObligations)
+                {
+                    Corpse corpse = (Corpse)obligation.targetA.Thing;
+                    if (corpse != null)
+                    {
+                        if(!allPawns.Contains(corpse.InnerPawn) && corpse.InnerPawn.CanBeBuried())
+                        {
+                            allPawns.Add(corpse.InnerPawn);
+                        }                            
+                    }
+                }
+/*                Map map = allPawns[0].Map; //Grab the map of the pawns to rebuild it
                 List<Thing> list = map.listerThings.ThingsInGroup(ThingRequestGroup.Corpse);
                 for (int i = 0; i < list.Count; i++) 
                 {
                     Pawn innerPawn = ((Corpse)list[i]).InnerPawn;
-                    if (innerPawn.CanBeBuried() && (innerPawn.IsColonist||(ritual.def.GetModExtension<FuneralPreceptExtension>().allowanimals && innerPawn.Faction.IsPlayer))) 
+
+                    if (innerPawn.CanBeBuried() && (innerPawn.IsColonist || (ritual.def.GetModExtension<FuneralPreceptExtension>().allowAnimals && innerPawn.Faction.IsPlayer)))
                     {
-                        ;
-                        if (ritual.def.GetModExtension<FuneralPreceptExtension>().requiresMeme ? (ritual.def.requiredMemes.Any(meme => innerPawn.Ideo.memes.Contains(meme))):true)
-                        {                            
-                            if (!allPawns.Contains(innerPawn))
-                            {                               
-                                allPawns.Add(innerPawn);
-                            }
-                            
+
+                        if (!allPawns.Contains(innerPawn))
+                        {
+
                         }
+
                     }
-                }
+                }*/
             }
 
         }
