@@ -4,7 +4,7 @@ using Verse;
 using System.Linq;
 using RimWorld;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
     public class RitualObligationTargetWorker_FuneralThingNeedsPower : RitualObligationTargetWorker_ThingDef
     {

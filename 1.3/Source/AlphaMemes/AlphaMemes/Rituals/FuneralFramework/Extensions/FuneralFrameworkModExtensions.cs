@@ -4,7 +4,7 @@ using Verse;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
 
     public class FuneralPreceptExtension : DefModExtension
@@ -15,7 +15,7 @@ namespace FuneralFramework
         public bool isColonistFuneral = false; //Can only have 1 colonist funeral type
         public bool replaceConflictRituals = false; //Decides whether to replace vanilla funeral on generation
         public bool addNoCorpseFuneral = true;//Adds the base game funeral for no corpse (empty grave)
-        public string corpseRitualRoleID = "FF_RitualRoleCorpse"; //add the role here if its not default
+        public string corpseRitualRoleID = "AM_RitualRoleCorpse"; //add the role here if its not default
         public List<PreceptDef> conflictingPreceptDefs = new List<PreceptDef>();
         public List<PreceptDef> PreceptConflicts(Ideo ideo)
         {

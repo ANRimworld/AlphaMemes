@@ -6,7 +6,7 @@ using RimWorld;
 using Verse;
 using System.Threading.Tasks;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {    //simple override to make the position always facing interaction spot
     public class RitualPosition_InterctingOnCell : RitualPosition_OnInteractionCell
     {

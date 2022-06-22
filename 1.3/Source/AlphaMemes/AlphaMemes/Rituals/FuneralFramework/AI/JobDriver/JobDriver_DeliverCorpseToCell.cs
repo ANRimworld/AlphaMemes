@@ -4,7 +4,7 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
-namespace FuneralFramework
+namespace AlphaMemes
 {
     public class JobDriver_DeliverCorpseToCell : JobDriver
 	{

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
-namespace FuneralFramework
+namespace AlphaMemes
 {
 	public class JobGiver_DeliverCorpseToCell : JobGiver_DeliverPawnToCell
 	{
@@ -25,7 +25,7 @@ namespace FuneralFramework
 			}
 			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.Position;
 
-			Job job = JobMaker.MakeJob(InternalDefOf.FF_DeliverCorpseToCell, pawn2, cell, pawn.mindState.duty.focusThird);
+			Job job = JobMaker.MakeJob(InternalDefOf.AM_DeliverCorpseToCell, pawn2, cell, pawn.mindState.duty.focusThird);
 			job.locomotionUrgency = PawnUtility.ResolveLocomotion(pawn, this.locomotionUrgency);
 			job.expiryInterval = this.jobMaxDuration;
 			job.count = 1;

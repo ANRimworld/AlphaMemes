@@ -6,7 +6,7 @@ using RimWorld;
 using Verse;
 using System.Threading.Tasks;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {    //Override to make it the interaction cell to start. This was needee cause base beside thing freaks out on 2x3 things \o/
     public class RitualPosition_BesideInteract: RitualPosition_BesideThing
     {

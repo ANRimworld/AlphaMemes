@@ -2,13 +2,13 @@
 <Defs>
 		<!--Precepts-->
 	<PreceptDef>
-		<defName>FF_CremateFuneral</defName>
+		<defName>AM_CremateFuneral</defName>
 		<label>Cremation Funeral</label>
 		<description>A gathering to witness the cremation of our friend.</description>
 		<issue>Ritual</issue>		
 		<iconPath>UI/Icons/Rituals/RitualFuneral</iconPath>
 		<preceptClass>Precept_Ritual</preceptClass>
-		<ritualPatternBase>FF_CremateFuneralPattern</ritualPatternBase>
+		<ritualPatternBase>AM_CremateFuneralPattern</ritualPatternBase>
 		<allowDuplicates>false</allowDuplicates>
 		<countsTowardsPreceptLimit>false</countsTowardsPreceptLimit>
 		<selectionWeight>1.0</selectionWeight>
@@ -17,10 +17,10 @@
 		<ignoreLimitsInEditMode>false</ignoreLimitsInEditMode>
 		<receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
 		<skipOpportunityLettersBeforeDay>0</skipOpportunityLettersBeforeDay>
-		<alsoAdds>FF_FuneralNoCorpse</alsoAdds>	
+		<alsoAdds>AM_FuneralNoCorpse</alsoAdds>	
 		<extraTextPawnDeathLetter>{PAWN_nameDef} should be cremated and their dust scattered so {PAWN_possessive} friends and family can move on.</extraTextPawnDeathLetter>
 		<modExtensions>
-		<li Class="FuneralFramework.FuneralPreceptExtension">
+		<li Class="AlphaMemes.FuneralPreceptExtension">
 			<isColonistFuneral>true</isColonistFuneral>
 			<addNoCorpseFuneral>true</addNoCorpseFuneral>
 			<conflictingPreceptDefs>
@@ -31,7 +31,7 @@
 	</PreceptDef>
 	
 		<PreceptDef ParentName="FuneralBase">
-		<defName>FF_FuneralNoCorpse</defName>
+		<defName>AM_FuneralNoCorpse</defName>
 		<canGenerateAsSpecialPrecept>false</canGenerateAsSpecialPrecept>
 		<label>funeral (no corpse)</label>
 		<visible>false</visible>
@@ -39,7 +39,7 @@
 		<ritualPatternBase>FuneralNoCorpse</ritualPatternBase>
 		<takeNameFrom>Funeral</takeNameFrom>
 		<modExtensions>
-		<li Class="FuneralFramework.FuneralPreceptExtension">
+		<li Class="AlphaMemes.FuneralPreceptExtension">
 			<addNoCorpseFuneral>false</addNoCorpseFuneral>
 		</li>
 		</modExtensions>

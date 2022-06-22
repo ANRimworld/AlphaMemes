@@ -10,7 +10,7 @@ using RimWorld.Planet;
 using System;
 
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
 
     [HarmonyPatch(typeof(LordJob_Ritual))]

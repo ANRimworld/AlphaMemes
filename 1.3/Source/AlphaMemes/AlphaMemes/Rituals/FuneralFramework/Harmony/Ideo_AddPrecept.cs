@@ -10,7 +10,7 @@ using RimWorld.Planet;
 using System;
 
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
 
     [HarmonyPatch(typeof(Ideo))]
@@ -43,7 +43,7 @@ namespace FuneralFramework
             //Determination Logic for multiple funerals
             if (precept.def.HasModExtension<FuneralPreceptExtension>())
             {
-                if (precept.def == InternalDefOf.FF_FuneralNoCorpse)
+                if (precept.def == InternalDefOf.AM_FuneralNoCorpse)
                 {
                     precept.def.GetModExtension<FuneralPreceptExtension>().SetNoCorpseFuneralDefName(__instance, precept.def);
                 }

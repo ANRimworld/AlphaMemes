@@ -6,7 +6,7 @@ using Verse;
 using RimWorld;
 using System.Threading.Tasks;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
     public class RitualOutcomeComp_FuneralFramework : RitualOutcomeComp
     {

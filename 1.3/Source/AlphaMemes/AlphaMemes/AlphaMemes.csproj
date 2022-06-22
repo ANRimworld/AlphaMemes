@@ -341,9 +341,7 @@
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverCorpseToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverCorpseToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFrameworkModExtensions.cs" />
-    <Compile Include="Rituals\FuneralFramework\Extensions\InternalDefsOf.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_CalculatePawnPortraitIcons.cs" />
-    <Compile Include="Rituals\FuneralFramework\Harmony\HarmonyInstance.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\IdeoUIUtility_CanAddPrecept.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Ideo_AddPrecept.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_Constructor.cs" />

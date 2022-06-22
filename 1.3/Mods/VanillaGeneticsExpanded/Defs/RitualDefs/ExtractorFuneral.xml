@@ -22,8 +22,8 @@
 		<RitualBehaviorDef>
 		<defName>GR_ExtractorFuneralBehavior</defName>
 		<durationTicks>5000</durationTicks>
-		<workerClass>FuneralFramework.RitualBehaviorWorker_FuneralFramework</workerClass>
-		<spectatorFilter Class="FuneralFramework.RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse">
+		<workerClass>AlphaMemes.RitualBehaviorWorker_FuneralFramework</workerClass>
+		<spectatorFilter Class="AlphaMemes.RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse">
 		<description>Spectators must be alive.</description>
 		</spectatorFilter>
 		<roles>
@@ -37,9 +37,9 @@
 			<required>True</required>
 			<countsAsParticipant>False</countsAsParticipant>
 		  </li>
-		  <li Class="FuneralFramework.RitualRoleFuneralCorpse">
+		  <li Class="AlphaMemes.RitualRoleFuneralCorpse">
 			<label>Corpse</label>
-			<id>FF_RitualRoleCorpse</id>        
+			<id>AM_RitualRoleCorpse</id>        
 			<maxCount>1</maxCount>
 			<allowOtherIdeos>false</allowOtherIdeos>
 			<allowNonAggroMentalState>true</allowNonAggroMentalState>
@@ -51,7 +51,7 @@
 		<stages>
 			<li Class="RitualStage_InteractWithRole">
 				<defaultDuty>Spectate</defaultDuty>
-				<targetId>FF_RitualRoleCorpse</targetId> 
+				<targetId>AM_RitualRoleCorpse</targetId> 
 				<endTriggers>
 					<li Class="StageEndTrigger_RolesArrived">
 						<roleIds>
@@ -62,7 +62,7 @@
 				<roleBehaviors>
 				  <li>
 					<roleId>moralist</roleId>
-					<dutyDef>FF_DeliverCorpseToCellDuty</dutyDef>
+					<dutyDef>AM_DeliverCorpseToCellDuty</dutyDef>
 				  </li>				  
 				</roleBehaviors>
 			</li>    
@@ -79,7 +79,7 @@
 					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
 					<speakerInteraction>Speech_Funeral</speakerInteraction>
 					<customPositions>					  
-					  <li Class="FuneralFramework.RitualPosition_BesideInteract" />
+					  <li Class="AlphaMemes.RitualPosition_BesideInteract" />
 					</customPositions>
 				  </li>
 				</roleBehaviors>
@@ -88,7 +88,7 @@
 					<text>{0}: The speech is over, and the extraction is beginning.</text>
 					<messageTypeDef>NeutralEvent</messageTypeDef>
 				</postAction>
-				<preAction Class="FuneralFramework.RitualStageAction_FuneralEffectSound">				
+				<preAction Class="AlphaMemes.RitualStageAction_FuneralEffectSound">				
 					  <sound>Recipe_Cremate</sound>
 					  <effect>Cremate</effect>
 				</preAction>				
@@ -105,7 +105,7 @@
 					<roleId>moralist</roleId>
 					<dutyDef>ArriveToCell</dutyDef>				  
 					<customPositions>					  
-					  <li Class="FuneralFramework.RitualPosition_InterctingOnCell"/>
+					  <li Class="AlphaMemes.RitualPosition_InterctingOnCell"/>
 					</customPositions>
 				  </li>
 				</roleBehaviors>
@@ -122,7 +122,7 @@
     <RitualOutcomeEffectDef>
 	<defName>GR_ExtractorFuneralOutcome</defName>
     <description>Depending on ritual quality, participants will get between {MINMOOD} and {MAXMOOD} mood for {MOODDAYS} days.</description>
-    <workerClass>FuneralFramework.RitualOutcomeEffectWorker_FuneralFramework</workerClass>
+    <workerClass>AlphaMemes.RitualOutcomeEffectWorker_FuneralFramework</workerClass>
     <allowAttachableOutcome>false</allowAttachableOutcome>
     <outcomeChances>
       <li>
@@ -171,7 +171,7 @@
 		  </points>
 		</curve>
 	</li>
-	<li Class="FuneralFramework.RitualOutcomeComp_FuneralFramework">
+	<li Class="AlphaMemes.RitualOutcomeComp_FuneralFramework">
 		<thingDefToSpawn>GR_HumanoidGenetic</thingDefToSpawn>
 		<bestOutcomeMulti>2</bestOutcomeMulti>
 		<worstOutcomeMulti>0</worstOutcomeMulti>
@@ -185,7 +185,7 @@
    <!--Ritual Obligation-->
 	<RitualObligationTargetFilterDef>
 		<defName>GR_ExtractGenomeObligation</defName>
-		<workerClass>FuneralFramework.RitualObligationTargetWorker_FuneralThingNeedsPower</workerClass>		
+		<workerClass>AlphaMemes.RitualObligationTargetWorker_FuneralThingNeedsPower</workerClass>		
 		<thingDefs>
 		  <li>GR_GeneticExtractionTable</li>		  
 		</thingDefs>

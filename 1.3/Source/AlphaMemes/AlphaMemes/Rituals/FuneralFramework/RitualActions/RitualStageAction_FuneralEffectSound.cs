@@ -8,7 +8,7 @@ using Verse.Sound;
 using Verse.AI.Group;
 using RimWorld;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
 	//Action to add a sound and effect to the behavior
 	public class RitualStageAction_FuneralEffectSound : RitualStageAction

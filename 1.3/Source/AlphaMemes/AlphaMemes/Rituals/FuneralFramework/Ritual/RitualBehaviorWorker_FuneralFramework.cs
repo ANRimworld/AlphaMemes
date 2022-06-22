@@ -11,7 +11,7 @@ using Verse.AI.Group;
 using RimWorld;
 
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
     public class RitualBehaviorWorker_FuneralFramework : RitualBehaviorWorker
     {

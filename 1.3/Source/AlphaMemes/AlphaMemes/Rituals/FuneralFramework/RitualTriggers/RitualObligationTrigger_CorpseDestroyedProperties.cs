@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using RimWorld;
-namespace FuneralFramework
+namespace AlphaMemes
 {
 
 /*    public class RitualObligationTriggerProperties_Test : RitualObligationTriggerProperties

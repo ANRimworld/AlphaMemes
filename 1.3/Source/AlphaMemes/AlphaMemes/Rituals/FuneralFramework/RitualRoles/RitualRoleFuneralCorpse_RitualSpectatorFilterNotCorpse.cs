@@ -6,7 +6,7 @@ using RimWorld;
 using Verse;
 using System.Threading.Tasks;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {    //Need this to prevent corpses from being added to spectator after brute forcing them into list
     public class RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse : RitualSpectatorFilter
     {

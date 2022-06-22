@@ -100,10 +100,15 @@ namespace AlphaMemes
 		public static DesignatorDropdownGroupDef AM_Floor_SteampunkTiles;
 		public static DesignatorDropdownGroupDef AM_Floor_NeolithicTiles;
 
+
+
 		[MayRequireRoyalty]
 		public static ThoughtDef AM_DeathKnellThought;
 
 		[MayRequireRoyalty]
 		public static PreceptDef AM_Abilities_DeathKnell;
+		//Funeral stuff
+		public static JobDef AM_DeliverCorpseToCell;
+		public static PreceptDef AM_FuneralNoCorpse;
 	}
 }

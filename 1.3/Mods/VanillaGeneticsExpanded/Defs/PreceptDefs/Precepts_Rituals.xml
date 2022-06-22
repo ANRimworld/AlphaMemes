@@ -25,7 +25,7 @@
 		<skipOpportunityLettersBeforeDay>0</skipOpportunityLettersBeforeDay>		
 		<extraTextPawnDeathLetter>{PAWN_nameDef} should be extracted and turned into a glorious creation so {PAWN_possessive} friends and family need not say farewell.</extraTextPawnDeathLetter>
 		<modExtensions>
-		<li Class="FuneralFramework.FuneralPreceptExtension">
+		<li Class="AlphaMemes.FuneralPreceptExtension">
 			<isColonistFuneral>true</isColonistFuneral>
 			<requiresMeme>true</requiresMeme>
 			<addNoCorpseFuneral>false</addNoCorpseFuneral>

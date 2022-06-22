@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Verse;
 using RimWorld;
 
-namespace FuneralFramework
+namespace AlphaMemes
 {
     public class RitualRoleFuneralCorpse : RitualRole
     {
