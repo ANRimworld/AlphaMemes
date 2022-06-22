@@ -342,7 +342,6 @@
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverCorpseToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFrameworkModExtensions.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\InternalDefsOf.cs" />
-    <Compile Include="Rituals\FuneralFramework\Extensions\ModCompatibilityCheck.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_CalculatePawnPortraitIcons.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\HarmonyInstance.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\IdeoUIUtility_CanAddPrecept.cs" />
@@ -358,6 +357,8 @@
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingNeedsPower.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObligationTrigger_CorpseDestroyedProperties.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObligationTrigger_CorpseDestroyed.cs" />
     <Compile Include="Rituals\FuneralFramework\Ritual\RitualBehaviorWorker_FuneralFramework.cs" />
     <Compile Include="Rituals\Outcomes\RitualOutcomeEffectWorker_MaddeningChant.cs" />
     <Compile Include="Rituals\Outcomes\RitualOutcomeEffectWorker_RelicDestruction.cs" />

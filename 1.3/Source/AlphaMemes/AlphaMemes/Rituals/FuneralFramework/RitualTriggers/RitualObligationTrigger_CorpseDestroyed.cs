@@ -8,16 +8,16 @@ using RimWorld;
 namespace FuneralFramework
 {
 
-/*    public class RitualObligationTrigger_ : RitualObligationTrigger
+/*    public class RitualObligationTrigger_Test : RitualObligationTrigger
     {
-		public override void Notify_MemberCorpseDestroyed(Pawn p)
-		{
-			
-			if (Current.ProgramState != ProgramState.Playing)
-			{
-				return;
-			}
+        public override void Notify_MemberCorpseDestroyed(Pawn p)
+        {
 
-		}
-	}*/
+            if (Current.ProgramState != ProgramState.Playing)
+            {
+                return;
+            }
+
+        }
+    }*/
 }
