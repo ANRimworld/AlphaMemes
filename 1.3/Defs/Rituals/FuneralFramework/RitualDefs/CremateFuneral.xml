@@ -172,20 +172,49 @@
 		</curve>
 	</li>
 	<li Class="AlphaMemes.RitualOutcomeComp_FuneralFramework">
-		<thingDefToSpawn>Urn</thingDefToSpawn>
-		<stuffDefToSpawn>BlocksMarble</stuffDefToSpawn>
-		<thingCount>1</thingCount>
+
 		<roleToSpawnOn>AM_RitualRoleCorpse</roleToSpawnOn>
-		<extraDefDescription>{DEFDESC} Contains the last remains of {CORPSE}</extraDefDescription>
-		<extraDefLabel>{DEFLABEL} Containing:{CORPSE}</extraDefLabel>
+		<outcomeSpawners>
+			<li Class="AlphaMemes.RitualOutcome_FuneralFramework_ThingToSpawn">				
+				<thingDefToSpawn>AM_Urn</thingDefToSpawn>
+				<stuffDefToSpawn>BlocksMarble</stuffDefToSpawn>
+				<thingCount>1</thingCount>
+			</li>
+		</outcomeSpawners>
 	</li>
     </comps>
   </RitualOutcomeEffectDef>
  
    <!--Ritual Obligation-->
+   	<RitualObligationTargetFilterDef>
+		<defName>AM_FuneralExtendedCremate</defName>
+		<workerClass>AlphaMemes.RitualObligationTargetWorker_FuneralThingExtended</workerClass>		
+		<modExtensions>
+		<li Class="AlphaMemes.FuneralFramework_ObligationTargetExtension">
+			<filters>			
+				<li Class="AlphaMemes.RitualObligationTargetWorker_FuneralThingNeedsPower">				
+					<def>AM_FuneralTargetCremate</def>
+				</li>
+				<li Class="AlphaMemes.RitualObligationTargetWorker_HaveRequiredStuff">
+					<def>AM_FuneralTargetCremateUrnStuff</def>									
+					<buildableDefToMake>AM_Urn</buildableDefToMake>
+					<count>20</count>
+				</li>				
+			</filters>
+		</li>
+		</modExtensions>
+	</RitualObligationTargetFilterDef>
+	
 	<RitualObligationTargetFilterDef>
-		<defName>AM_FuneralTargetThingNeedsPower</defName>
+		<defName>AM_FuneralTargetCremate</defName>
 		<workerClass>AlphaMemes.RitualObligationTargetWorker_FuneralThingNeedsPower</workerClass>		
+		<thingDefs>
+		  <li>ElectricCrematorium</li>		  
+		</thingDefs>
+	</RitualObligationTargetFilterDef>
+	<RitualObligationTargetFilterDef>
+		<defName>AM_FuneralTargetCremateUrnStuff</defName>
+		<workerClass>AlphaMemes.RitualObligationTargetWorker_HaveRequiredStuff</workerClass>		
 		<thingDefs>
 		  <li>ElectricCrematorium</li>		  
 		</thingDefs>

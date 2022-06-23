@@ -18,8 +18,7 @@ namespace AlphaMemes
         {
             
             if (!base.CanUseTargetInternal(target, obligation).canUse)
-            {
-                
+            {                
                 return false;               
             }
             

@@ -106,6 +106,7 @@ namespace AlphaMemes
             {
                 effecter.EffectTick(effecterpawn, ritual.selectedTarget);
             }
+
         }
         public override Sustainer SoundPlaying
         {
@@ -120,7 +121,8 @@ namespace AlphaMemes
         }
         public override void Cleanup(LordJob_Ritual ritual)
         {
-            if(this.soundPlaying != null)
+            base.Cleanup(ritual);
+            if (this.soundPlaying != null)
             {
                 soundPlaying.End();
                 soundPlaying = null;
@@ -130,7 +132,17 @@ namespace AlphaMemes
                 effecter.Cleanup();
                 effecter = null;
             }
-            base.Cleanup(ritual);
+            Corpse corpse = ritual.assignments.AllPawns.First(x => x.Dead).Corpse;
+            if (ritual.Ritual.activeObligations != null) //handling the cleanup of corpse rituals myself to ensure the obligation is gone as it wasnt always being removed for animals
+            {
+                foreach (RitualObligation obligation in ritual.Ritual.activeObligations)
+                {
+                    if(obligation.targetA.Thing is Corpse ? (Corpse)obligation.targetA.Thing == corpse : false)
+                    {
+                        ritual.Ritual.activeObligations.Remove(obligation);
+                    }                
+                }
+            }
         }
         protected override void PostExecute(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
         {

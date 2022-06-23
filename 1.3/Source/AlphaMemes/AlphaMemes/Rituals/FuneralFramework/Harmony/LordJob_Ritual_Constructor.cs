@@ -29,7 +29,7 @@ namespace AlphaMemes
                 Thing thing = selectedTarget.Thing;
                 IntVec3 cell = thing.OccupiedRect().CenterCell;
                 
-                if (!thing.Map.reachability.CanReach(cell, thing.InteractionCell, PathEndMode.OnCell, TraverseParms.For(TraverseMode.NoPassClosedDoors, Danger.Deadly, false, false, false)))
+                if (thing.def.passability != Traversability.Standable)
                 {
                     if (!thing.def.hasInteractionCell)
                     {                        

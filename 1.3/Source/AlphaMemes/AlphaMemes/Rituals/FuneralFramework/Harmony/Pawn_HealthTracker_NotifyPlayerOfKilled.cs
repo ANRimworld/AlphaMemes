@@ -20,7 +20,7 @@ namespace AlphaMemes
     //Best spot I could find to hook into
     //Handles filtering out of Hunted, sluaghtered, and killed as part of ritual(sacrifice)
     //As well as none faction and a few other relevant ones
-    public static class FuneralFramework_Pawn_Kill
+    public static class FuneralFramework_Pawn_HealthTracker_NotifyPlayerOfKilled_AnimalObligationTrigger
     {
         [HarmonyPostfix]
         public static void Postfix(Pawn_HealthTracker __instance)
@@ -36,6 +36,16 @@ namespace AlphaMemes
                 bool createdObligation = false;
                 foreach (Precept_Ritual ritual in ideo.GetAllPreceptsOfType<Precept_Ritual>().Where(x => x.def.HasModExtension<FuneralPreceptExtension>() ? x.def.GetModExtension<FuneralPreceptExtension>().allowAnimals : false))
                 {   //Doing for each for as I might allow multiple animal funerals but still only 1 per type eg 1 bonded 1 venerated though probably not because it will clutter up rituals and max 6
+                    if(ritual.activeObligations != null)
+                    {
+                        if (ritual.activeObligations.Any(x => x.targetA.Thing is Corpse ? (Corpse)x.targetA.Thing == pawn.Corpse : false))
+                        {//just in case this somehow gets called twice for same pawn
+                            createdObligation = true;
+                            break;
+                        }
+                    }                      
+                    
+                    
                     RitualObiligationTrigger_Animals trigger = ritual.def.GetModExtension<FuneralPreceptExtension>().animalObligationTrigger;
                     Pawn target2 = null;
                     bool canAdd = trigger.CanAddPawn(pawn, ideo, ritual, out target2);
@@ -46,8 +56,7 @@ namespace AlphaMemes
                                                   //But it's tricky because Outcome Comps is set by defs and I dont want to duplicate every ritual into animal due to list clutter and limit 6 rituals
                                                   //Probably just need to make my own role comp
                     }                  
-
-                    if (canAdd)
+                    else if (canAdd)
                     {
                         ritual.AddObligation(new RitualObligation(ritual, pawn.Corpse,true));
                         createdObligation = true;

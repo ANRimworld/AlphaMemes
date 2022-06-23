@@ -23,62 +23,28 @@ namespace AlphaMemes
             
 
             comp = (RitualOutcomeComp_FuneralFramework)def.comps.Find(x => x.GetType() == typeof(RitualOutcomeComp_FuneralFramework));
-            extraOutcomeDesc = null;
-            string extraDefDescription = comp.extraDefDescription;
+            bool worstOutcome = OutcomeChanceWorst(jobRitual, outcome);
+            bool bestOutcome = outcome.BestPositiveOutcome(jobRitual);
+            extraOutcomeDesc = null;            
             Pawn pawn = jobRitual.PawnWithRole(comp.roleToSpawnOn);
-            Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse
-            ThingDef thingDef = comp.thingDefToSpawn;
-            CustomThingDef(pawn, corpse,totalPresence, jobRitual, outcome, ref thingDef); //Not used in base behavior
+            Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse       
             ExtraOutcomeDesc(pawn, corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
-            Thing thingToSpawn = ThingtoSpawn(pawn, corpse, totalPresence,outcome, jobRitual, thingDef, extraDefDescription);
-            ApplyOn(pawn, corpse, thingToSpawn, totalPresence, jobRitual, outcome);
-
-        }
-        public virtual ThingDef CustomThingDef(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref ThingDef thingDef)
-        {
-            return thingDef; //Not used but hook for easy harmony patch or override
-        }
-        public virtual Thing ThingtoSpawn(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, OutcomeChance outcome, LordJob_Ritual jobRitual,ThingDef thingDef, string extraDefDescription)
-        {
-
-            if (thingDef == null)
+            List<Thing> thingsToSpawn = new List<Thing>();
+            foreach(RitualOutcome_FuneralFramework_ThingToSpawn getThing in comp.outcomeSpawners)
             {
-                return null;
+                Thing thingToSpawn = getThing.GetThingToSpawn(jobRitual, bestOutcome, worstOutcome, pawn, corpse);
+                if(thingToSpawn != null)
+                {
+                    thingsToSpawn.Add(thingToSpawn);
+                }
             }
-            int stacksize = comp.thingCount;
-            ThingDef stuff = comp.stuffDefToSpawn;
-            if(thingDef.MadeFromStuff & stuff == null)
-            {
-                stuff = GenStuff.DefaultStuffFor(thingDef);
-            }
-            Thing thingToSpawn = ThingMaker.MakeThing(thingDef, stuff);       
-                
-            //comp.ExtraDescription(pawn, corpse, totalPresence, jobRitual, outcome, thingToSpawn);                
-
-            if (thingToSpawn is Building)
-            {
-                thingToSpawn = thingToSpawn.MakeMinified();
-            }
-
-            if (OutcomeChanceWorst(jobRitual, outcome))
-            {
-                stacksize = (int)Math.Round(stacksize * comp.worstOutcomeMulti);
-            }
-            if (outcome.BestPositiveOutcome(jobRitual))
-            {
-
-                stacksize = (int)Math.Round(stacksize * comp.bestOutcomeMulti);
-            }
-            if(stacksize <= 0)
-            {
-                return null;
-            }
-            thingToSpawn.stackCount = stacksize;
-            return thingToSpawn;
             
+            ApplyOn(pawn, corpse, thingsToSpawn, totalPresence, jobRitual, outcome);
 
         }
-        public virtual void ApplyOn(Pawn pawn, Corpse corpse, Thing thingToSpawn, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome)
+
+
+        public virtual void ApplyOn(Pawn pawn, Corpse corpse, List<Thing> thingsToSpawn, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome)
         {
             if (comp.stripcorpse == true)
             {
@@ -89,9 +55,12 @@ namespace AlphaMemes
             {
                 cell = pawn.Corpse.Position;
             }
-            if (thingToSpawn != null)
+            if (thingsToSpawn.Count > 0)
             {
-                GenPlace.TryPlaceThing(thingToSpawn, cell, jobRitual.Map, ThingPlaceMode.Near);
+                foreach (Thing thingToSpawn in thingsToSpawn)
+                {
+                    GenPlace.TryPlaceThing(thingToSpawn, cell, jobRitual.Map, ThingPlaceMode.Near);
+                }                
             }
             corpse.Destroy();
            
