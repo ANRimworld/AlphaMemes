@@ -350,8 +350,8 @@
     <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_ShouldBeCalledOff.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_Setup.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />
-    <Compile Include="Rituals\FuneralFramework\RitualOutcome\CompProperties_FFContains.cs" />
-    <Compile Include="Rituals\FuneralFramework\RitualOutcome\Comp_FFContains.cs" />
+    <Compile Include="Rituals\FuneralFramework\Comp\CompProperties_FFContains.cs" />
+    <Compile Include="Rituals\FuneralFramework\Comp\Comp_FFContains.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcome_FuneralFramework_ThingToSpawn.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_FuneralFramework.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralFramework.cs" />
@@ -359,6 +359,7 @@
     <Compile Include="Rituals\FuneralFramework\RitualPositions\RitualPosition_InterctingOnCell.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingExtended.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_HaveRequiredStuff.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingNeedsPower.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObiligationTrigger_Animals.cs" />

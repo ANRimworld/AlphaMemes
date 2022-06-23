@@ -14,32 +14,45 @@ namespace AlphaMemes
 
         //spawning properties of the outcome
         public ThingDef thingDefToSpawn = null;
+        public ThingDef stuffToUse = null;  //Dont have a way to select yet if ever (would need to create custom ritul start UI) use this for specific def
         public ThingDef stuffDefToSpawn = null;
         public int thingCount = 0;
+        public int stuffCount = 0;
         public float bestOutcomeMulti = 1;
         public float worstOutcomeMulti = 1;
-        
+        public List<ThingDef> stuffOptions = new List<ThingDef>(); //If I solve above this will be better
+        public List<StuffCategoryDef> stuffCategoryDefs;
+
+        public virtual ThingDef FindStuffForThing(RitualObligation obligation,bool recheck)
+        {//
+            if(stuffToUse != null)
+            {
+
+                stuffDefToSpawn = stuffToUse;                
+                return stuffDefToSpawn;
+            }
+            if(stuffOptions.Count>0 && !recheck)//Obligation filters get called a lot so dont check resource list unless we have to
+            {                
+                return stuffDefToSpawn;
+            }
+            stuffOptions.Clear();
+
+            foreach (KeyValuePair<ThingDef, int> allCountedAmount in Find.CurrentMap.resourceCounter.AllCountedAmounts) 
+            {
+                if (allCountedAmount.Key.IsStuff && stuffCategoryDefs.Any(x=> allCountedAmount.Key.stuffProps.categories.Contains(x)) && allCountedAmount.Value >= stuffCount)
+                {
+                    stuffOptions.Add(allCountedAmount.Key);
+                }
+            }
+            stuffDefToSpawn = stuffOptions.RandomElement();
+            return stuffDefToSpawn;
+        }
 
         public virtual Thing GetThingToSpawn(LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome,Pawn pawnToSpawnOn, Corpse corpse)
         {
             //This shit is wonky and I have no idea if it'll work. But itd be kinda neat if it did.
             //Though I should find a better way            
-            if (ritual.Ritual.obligationTargetFilter.def.HasModExtension<FuneralFramework_ObligationTargetExtension>())
-            {
-                foreach (RitualObligationTargetFilter filter in ritual.Ritual.obligationTargetFilter.def.GetModExtension<FuneralFramework_ObligationTargetExtension>().filters)
-                {
-                    if(filter is RitualObligationTargetWorker_HaveRequiredStuff) //definetly want a better way here. Might need to rethink how extension.filters is setup seperate mod extension for spawning stuff on individual def?
-                    {
-                        RitualObligationTargetWorker_HaveRequiredStuff stuffworker = filter as RitualObligationTargetWorker_HaveRequiredStuff;
-                        if (!stuffworker.canSpawn)
-                        {
-                            return null;
-                        }
-                        stuffDefToSpawn = stuffworker.stuffToUse;
-                        break;
-                    }
-                }
-            }
+
             ThingDef thingDef = CustomThingDefLogic(ritual,pawnToSpawnOn,corpse);
             thingDef = thingDef == null ? thingDefToSpawn : thingDef;
             if (thingDef == null)

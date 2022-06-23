@@ -13,7 +13,7 @@
 			<mustBePlayerIdeo>true</mustBePlayerIdeo>
 		  </li>
 		</ritualObligationTriggers>
-		<ritualObligationTargetFilter>AM_FuneralTargetThingNeedsPower</ritualObligationTargetFilter>
+		<ritualObligationTargetFilter>AM_FuneralExtendedCremate</ritualObligationTargetFilter>
 		<ritualBehavior>AM_CremateFuneralBehavior</ritualBehavior>
 		<ritualOutcomeEffect>AM_CremateFuneralOutcome</ritualOutcomeEffect>
 	</RitualPatternDef>
@@ -177,8 +177,14 @@
 		<outcomeSpawners>
 			<li Class="AlphaMemes.RitualOutcome_FuneralFramework_ThingToSpawn">				
 				<thingDefToSpawn>AM_Urn</thingDefToSpawn>
-				<stuffDefToSpawn>BlocksMarble</stuffDefToSpawn>
+				<stuffToUse>
+					<li>Marble Blocks</li>
+				</stuffToUse>
+				<stuffCategoryDefs>
+					<li>stony</li>
+				</stuffCategoryDefs>	
 				<thingCount>1</thingCount>
+				<stuffCount>20</stuffCount>				
 			</li>
 		</outcomeSpawners>
 	</li>
@@ -190,18 +196,18 @@
 		<defName>AM_FuneralExtendedCremate</defName>
 		<workerClass>AlphaMemes.RitualObligationTargetWorker_FuneralThingExtended</workerClass>		
 		<modExtensions>
-		<li Class="AlphaMemes.FuneralFramework_ObligationTargetExtension">
-			<filters>			
-				<li Class="AlphaMemes.RitualObligationTargetWorker_FuneralThingNeedsPower">				
-					<def>AM_FuneralTargetCremate</def>
-				</li>
-				<li Class="AlphaMemes.RitualObligationTargetWorker_HaveRequiredStuff">
-					<def>AM_FuneralTargetCremateUrnStuff</def>									
-					<buildableDefToMake>AM_Urn</buildableDefToMake>
-					<count>20</count>
-				</li>				
-			</filters>
-		</li>
+			<li Class="AlphaMemes.ObligationTargetExtension">
+				<filters>			
+					<li Class="AlphaMemes.RitualObligationTargetWorker_FuneralThingNeedsPower">				
+						<def>AM_FuneralTargetCremate</def>
+					</li>
+					<li Class="AlphaMemes.RitualObligationTargetWorker_HaveRequiredStuff">
+						<def>AM_FuneralTargetCremateUrnStuff</def>									
+						<buildableDefToMake>AM_Urn</buildableDefToMake>
+						<count>20</count>
+					</li>				
+				</filters>							
+			</li>
 		</modExtensions>
 	</RitualObligationTargetFilterDef>
 	
@@ -212,6 +218,7 @@
 		  <li>ElectricCrematorium</li>		  
 		</thingDefs>
 	</RitualObligationTargetFilterDef>
+	
 	<RitualObligationTargetFilterDef>
 		<defName>AM_FuneralTargetCremateUrnStuff</defName>
 		<workerClass>AlphaMemes.RitualObligationTargetWorker_HaveRequiredStuff</workerClass>		

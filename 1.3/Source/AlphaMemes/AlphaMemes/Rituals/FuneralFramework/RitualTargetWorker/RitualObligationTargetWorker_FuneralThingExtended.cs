@@ -17,7 +17,7 @@ namespace AlphaMemes
         }
         public override IEnumerable<TargetInfo> GetTargets(RitualObligation obligation, Map map)
         {
-            extension = def.GetModExtension<FuneralFramework_ObligationTargetExtension>();
+            extension = def.GetModExtension<ObligationTargetExtension>();
             foreach (RitualObligationTargetFilter worker in extension.filters)
             {
                 foreach(TargetInfo target in worker.GetTargets(obligation, map))
@@ -29,7 +29,7 @@ namespace AlphaMemes
         protected override RitualTargetUseReport CanUseTargetInternal(TargetInfo target, RitualObligation obligation)
         {            
 
-            extension = def.GetModExtension<FuneralFramework_ObligationTargetExtension>();
+            extension = def.GetModExtension<ObligationTargetExtension>();
 
             RitualTargetUseReport temp;
             bool canUse = true;
@@ -54,7 +54,7 @@ namespace AlphaMemes
         public override IEnumerable<string> GetTargetInfos(RitualObligation obligation)
         {
 
-            extension = def.GetModExtension<FuneralFramework_ObligationTargetExtension>();
+            extension = def.GetModExtension<ObligationTargetExtension>();
             
             foreach (RitualObligationTargetFilter worker in extension.filters)
             {
@@ -65,6 +65,6 @@ namespace AlphaMemes
             }
             yield break;
         }
-        FuneralFramework_ObligationTargetExtension extension;
+        ObligationTargetExtension extension;
     }
 }

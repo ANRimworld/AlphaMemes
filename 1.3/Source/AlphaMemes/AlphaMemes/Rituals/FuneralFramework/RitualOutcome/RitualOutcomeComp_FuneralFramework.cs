@@ -10,12 +10,20 @@ namespace AlphaMemes
 {
     public class RitualOutcomeComp_FuneralFramework : RitualOutcomeComp
     {
+        public override RitualOutcomeComp_Data MakeData()
+        {
+            return new RitualOutcomeComp_DataFuneralFramework();
+        }
         public override bool Applies(LordJob_Ritual ritual)
         {
             return true;
         }
         //spawning properties of the outcome
-        
+        public void fillData(RitualOutcomeComp_Data comp)
+        {
+            RitualOutcomeComp_DataFuneralFramework data = (RitualOutcomeComp_DataFuneralFramework)comp;
+            data.outcomeSpawners = outcomeSpawners;
+        }
 
         public bool stripcorpse = false;
         public string roleToSpawnOn = "FF_RitualRoleCorpse";

@@ -15,12 +15,17 @@ namespace AlphaMemes
         public RitualObligationTargetWorker_HaveRequiredStuff(RitualObligationTargetFilterDef def) : base(def)
         {
         }
-
+        
         protected override RitualTargetUseReport CanUseTargetInternal(TargetInfo target, RitualObligation obligation)
         {
             if (!base.CanUseTargetInternal(target, obligation).canUse)
             {
                 return false;
+            }
+            Precept_Ritual ritual = parent;
+            if (ritual == null)
+            {
+                Log.Error("The thing you expected");
             }
             
             Map map = target.Thing.Map;

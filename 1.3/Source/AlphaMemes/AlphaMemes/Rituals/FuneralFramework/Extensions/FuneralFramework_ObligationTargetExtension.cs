@@ -7,12 +7,13 @@ using System.Collections.Generic;
 namespace AlphaMemes
 {
     //Used to extend functionality of obligation to allow more then 1 filter per pattern
-    public class FuneralFramework_ObligationTargetExtension : DefModExtension
+    public class ObligationTargetExtension : DefModExtension
     {
 
         public List<RitualObligationTargetFilter> filters;
 
     }
+
 
 
 
