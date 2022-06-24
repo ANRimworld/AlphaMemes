@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 namespace AlphaMemes
 {   //Using this for thingdef now
     //Allows for multiple things to be spawned, and ability to create comps to do different things easier
-    public class RitualOutcome_FuneralFramework_ThingToSpawn
+    public class FuneralFramework_ThingToSpawn
     {
 
+
+
         //spawning properties of the outcome
+
         public ThingDef thingDefToSpawn = null;
-        public ThingDef stuffToUse = null;  //Dont have a way to select yet if ever (would need to create custom ritul start UI) use this for specific def
+        public ThingDef stuffToUse = null;  //
         public ThingDef stuffDefToSpawn = null;
         public int thingCount = 0;
         public int stuffCount = 0;
@@ -23,17 +26,48 @@ namespace AlphaMemes
         public List<ThingDef> stuffOptions = new List<ThingDef>(); //If I solve above this will be better
         public List<StuffCategoryDef> stuffCategoryDefs;
 
-        public virtual ThingDef FindStuffForThing(RitualObligation obligation,bool recheck)
+        
+        public virtual bool CanStart(bool recheck = true)
+        {
+            Map map = Find.CurrentMap;
+            if (stuffDefToSpawn != null && !recheck)
+            {
+                recheck = map.resourceCounter.GetCount(stuffDefToSpawn) <= stuffCount;
+                if (!recheck)
+                {
+                    recheck = !stuffOptions.Any(x => map.resourceCounter.GetCount(x) >= stuffCount);
+                }
+               
+                
+            }
+            if (recheck)
+            {
+                FindStuffForThing(recheck);
+                foreach(ThingDef thing in stuffOptions)
+                {
+                    if (map.resourceCounter.GetCount(thing) >= stuffCount)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+            
+        }
+
+        public virtual void FindStuffForThing(bool recheck)
         {//
-            if(stuffToUse != null)
+            
+            if (stuffToUse != null)
             {
 
-                stuffDefToSpawn = stuffToUse;                
-                return stuffDefToSpawn;
+                stuffDefToSpawn = stuffToUse;
+                return;
             }
             if(stuffOptions.Count>0 && !recheck)//Obligation filters get called a lot so dont check resource list unless we have to
-            {                
-                return stuffDefToSpawn;
+            {
+                return;
             }
             stuffOptions.Clear();
 
@@ -44,8 +78,12 @@ namespace AlphaMemes
                     stuffOptions.Add(allCountedAmount.Key);
                 }
             }
-            stuffDefToSpawn = stuffOptions.RandomElement();
-            return stuffDefToSpawn;
+            if(stuffOptions.Count() > 0)
+            {
+                stuffDefToSpawn = stuffOptions.RandomElement();
+                
+            }            
+            
         }
 
         public virtual Thing GetThingToSpawn(LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome,Pawn pawnToSpawnOn, Corpse corpse)
@@ -60,7 +98,18 @@ namespace AlphaMemes
                 return null;               
             }            
             int stacksize = thingCount;
-            ThingDef stuff = stuffDefToSpawn;
+            RitualBehaviorWorker_FuneralFramework behaivor = (RitualBehaviorWorker_FuneralFramework)ritual.Ritual.behavior;
+            ThingDef stuff = stuffDefToSpawn;//fallback
+            foreach (Thing thing in ritual.usedThings)
+            {
+                if(thing.def == behaivor.stuffToUse)
+                {
+                    stuff = thing.def;
+                    thing.DeSpawn(DestroyMode.Vanish);
+                    break;
+                }
+            }
+            
             if (thingDef.MadeFromStuff ? !GenStuff.AllowedStuffsFor(thingDef, TechLevel.Undefined).Contains(stuff) :false)
             {
                 stuff = GenStuff.DefaultStuffFor(thingDefToSpawn);

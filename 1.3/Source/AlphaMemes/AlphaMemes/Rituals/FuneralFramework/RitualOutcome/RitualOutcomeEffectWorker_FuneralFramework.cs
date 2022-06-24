@@ -20,17 +20,19 @@ namespace AlphaMemes
         //Extends the functionality of apply extra outcome
         protected override void ApplyExtraOutcome(Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, out string extraOutcomeDesc, ref LookTargets letterLookTargets)
         {
-            
-
-            comp = (RitualOutcomeComp_FuneralFramework)def.comps.Find(x => x.GetType() == typeof(RitualOutcomeComp_FuneralFramework));
+            //Getting all the data
+            comp = (RitualOutcomeComp_FuneralFramework)def.comps.Find(x => x.GetType() == typeof(RitualOutcomeComp_FuneralFramework));            
+            outcomeExtension = def.GetModExtension<OutcomeEffectExtension>();
+            compData = (RitualOutcomeComp_DataFuneralFramework)DataForComp(comp);
             bool worstOutcome = OutcomeChanceWorst(jobRitual, outcome);
             bool bestOutcome = outcome.BestPositiveOutcome(jobRitual);
             extraOutcomeDesc = null;            
-            Pawn pawn = jobRitual.PawnWithRole(comp.roleToSpawnOn);
+
+            Pawn pawn = jobRitual.PawnWithRole(outcomeExtension.roleToSpawnOn);
             Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse       
             ExtraOutcomeDesc(pawn, corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
             List<Thing> thingsToSpawn = new List<Thing>();
-            foreach(RitualOutcome_FuneralFramework_ThingToSpawn getThing in comp.outcomeSpawners)
+            foreach(FuneralFramework_ThingToSpawn getThing in compData.outcomeSpawners)
             {
                 Thing thingToSpawn = getThing.GetThingToSpawn(jobRitual, bestOutcome, worstOutcome, pawn, corpse);
                 if(thingToSpawn != null)
@@ -46,7 +48,7 @@ namespace AlphaMemes
 
         public virtual void ApplyOn(Pawn pawn, Corpse corpse, List<Thing> thingsToSpawn, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome)
         {
-            if (comp.stripcorpse == true)
+            if (outcomeExtension.stripcorpse == true)
             {
                 corpse.Strip();
             }
@@ -69,14 +71,14 @@ namespace AlphaMemes
         }
         public virtual void ExtraOutcomeDesc(Pawn pawn, Corpse corpse, Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, ref string extraOutcomeDesc, ref LookTargets letterLookTargets)
         {
-            if (OutcomeChanceWorst(jobRitual, outcome) && comp.worstOutcomeDesc != null)
+            if (OutcomeChanceWorst(jobRitual, outcome) && outcomeExtension.worstOutcomeDesc != null)
             {
                
-                extraOutcomeDesc = comp.worstOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"),pawn.Name.Named("SPAWNPAWN"));
+                extraOutcomeDesc = outcomeExtension.worstOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"),pawn.Name.Named("SPAWNPAWN"));
             }
             if (outcome.BestPositiveOutcome(jobRitual))
             {
-                extraOutcomeDesc = comp.bestOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"), pawn.Name.Named("SPAWNPAWN"));
+                extraOutcomeDesc = outcomeExtension.bestOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"), pawn.Name.Named("SPAWNPAWN"));
             }
         }
 
@@ -98,7 +100,9 @@ namespace AlphaMemes
         {
             base.ExposeData();
         }
-        public RitualOutcomeComp_FuneralFramework comp;
 
+        public OutcomeEffectExtension  outcomeExtension;
+        public RitualOutcomeComp_FuneralFramework comp;
+        public RitualOutcomeComp_DataFuneralFramework compData;
     }
 }

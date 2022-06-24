@@ -33,7 +33,7 @@ namespace AlphaMemes
             {
                 return;
             }
-           
+
             LordJob_Ritual lordJob = (LordJob_Ritual)this.CreateLordJob(target, organizer, ritual, obligation, assignments);            
             LordMaker.MakeNewLord(Faction.OfPlayer, lordJob, target.Map, assignments.Participants.Where(delegate (Pawn p)
             {
@@ -42,7 +42,7 @@ namespace AlphaMemes
             }));
 
             FuneralFramework_PreparePawn(assignments);
-            this.PostExecute(target, organizer, ritual, obligation, assignments);
+            PostExecute(target, organizer, ritual, obligation, assignments);
             if (playerForced)
             {
                 foreach (Pawn pawn in assignments.Participants)
@@ -132,16 +132,20 @@ namespace AlphaMemes
                 effecter.Cleanup();
                 effecter = null;
             }
+
             Corpse corpse = ritual.assignments.AllPawns.First(x => x.Dead).Corpse;
             if (ritual.Ritual.activeObligations != null) //handling the cleanup of corpse rituals myself to ensure the obligation is gone as it wasnt always being removed for animals
             {
-                foreach (RitualObligation obligation in ritual.Ritual.activeObligations)
+                if(ritual.TicksLeft == 0)
                 {
-                    if(obligation.targetA.Thing is Corpse ? (Corpse)obligation.targetA.Thing == corpse : false)
+                    foreach (RitualObligation obligation in ritual.Ritual.activeObligations)
                     {
-                        ritual.Ritual.activeObligations.Remove(obligation);
-                    }                
-                }
+                        if (obligation.targetA.Thing is Corpse ? (Corpse)obligation.targetA.Thing == corpse : false)
+                        {
+                            ritual.Ritual.activeObligations.Remove(obligation);
+                        }
+                    }
+                }                
             }
         }
         protected override void PostExecute(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
@@ -170,6 +174,7 @@ namespace AlphaMemes
         public RitualRole leader;
         public Pawn effecterpawn;
         public FuneralPreceptExtension extension;
-
+        public ThingDef stuffToUse;
+        public int stuffCount;
     }
 }

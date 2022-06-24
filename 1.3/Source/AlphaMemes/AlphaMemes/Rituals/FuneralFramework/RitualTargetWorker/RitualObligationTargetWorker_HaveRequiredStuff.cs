@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using Verse;
 using System.Linq;
@@ -20,65 +21,46 @@ namespace AlphaMemes
         {
             if (!base.CanUseTargetInternal(target, obligation).canUse)
             {
-                return false;
-            }
-            Precept_Ritual ritual = parent;
-            if (ritual == null)
-            {
-                Log.Error("The thing you expected");
+                return false;           
             }
             
-            Map map = target.Thing.Map;
+
             
-            if (stuffToUse != null)//if passed skip the heavy lifting
+            //Bit convoluted but outcome stores the data to know if we can start
+            RitualOutcomeComp_DataFuneralFramework data = (RitualOutcomeComp_DataFuneralFramework)parent.outcomeEffect.compDatas.Find(x => x != null ?  x.GetType() == typeof(RitualOutcomeComp_DataFuneralFramework): false);            
+            StringBuilder failReasons = new StringBuilder();
+            foreach (FuneralFramework_ThingToSpawn spawner in data.outcomeSpawners.Where(x=> x.stuffCount>0))
             {
-                if (map.resourceCounter.GetCount(stuffToUse) >= count)
-                {
-                    canSpawn = true;
-                    return true;
-                }
-            }            
-          
-            foreach (KeyValuePair<ThingDef, int> allCountedAmount in map.resourceCounter.AllCountedAmounts) //Slightly worried about perfomance of this since game likes to call this a lot
-            {                
-                if (allCountedAmount.Key.IsStuff && allCountedAmount.Key.stuffProps.CanMake(buildableDefToMake) && allCountedAmount.Value >= count)
-                {
-                    stuffOptions.Add(allCountedAmount.Key);                    
+                if (!spawner.CanStart())
+                {                    
+                    failReasons.AppendInNewLine("Funeral_NotEnoughStuff".Translate(string.Join(", ", spawner.stuffCategoryDefs.Select(x => x.label).Named("STUFF")), spawner.stuffCount.ToString().Named("COUNT")));
                 }
             }
-            if(stuffOptions.Count > 0)
+
+            if (failReasons.Length > 0)
             {
-                stuffToUse = stuffOptions.RandomElement();//Yup it sucks
+                return failReasons.ToString();
             }
-            else
-            {
-                return "Funeral_NotEnoughStuff".Translate(string.Join(", ", buildableDefToMake.stuffCategories.Select(x => x.label).Named("STUFF")), count.ToString().Named("COUNT"));
-            }
-            canSpawn = true;
             return true;
 		}
 
-        public override void ExposeData()
-        {
-           //pretty sure exposing is going to explode cause only 1 obligigation
-           //maybe subclasses exposed under main, but probably not important. Saving stufftouse/options would be nice to not need to check it as often but it'll have to be rechecked regardless
 
-        }
         
         public override IEnumerable<string> GetTargetInfos(RitualObligation obligation)
         {
-            yield return "Funeral_XOf".Translate(count.ToString());
-            foreach(StuffCategoryDef stuffCategoryDef in buildableDefToMake.stuffCategories)
+            //Use extension as this gets called before map is even created so always use defaults
+            FuneralPreceptExtension extension = parent.def.GetModExtension<FuneralPreceptExtension>();            
+            foreach(FuneralFramework_ThingToSpawn spawner in extension.spawners.Where(x => x.stuffCount > 0))
             {
-                yield return stuffCategoryDef.label;
-            }            
+                string stringReturn = "Funeral_XOf".Translate(spawner.stuffCount.ToString());
+                stringReturn = stringReturn + "(" + string.Join(", ", spawner.stuffCategoryDefs.Select(x => x.label)) + ")"; 
+                yield return stringReturn;
+            }
+       
             yield break;
         }
-        public ThingDef buildableDefToMake; //This only works with buildabledef, things w/ recipes scare me
-        public ThingDef stuffToUse; //Dont have a way to select yet if ever (would need to create custom ritul start UI) use this for specific def
-        List<ThingDef> stuffOptions = new List<ThingDef>(); //If I solve above this will be better
-        public int count;
-        public bool canSpawn = false;
+
+    
         
         
     }

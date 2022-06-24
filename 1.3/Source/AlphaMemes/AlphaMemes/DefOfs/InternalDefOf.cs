@@ -109,6 +109,7 @@ namespace AlphaMemes
 		public static PreceptDef AM_Abilities_DeathKnell;
 		//Funeral stuff
 		public static JobDef AM_DeliverCorpseToCell;
+		public static JobDef AM_DeliverStuffToCell;
 		public static PreceptDef AM_FuneralNoCorpse;
 	}
 }

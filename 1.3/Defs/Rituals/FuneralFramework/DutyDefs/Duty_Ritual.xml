@@ -15,4 +15,21 @@
       </subNodes>
     </thinkNode>
   </DutyDef>
+   <DutyDef>
+    <defName>AM_DeliverStuffToCellDuty</defName>
+    <hook>HighPriority</hook>
+    <socialModeMax>Off</socialModeMax>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <!-- Goto pawn -->
+        <li Class="AlphaMemes.JobGiver_DeliverStuffToCell">
+          <exactCell>true</exactCell>
+          <locomotionUrgency>Jog</locomotionUrgency>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+  
+
+  
 </Defs>

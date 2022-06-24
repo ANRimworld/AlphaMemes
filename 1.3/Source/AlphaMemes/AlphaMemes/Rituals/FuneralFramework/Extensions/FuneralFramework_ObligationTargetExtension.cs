@@ -10,7 +10,7 @@ namespace AlphaMemes
     public class ObligationTargetExtension : DefModExtension
     {
 
-        public List<RitualObligationTargetFilter> filters;
+        public List<RitualObligationTargetFilterDef> filters;
 
     }
 

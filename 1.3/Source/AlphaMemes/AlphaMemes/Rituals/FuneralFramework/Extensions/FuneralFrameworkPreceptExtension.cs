@@ -20,7 +20,11 @@ namespace AlphaMemes
         public RitualObiligationTrigger_Animals animalObligationTrigger;
         public bool allowAnimals = false;
 
+        //Spawn Stufff - There can be many spawners but only 1 stuff to use to complicated otherwise
+        public List<FuneralFramework_ThingToSpawn> spawners;
+        public bool effectsOutcome;
         
+
         public List<PreceptDef> PreceptConflicts(Ideo ideo)
         {
 

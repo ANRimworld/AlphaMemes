@@ -6,5 +6,11 @@
     <reportString>delivering TargetA.</reportString>
     <casualInterruptible>false</casualInterruptible>
   </JobDef>
+    <JobDef>
+    <defName>AM_DeliverStuffToCell</defName>
+    <driverClass>AlphaMemes.JobDriver_DeliverCorpseToCell</driverClass>
+    <reportString>delivering TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
 
 </Defs>
