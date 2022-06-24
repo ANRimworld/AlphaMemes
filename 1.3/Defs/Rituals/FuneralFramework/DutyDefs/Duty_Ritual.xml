@@ -12,6 +12,9 @@
           <exactCell>true</exactCell>
           <locomotionUrgency>Jog</locomotionUrgency>
         </li>
+		<li Class="JobGiver_Idle">
+          <ticks>60</ticks>
+        </li>
       </subNodes>
     </thinkNode>
   </DutyDef>
@@ -25,6 +28,9 @@
         <li Class="AlphaMemes.JobGiver_DeliverStuffToCell">
           <exactCell>true</exactCell>
           <locomotionUrgency>Jog</locomotionUrgency>
+        </li>
+		<li Class="JobGiver_Idle">
+          <ticks>60</ticks>
         </li>
       </subNodes>
     </thinkNode>

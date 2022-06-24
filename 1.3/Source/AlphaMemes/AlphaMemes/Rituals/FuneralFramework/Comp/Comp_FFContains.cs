@@ -13,6 +13,7 @@ namespace AlphaMemes
         //I just want my urn to say who it contains T_T
         //If there was another way I couldnt find it and Im sad cause this seems like way to much effort for something so small
         private TaggedString pawnName = null;
+        private TaggedString pawnNickname = null;
         private string deathDate;
         private TaleReference taleRef;
         public CompProperties_CorpseContainer Props
@@ -44,13 +45,14 @@ namespace AlphaMemes
             {
                 return base.TransformLabel(label);
             }
-            string returnString = Props.transformLabel.Formatted(pawnName.CapitalizeFirst().Named("CORPSE"), label.Named("LABEL")).Resolve();
+            string returnString = Props.transformLabel.Formatted(pawnNickname.CapitalizeFirst().Named("CORPSE"), label.Named("LABEL")).Resolve();
             return base.TransformLabel(returnString);
         }
         public void InitComp_CorpseContainer(Corpse corpse)
         {
             
             pawnName = corpse.InnerPawn.NameFullColored;
+            pawnNickname = corpse.InnerPawn.NameShortColored;
             taleRef = Find.TaleManager.GetRandomTaleReferenceForArtConcerning(corpse.InnerPawn);
             deathDate = GenDate.DateFullStringAt((long)GenDate.TickGameToAbs(corpse.timeOfDeath), Find.WorldGrid.LongLatOf(corpse.Tile));
         }
@@ -71,6 +73,7 @@ namespace AlphaMemes
         {
             base.PostExposeData();
             Scribe_Values.Look<TaggedString>(ref pawnName, "pawnName", null, false);
+            Scribe_Values.Look<TaggedString>(ref pawnNickname, "pawnNickname", null, false);
             Scribe_Values.Look<string>(ref deathDate, "deathDate", null, false);
             Scribe_Deep.Look<TaleReference>(ref taleRef, "taleRef", Array.Empty<object>());
 

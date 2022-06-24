@@ -104,6 +104,7 @@
 				<preAction Class="AlphaMemes.RitualStageAction_FuneralEffectSound">				
 					  <sound>Recipe_Cremate</sound>
 					  <effect>Cremate</effect>
+					  <roleID>AM_Crafter</roleID>
 				</preAction>				
 			</li>
 			<li>
@@ -116,6 +117,14 @@
 				<roleBehaviors>
 				  <li>
 					<roleId>moralist</roleId>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_Funeral</speakerInteraction>
+					<customPositions>					  
+					  <li Class="AlphaMemes.RitualPosition_BesideInteract" />
+					</customPositions>
+				  </li>				
+				  <li>
+					<roleId>AM_Crafter</roleId>
 					<dutyDef>ArriveToCell</dutyDef>				  
 					<customPositions>					  
 					  <li Class="AlphaMemes.RitualPosition_InterctingOnCell"/>
@@ -201,6 +210,17 @@
 		<li Class="AlphaMemes.OutcomeEffectExtension">
 			<stripcorpse>false</stripcorpse>
 			<roleToSpawnOn>AM_RitualRoleCorpse</roleToSpawnOn>
+			<!--Spawners-->
+			<outcomeSpawners>
+				<li Class="AlphaMemes.FuneralFramework_ThingToSpawn">				
+					<thingDefToSpawn>AM_Urn</thingDefToSpawn>
+					<stuffCategoryDefs>
+						<li>Stony</li>
+					</stuffCategoryDefs>	
+					<thingCount>1</thingCount>
+					<stuffCount>20</stuffCount>				
+				</li>
+			</outcomeSpawners>
 		</li>
 	</modExtensions>
   </RitualOutcomeEffectDef>

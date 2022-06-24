@@ -29,12 +29,23 @@ namespace AlphaMemes
             {
                 return;
             }
-            if (!base.CanExecuteOn(target, obligation))
+            //So it turns out obligation doesnt change when you change assigment. Which sucks. I hope I can do it here and it will flow everywher
+            RitualObligation obligationToUse = obligation;
+            foreach (RitualObligation obligationTemp in ritual.activeObligations)
+            {
+                if (obligationTemp.targetA.Thing == assignments.AssignedPawns(extension.corpseRitualRoleID).First().Corpse)//it aint pretty but it works assignments sucks I can maybe remove the hardcode with typeof or is loop on roles but meh corpse should always be that role
+                {
+                    obligationToUse = obligationTemp;
+                }
+            }
+            if (!base.CanExecuteOn(target, obligationToUse))
             {
                 return;
             }
+            
 
-            LordJob_Ritual lordJob = (LordJob_Ritual)this.CreateLordJob(target, organizer, ritual, obligation, assignments);            
+
+            LordJob_Ritual lordJob = (LordJob_Ritual)this.CreateLordJob(target, organizer, ritual, obligationToUse, assignments);            
             LordMaker.MakeNewLord(Faction.OfPlayer, lordJob, target.Map, assignments.Participants.Where(delegate (Pawn p)
             {
                 bool flag = p.Dead;
@@ -42,7 +53,7 @@ namespace AlphaMemes
             }));
 
             FuneralFramework_PreparePawn(assignments);
-            PostExecute(target, organizer, ritual, obligation, assignments);
+            PostExecute(target, organizer, ritual, obligationToUse, assignments);
             if (playerForced)
             {
                 foreach (Pawn pawn in assignments.Participants)
@@ -115,10 +126,7 @@ namespace AlphaMemes
                 return this.soundPlaying;
             }
         }
-        public override void ExposeData()
-        {
-            base.ExposeData();
-        }
+
         public override void Cleanup(LordJob_Ritual ritual)
         {
             base.Cleanup(ritual);
@@ -133,7 +141,7 @@ namespace AlphaMemes
                 effecter = null;
             }
 
-            Corpse corpse = ritual.assignments.AllPawns.First(x => x.Dead).Corpse;
+/*            Corpse corpse = ritual.assignments.AllPawns.First(x => x.Dead).Corpse;
             if (ritual.Ritual.activeObligations != null) //handling the cleanup of corpse rituals myself to ensure the obligation is gone as it wasnt always being removed for animals
             {
                 if(ritual.TicksLeft == 0)
@@ -146,7 +154,7 @@ namespace AlphaMemes
                         }
                     }
                 }                
-            }
+            }*/
         }
         protected override void PostExecute(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
         {
@@ -167,6 +175,12 @@ namespace AlphaMemes
                     RestUtility.WakeUp(participant);
                 }
             }
+        }
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Defs.Look<ThingDef>(ref stuffToUse, "stuffToUse");
+            Scribe_Values.Look(ref stuffCount, "stuffCount");
         }
 
         public Sustainer soundPlaying; //Cant override set        

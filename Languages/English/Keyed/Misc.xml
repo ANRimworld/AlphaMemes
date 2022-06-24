@@ -37,7 +37,7 @@
 	<Funeral_DisabledCorpseInaccessible>No accessible dead colonists, recover their body if possible</Funeral_DisabledCorpseInaccessible>
 	<AM_SelectStuffToUse>Select Stuff To Use</AM_SelectStuffToUse>
 	<Funeral_XOf>{0} of type:</Funeral_XOf>
-	<Funeral_NotEnoughStuff>Not enough stuff: need {COUNT} of ({STUFF}):</Funeral_NotEnoughStuff>
-	<AM_RitualCrafteeOutcome>{SKILL} skill present</AM_RitualCrafterOutcome>
+	<Funeral_NotEnoughStuff>Not enough stuff: need {COUNT} of {STUFF}:</Funeral_NotEnoughStuff>
+	<AM_RitualCrafterOutcome>{SKILL} crafter present</AM_RitualCrafterOutcome>
 	
 </LanguageData>

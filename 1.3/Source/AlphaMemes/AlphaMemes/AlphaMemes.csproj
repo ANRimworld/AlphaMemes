@@ -353,11 +353,11 @@
     <Compile Include="Rituals\FuneralFramework\Harmony\Ideo_AddPrecept.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_Constructor.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_ShouldBeCalledOff.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_FillPawns.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_Setup.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />
     <Compile Include="Rituals\FuneralFramework\Comp\CompProperties_FFContains.cs" />
     <Compile Include="Rituals\FuneralFramework\Comp\Comp_FFContains.cs" />
-    <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_DataFuneralFramework.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\FuneralFramework_ThingToSpawn.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_Crafter.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_FuneralFramework.cs" />

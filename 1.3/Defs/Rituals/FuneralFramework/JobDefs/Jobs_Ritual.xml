@@ -8,7 +8,7 @@
   </JobDef>
     <JobDef>
     <defName>AM_DeliverStuffToCell</defName>
-    <driverClass>AlphaMemes.JobDriver_DeliverCorpseToCell</driverClass>
+    <driverClass>AlphaMemes.JobDriver_DeliverStuffToCell</driverClass>
     <reportString>delivering TargetA.</reportString>
     <casualInterruptible>false</casualInterruptible>
   </JobDef>

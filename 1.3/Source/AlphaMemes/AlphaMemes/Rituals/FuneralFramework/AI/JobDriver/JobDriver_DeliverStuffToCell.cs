@@ -18,7 +18,7 @@ namespace AlphaMemes
 		public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
 			base.Map.reservationManager.ReleaseAllForTarget(Takee);
-			return base.Map.reservationManager.Reserve(pawn, job, Takee, 1, -1, null, true);
+			return base.Map.reservationManager.Reserve(pawn, job, Takee, 1, job.count, null, true);
 			
         }
 		protected override IEnumerable<Toil> MakeNewToils()
@@ -26,7 +26,8 @@ namespace AlphaMemes
 			this.FailOnDestroyedOrNull(TargetIndex.A);			
 			Toil toil = Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.Touch).FailOnSomeonePhysicallyInteracting(TargetIndex.A);
 			yield return toil;
-			Toil startCarrying = Toils_Haul.StartCarryThing(TargetIndex.A, false, false, false);
+			Toil startCarrying = Toils_Haul.StartCarryThing(TargetIndex.A,true,false,true);
+
 			Toil gotoCell = Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.ClosestTouch);
 			yield return Toils_Jump.JumpIf(gotoCell, () => this.pawn.IsCarryingThing(this.Takee));
 			yield return startCarrying;
@@ -36,16 +37,16 @@ namespace AlphaMemes
 				if (!this.job.ritualTag.NullOrEmpty())
 				{
 					Lord lord = this.pawn.GetLord();
-					LordJob_Ritual lordJob_Ritual = ((lord != null) ? lord.LordJob : null) as LordJob_Ritual;					
+					LordJob_Ritual lordJob_Ritual = ((lord != null) ? lord.LordJob : null) as LordJob_Ritual;
+					lordJob_Ritual.usedThings.Add(Takee);
 					lordJob_Ritual = (((lord != null) ? lord.LordJob : null) as LordJob_Ritual);
 					if (lordJob_Ritual != null)
 					{
-						lordJob_Ritual.usedThings.Add(Takee);
 						lordJob_Ritual.AddTagForPawn(this.pawn, this.job.ritualTag);
 					}
 				}
 			});
-			yield return Toils_Haul.PlaceHauledThingInCell(TargetIndex.B, null, false, false);
+			yield return Toils_Haul.PlaceCarriedThingInCellFacing(TargetIndex.B);
 			yield break;
 		}
 

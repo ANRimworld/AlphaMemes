@@ -30,13 +30,7 @@ namespace AlphaMemes
                 RitualObligationTargetWorker_FuneralThingExtended filter = ritual.obligationTargetFilter as RitualObligationTargetWorker_FuneralThingExtended;
                 filter.initFilters(ritual);
             }
-            //Comp Data Init
-            if(ritual.outcomeEffect is RitualOutcomeEffectWorker_FuneralFramework)
-            {
-                RitualOutcomeEffectWorker_FuneralFramework ritualOutcome = ritual.outcomeEffect as RitualOutcomeEffectWorker_FuneralFramework;
-                RitualOutcomeComp_FuneralFramework comp = (RitualOutcomeComp_FuneralFramework)ritualOutcome.def.comps.Find(x => x.GetType() == typeof(RitualOutcomeComp_FuneralFramework));
-                comp.fillData(ritualOutcome.DataForComp(comp),ritual);
-            }
+
         }
 
     }

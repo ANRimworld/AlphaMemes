@@ -23,6 +23,10 @@ namespace AlphaMemes
 			{
 				return null;
 			}
+			if(pawn2.Position == pawn.mindState.duty.focusThird.Cell)
+            {
+				return null;
+            }
 			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.Position;
 
 			Job job = JobMaker.MakeJob(InternalDefOf.AM_DeliverCorpseToCell, pawn2, cell, pawn.mindState.duty.focusThird);

@@ -13,7 +13,7 @@ namespace AlphaMemes
     {
         public override RitualOutcomeComp_Data MakeData()
         {
-            return new RitualOutcomeComp_DataFuneralFramework();
+            return null;
         }
         public override bool Applies(LordJob_Ritual ritual)
         {
@@ -43,6 +43,35 @@ namespace AlphaMemes
                 priority = 1f
 
             };
+        }
+        public override Pawn BestPawnForRole(List<Pawn> pawns, RitualRoleAssignments assignments, out string roleId)
+        {
+            roleId = this.roleId;
+            Pawn bestPawn = pawns.First(x => !x.Dead);//Was random but eventually that'd cause an awkward situation
+            foreach(Pawn pawn in pawns)
+            {
+                bool flag = false;
+                string reason = null;
+                if(pawn.skills?.GetSkill(skill).Level > bestPawn.skills.GetSkill(skill).Level && !pawn.Dead)
+                {
+                    Precept_Role pRole = pawn.Ideo?.GetRole(pawn);//seperated this all out because somewhere in the chain it wasnt happy about null and I wanted to see where. Dont feel like recombining
+                    if (pRole != null)
+                    {
+                        foreach(RitualRole role in assignments.Ritual.behavior.def.roles)
+                        {
+                            flag = role.AppliesToRole(pRole, out reason);
+                            if (flag) { break; }
+                        }                        
+                    }
+                    if(!flag)
+                    {
+                        bestPawn = pawn;
+                    } 
+                    
+                }               
+
+            }
+            return bestPawn;
         }
         public string roleId;
         public SkillDef skill;

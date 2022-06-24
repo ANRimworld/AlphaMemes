@@ -42,22 +42,8 @@ namespace AlphaMemes
                         }                            
                     }
                 }
-/*                Map map = allPawns[0].Map; //Grab the map of the pawns to rebuild it
-                List<Thing> list = map.listerThings.ThingsInGroup(ThingRequestGroup.Corpse);
-                for (int i = 0; i < list.Count; i++) 
-                {
-                    Pawn innerPawn = ((Corpse)list[i]).InnerPawn;
 
-                    if (innerPawn.CanBeBuried() && (innerPawn.IsColonist || (ritual.def.GetModExtension<FuneralPreceptExtension>().allowAnimals && innerPawn.Faction.IsPlayer)))
-                    {
 
-                        if (!allPawns.Contains(innerPawn))
-                        {
-
-                        }
-
-                    }
-                }*/
             }
 
         }

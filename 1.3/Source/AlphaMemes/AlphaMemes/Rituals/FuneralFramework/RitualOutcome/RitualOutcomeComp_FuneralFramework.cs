@@ -12,7 +12,7 @@ namespace AlphaMemes
     {
         public override RitualOutcomeComp_Data MakeData()
         {
-            return new RitualOutcomeComp_DataFuneralFramework();
+            return null;
         }
         public override float Count(LordJob_Ritual ritual, RitualOutcomeComp_Data data)
         {
@@ -23,18 +23,12 @@ namespace AlphaMemes
             return true;
         }
         //spawning properties of the outcome
-        public void fillData(RitualOutcomeComp_Data comp, Precept_Ritual ritual)
+
+        public virtual Pawn BestPawnForRole(List<Pawn> pawns, RitualRoleAssignments assignments, out string roleId)
         {
-            if (!ritual.def.HasModExtension<FuneralPreceptExtension>())
-            {
-                return;
-            }
-            RitualOutcomeComp_DataFuneralFramework data = (RitualOutcomeComp_DataFuneralFramework)comp;
-            data.outcomeSpawners = ritual.def.GetModExtension<FuneralPreceptExtension>().spawners;
-            data.ritualdef = ritual.def;
-
+            roleId = null;
+            return null;
         }
-
         
 
 

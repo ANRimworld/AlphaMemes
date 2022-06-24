@@ -34,17 +34,7 @@
 				<namedanimals>true</namedanimals><!--This is pushing it-->
 				<allAnimals>false</allAnimals> <!--Probably shouldnt turn this on but you do you-->
 			</animalObligationTrigger>
-			<!--Spawners-->
-			<spawners>
-				<li Class="AlphaMemes.FuneralFramework_ThingToSpawn">				
-					<thingDefToSpawn>AM_Urn</thingDefToSpawn>
-					<stuffCategoryDefs>
-						<li>Stony</li>
-					</stuffCategoryDefs>	
-					<thingCount>1</thingCount>
-					<stuffCount>20</stuffCount>				
-				</li>
-			</spawners>
+
 		</li>
 		</modExtensions>
 	</PreceptDef>

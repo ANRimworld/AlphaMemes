@@ -21,9 +21,8 @@ namespace AlphaMemes
         protected override void ApplyExtraOutcome(Dictionary<Pawn, int> totalPresence, LordJob_Ritual jobRitual, OutcomeChance outcome, out string extraOutcomeDesc, ref LookTargets letterLookTargets)
         {
             //Getting all the data
-            comp = (RitualOutcomeComp_FuneralFramework)def.comps.Find(x => x.GetType() == typeof(RitualOutcomeComp_FuneralFramework));            
-            outcomeExtension = def.GetModExtension<OutcomeEffectExtension>();
-            compData = (RitualOutcomeComp_DataFuneralFramework)DataForComp(comp);
+                        
+            outcomeExtension = def.GetModExtension<OutcomeEffectExtension>();            
             bool worstOutcome = OutcomeChanceWorst(jobRitual, outcome);
             bool bestOutcome = outcome.BestPositiveOutcome(jobRitual);
             extraOutcomeDesc = null;            
@@ -32,7 +31,7 @@ namespace AlphaMemes
             Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse       
             ExtraOutcomeDesc(pawn, corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
             List<Thing> thingsToSpawn = new List<Thing>();
-            foreach(FuneralFramework_ThingToSpawn getThing in compData.outcomeSpawners)
+            foreach(FuneralFramework_ThingToSpawn getThing in outcomeExtension.outcomeSpawners)
             {
                 Thing thingToSpawn = getThing.GetThingToSpawn(jobRitual, bestOutcome, worstOutcome, pawn, corpse);
                 if(thingToSpawn != null)
@@ -102,7 +101,7 @@ namespace AlphaMemes
         }
 
         public OutcomeEffectExtension  outcomeExtension;
-        public RitualOutcomeComp_FuneralFramework comp;
-        public RitualOutcomeComp_DataFuneralFramework compData;
+        
+        
     }
 }

@@ -27,9 +27,9 @@ namespace AlphaMemes
                 return;
             }
             //Do we need stuff
-            if (ritual.outcomeEffect.compDatas.Any(x => x != null ? x.GetType() == typeof(RitualOutcomeComp_DataFuneralFramework) : false))
+            if (ritual.outcomeEffect.def.HasModExtension<OutcomeEffectExtension>())
             {
-                RitualOutcomeComp_DataFuneralFramework data = (RitualOutcomeComp_DataFuneralFramework)ritual.outcomeEffect.compDatas.Find(x => x != null ? x.GetType() == typeof(RitualOutcomeComp_DataFuneralFramework) : false);
+                OutcomeEffectExtension data = ritual.outcomeEffect.def.GetModExtension<OutcomeEffectExtension>();
                 Dictionary<Thing, int> stuffOptions = new Dictionary<Thing, int>();
                 RitualBehaviorWorker_FuneralFramework behavior = (RitualBehaviorWorker_FuneralFramework)ritual.behavior;
                 
@@ -39,14 +39,18 @@ namespace AlphaMemes
                     foreach (Thing thing in Find.CurrentMap.listerThings.AllThings.Where(x => spawner.stuffOptions.Contains(x.def)))
                     {
                         stuffOptions.Add(thing, spawner.stuffCount);
-                        behavior.stuffToUse = thing.def;
-                        behavior.stuffCount = spawner.stuffCount;
+                        if(behavior.stuffToUse == null)//Doing this because I cant easily make a selection mandatory so if they dont select its just one of the options
+                        {
+                            behavior.stuffToUse = thing.def;
+                            behavior.stuffCount = spawner.stuffCount;
+                        }
+
                     }
                 }
 
                 var selectStuffToUse = new Rect(inRect.xMax - buttonDimensions.x, inRect.yMax - 76f - buttonDimensions.y, buttonDimensions.x, buttonDimensions.y);
                 
-                DrawButton(selectStuffToUse, iGuessIDoItThisWay, delegate
+                DrawButton(selectStuffToUse, behavior.stuffCount.ToString() + " " + behavior.stuffToUse.label, delegate
                 {
                     var floatOptions = new List<FloatMenuOption>();
                     foreach(KeyValuePair<Thing, int> option in stuffOptions)
@@ -55,7 +59,6 @@ namespace AlphaMemes
                         {
                             behavior.stuffToUse = option.Key.def;
                             behavior.stuffCount = option.Value;
-                            iGuessIDoItThisWay = option.Value.ToString() + " " + option.Key.LabelCapNoCount;
                         }));
                     }
                     Find.WindowStack.Add(new FloatMenu(floatOptions));
@@ -73,7 +76,7 @@ namespace AlphaMemes
 
         }
 
-        private static string iGuessIDoItThisWay = "AM_SelectStuffToUse".Translate();
+
         private static Vector2 buttonDimensions = new Vector2(200f, 24f);
     }
 

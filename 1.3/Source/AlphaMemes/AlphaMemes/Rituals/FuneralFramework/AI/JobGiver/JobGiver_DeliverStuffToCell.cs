@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Verse.AI.Group;
 using Verse;
 using Verse.AI;
 namespace AlphaMemes
@@ -31,7 +31,12 @@ namespace AlphaMemes
 			def = behavior.stuffToUse;
 			count = behavior.stuffCount;
 
-
+			Lord lord = pawn.GetLord();
+			LordJob_Ritual lordJob_Ritual = ((lord != null) ? lord.LordJob : null) as LordJob_Ritual;
+            if (lordJob_Ritual.PawnTagSet(pawn, "Arrived"))
+            {
+				return null;
+            }
 			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.InteractionCell;
 			int toTake = Math.Max(count - pawn.inventory.Count(def), 0);
 			if (toTake == 0)
@@ -48,7 +53,7 @@ namespace AlphaMemes
 			Job job = JobMaker.MakeJob(InternalDefOf.AM_DeliverStuffToCell, thingToGet, cell);
 			job.locomotionUrgency = PawnUtility.ResolveLocomotion(pawn, this.locomotionUrgency);
 			job.expiryInterval = this.jobMaxDuration;
-			job.count = 1;
+			job.count = count;
 			job.ritualTag = "Arrived";
 			return job;
 		}
