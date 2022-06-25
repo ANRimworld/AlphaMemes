@@ -12,5 +12,11 @@
     <reportString>delivering TargetA.</reportString>
     <casualInterruptible>false</casualInterruptible>
   </JobDef>
+   <JobDef>
+    <defName>AM_LoadCorpseToThing</defName>
+    <driverClass>AlphaMemes.JobDriver_LoadCorpseToThing</driverClass>
+    <reportString>delivering TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
 
 </Defs>

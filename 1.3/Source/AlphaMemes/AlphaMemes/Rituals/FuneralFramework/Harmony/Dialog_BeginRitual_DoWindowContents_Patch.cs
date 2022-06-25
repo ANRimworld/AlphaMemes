@@ -32,43 +32,46 @@ namespace AlphaMemes
                 OutcomeEffectExtension data = ritual.outcomeEffect.def.GetModExtension<OutcomeEffectExtension>();
                 Dictionary<Thing, int> stuffOptions = new Dictionary<Thing, int>();
                 RitualBehaviorWorker_FuneralFramework behavior = (RitualBehaviorWorker_FuneralFramework)ritual.behavior;
-                
-                foreach (FuneralFramework_ThingToSpawn spawner in data.outcomeSpawners)
+                if(!data.outcomeSpawners.NullOrEmpty())
                 {
-                    if(spawner.stuffDefToSpawn == null)
+                    foreach (FuneralFramework_ThingToSpawn spawner in data.outcomeSpawners)
                     {
-                        continue;
-                    }
-                    foreach (Thing thing in Find.CurrentMap.listerThings.AllThings.Where(x => spawner.stuffOptions.Contains(x.def)))
-                    {
-                        stuffOptions.Add(thing, spawner.stuffCount);
-                        if(behavior.stuffToUse == null)//Doing this because I cant easily make a selection mandatory so if they dont select its just one of the options
+                        if (spawner.stuffDefToSpawn == null)
                         {
-                            behavior.stuffToUse = thing.def;
-                            behavior.stuffCount = spawner.stuffCount;
+                            continue;
                         }
-
-                    }
-                }
-                if (stuffOptions.Count() == 0)
-                {
-                    return;
-                }
-                var selectStuffToUse = new Rect(inRect.xMax - buttonDimensions.x, inRect.yMax - 76f - buttonDimensions.y, buttonDimensions.x, buttonDimensions.y);
-                
-                DrawButton(selectStuffToUse, behavior.stuffCount.ToString() + " " + behavior.stuffToUse.label, delegate
-                {
-                    var floatOptions = new List<FloatMenuOption>();
-                    foreach(KeyValuePair<Thing, int> option in stuffOptions)
-                    {
-                        floatOptions.Add(new FloatMenuOption(option.Value.ToString() + " " + option.Key.LabelCapNoCount, delegate
+                        foreach (Thing thing in Find.CurrentMap.listerThings.AllThings.Where(x => spawner.stuffOptions.Contains(x.def)))
                         {
-                            behavior.stuffToUse = option.Key.def;
-                            behavior.stuffCount = option.Value;
-                        }));
+                            stuffOptions.Add(thing, spawner.stuffCount);
+                            if (behavior.stuffToUse == null)//Doing this because I cant easily make a selection mandatory so if they dont select its just one of the options
+                            {
+                                behavior.stuffToUse = thing.def;
+                                behavior.stuffCount = spawner.stuffCount;
+                            }
+
+                        }
                     }
-                    Find.WindowStack.Add(new FloatMenu(floatOptions));
-                });
+                    if (stuffOptions.Count() == 0)
+                    {
+                        return;
+                    }
+                    var selectStuffToUse = new Rect(inRect.xMax - buttonDimensions.x, inRect.yMax - 76f - buttonDimensions.y, buttonDimensions.x, buttonDimensions.y);
+
+                    DrawButton(selectStuffToUse, behavior.stuffCount.ToString() + " " + behavior.stuffToUse.label, delegate
+                    {
+                        var floatOptions = new List<FloatMenuOption>();
+                        foreach (KeyValuePair<Thing, int> option in stuffOptions)
+                        {
+                            floatOptions.Add(new FloatMenuOption(option.Value.ToString() + " " + option.Key.LabelCapNoCount, delegate
+                            {
+                                behavior.stuffToUse = option.Key.def;
+                                behavior.stuffCount = option.Value;
+                            }));
+                        }
+                        Find.WindowStack.Add(new FloatMenu(floatOptions));
+                    });
+                }
+               
             }
                
 

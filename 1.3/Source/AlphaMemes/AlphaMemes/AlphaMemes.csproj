@@ -338,8 +338,10 @@
     <Compile Include="Precepts\Precept_DespisedAnimal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rituals\Behaviours\RitualBehaviorWorker_MaddeningChant.cs" />
+    <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_LoadCorpseToThing.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverStuffToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverCorpseToCell.cs" />
+    <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_LoadCorpseToThing.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverStuffToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverCorpseToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFramework_OutcomeEffectExtension.cs" />
@@ -355,6 +357,7 @@
     <Compile Include="Rituals\FuneralFramework\Harmony\LordJob_Ritual_ShouldBeCalledOff.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_FillPawns.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_Setup.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_BlastOff.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />
     <Compile Include="Rituals\FuneralFramework\Comp\CompProperties_FFContains.cs" />
     <Compile Include="Rituals\FuneralFramework\Comp\Comp_FFContains.cs" />
@@ -362,12 +365,14 @@
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\FuneralFramework_ThingToSpawn.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_Crafter.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeComp_FuneralFramework.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralBlastOff.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralFramework.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualPositions\RitualPosition_BesideThing.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualPositions\RitualPosition_InterctingOnCell.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingExtended.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralLaunchable.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_HaveRequiredStuff.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingNeedsPower.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObiligationTrigger_Animals.cs" />

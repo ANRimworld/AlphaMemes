@@ -25,20 +25,33 @@ namespace AlphaMemes
             outcomeExtension = def.GetModExtension<OutcomeEffectExtension>();            
             bool worstOutcome = OutcomeChanceWorst(jobRitual, outcome);
             bool bestOutcome = outcome.BestPositiveOutcome(jobRitual);
-            extraOutcomeDesc = null;            
-
-            Pawn pawn = jobRitual.PawnWithRole(outcomeExtension.roleToSpawnOn);
-            Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse       
+            extraOutcomeDesc = null;
+            Pawn pawn = null;
+            Corpse corpse = jobRitual.assignments.AllPawns.First(x => x.Dead).Corpse;//Only one corpse
+            if (outcomeExtension.roleToSpawnOn != null)
+            {
+                pawn = jobRitual.PawnWithRole(outcomeExtension.roleToSpawnOn);
+            }
+            else
+            {
+                pawn = corpse.InnerPawn;
+            }
+           
+                   
             ExtraOutcomeDesc(pawn, corpse,totalPresence,jobRitual,outcome, ref extraOutcomeDesc, ref letterLookTargets);
             List<Thing> thingsToSpawn = new List<Thing>();
-            foreach(FuneralFramework_ThingToSpawn getThing in outcomeExtension.outcomeSpawners)
+            if (!outcomeExtension.outcomeSpawners.NullOrEmpty())
             {
-                Thing thingToSpawn = getThing.GetThingToSpawn(jobRitual, bestOutcome, worstOutcome, pawn, corpse);
-                if(thingToSpawn != null)
+                foreach (FuneralFramework_ThingToSpawn getThing in outcomeExtension.outcomeSpawners)
                 {
-                    thingsToSpawn.Add(thingToSpawn);
+                    Thing thingToSpawn = getThing?.GetThingToSpawn(jobRitual, bestOutcome, worstOutcome, pawn, corpse);
+                    if (thingToSpawn != null)
+                    {
+                        thingsToSpawn.Add(thingToSpawn);
+                    }
                 }
             }
+
             
             ApplyOn(pawn, corpse, thingsToSpawn, totalPresence, jobRitual, outcome);
 
@@ -63,6 +76,7 @@ namespace AlphaMemes
                     GenPlace.TryPlaceThing(thingToSpawn, cell, jobRitual.Map, ThingPlaceMode.Near);
                 }                
             }
+            
             corpse.Destroy();
            
             
@@ -73,11 +87,11 @@ namespace AlphaMemes
             if (OutcomeChanceWorst(jobRitual, outcome) && outcomeExtension.worstOutcomeDesc != null)
             {
                
-                extraOutcomeDesc = outcomeExtension.worstOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"),pawn.Name.Named("SPAWNPAWN"));
+                extraOutcomeDesc = outcomeExtension.worstOutcomeDesc.Formatted(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"),pawn.Name.Named("SPAWNPAWN"));
             }
             if (outcome.BestPositiveOutcome(jobRitual))
             {
-                extraOutcomeDesc = outcomeExtension.bestOutcomeDesc.Translate(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"), pawn.Name.Named("SPAWNPAWN"));
+                extraOutcomeDesc = outcomeExtension.bestOutcomeDesc.Formatted(jobRitual.Ritual.Label.Named("RITUAL"), corpse.InnerPawn.Name.Named("CORPSE"), pawn.Name.Named("SPAWNPAWN"));
             }
         }
 

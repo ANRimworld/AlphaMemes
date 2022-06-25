@@ -110,6 +110,7 @@ namespace AlphaMemes
 		//Funeral stuff
 		public static JobDef AM_DeliverCorpseToCell;
 		public static JobDef AM_DeliverStuffToCell;
+		public static JobDef AM_LoadCorpseToThing;
 		public static PreceptDef AM_FuneralNoCorpse;
 	}
 }
