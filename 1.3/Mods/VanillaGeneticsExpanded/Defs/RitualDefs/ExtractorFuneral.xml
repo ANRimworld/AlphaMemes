@@ -212,7 +212,7 @@
 			<roleToSpawnOn>AM_RitualRoleCorpse</roleToSpawnOn>
 			<!--Spawners-->
 			<outcomeSpawners>
-				<li Class="AlphaMemes.FuneralFramework_ThingToSpawn">				
+				<li Class="AlphaMemes.FuneralFramework_ThingToSpawnGenetics">				
 					<thingDefToSpawn>GR_HumanoidGenetic</thingDefToSpawn>	
 					<thingCount>1</thingCount>
 					<bestOutcomeMulti>2</bestOutcomeMulti>
