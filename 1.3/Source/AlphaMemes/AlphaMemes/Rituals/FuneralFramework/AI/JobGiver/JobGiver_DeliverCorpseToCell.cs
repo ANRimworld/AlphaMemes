@@ -23,7 +23,7 @@ namespace AlphaMemes
 			{
 				return null;
 			}
-			if(pawn2.Position == pawn.mindState.duty.focusThird.Cell)
+			if(pawn2.Position == pawn.mindState.duty.focusThird.Cell && pawn.Position.AdjacentTo8Way(pawn.mindState.duty.focusThird.Thing.InteractionCell))
             {
 				return null;
             }

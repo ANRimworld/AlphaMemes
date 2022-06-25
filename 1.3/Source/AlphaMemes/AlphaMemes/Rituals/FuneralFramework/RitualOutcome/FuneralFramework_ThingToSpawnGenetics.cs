@@ -24,6 +24,12 @@ namespace AlphaMemes
             {
                 base.thingDefToSpawn = thingDef;
             }
+            else
+            {
+                //If no genome do a template \o/
+                thingDef = DefDatabase<ThingDef>.AllDefsListForReading.First(x => x.defName == "GR_TemplateGenetic");
+                base.thingDefToSpawn = thingDef;
+            }
 
             return base.GetThingToSpawn(ritual, bestOutcome, worstOutcome, pawnToSpawnOn, corpse);
         }
@@ -31,12 +37,7 @@ namespace AlphaMemes
         {
 
             ThingDef thingDef = null;
-            //Harmony is black magic
-            
             thingDef = (ThingDef)Traverse.CreateWithType("GeneticRim.StaticCollectionsClass")?.Method("GenomeForPawn", new Type[] { typeof(Pawn) }).GetValue(corpse.InnerPawn);
-
-
-
             return thingDef;
         }
 
