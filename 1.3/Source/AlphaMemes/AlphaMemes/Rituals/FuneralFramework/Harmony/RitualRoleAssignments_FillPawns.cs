@@ -48,9 +48,9 @@ namespace AlphaMemes
                             }
                             if (!__instance.TryAssign(pawn, __instance.GetRole(roleid), out failReason))
                             {
-                                Log.Message("stop");
+
                             }
-                            Log.Message("stop");
+
                         }
                        
                     }

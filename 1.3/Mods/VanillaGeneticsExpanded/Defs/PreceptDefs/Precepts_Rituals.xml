@@ -22,17 +22,24 @@
 		<impact>Medium</impact>
 		<ignoreLimitsInEditMode>false</ignoreLimitsInEditMode>
 		<receivesExpectationsQualityOffset>true</receivesExpectationsQualityOffset>
-		<skipOpportunityLettersBeforeDay>0</skipOpportunityLettersBeforeDay>		
+		<skipOpportunityLettersBeforeDay>0</skipOpportunityLettersBeforeDay>
+		<alsoAdds>AM_FuneralNoCorpse</alsoAdds>			
 		<extraTextPawnDeathLetter>{PAWN_nameDef} should be extracted and turned into a glorious creation so {PAWN_possessive} friends and family need not say farewell.</extraTextPawnDeathLetter>
 		<modExtensions>
 		<li Class="AlphaMemes.FuneralPreceptExtension">
 			<isColonistFuneral>true</isColonistFuneral>
-			<requiresMeme>true</requiresMeme>
-			<addNoCorpseFuneral>false</addNoCorpseFuneral>
-			<replaceConflictRituals>true</replaceConflictRituals>
+			<addNoCorpseFuneral>true</addNoCorpseFuneral>
 			<conflictingPreceptDefs>
 				<li>Funeral</li>
 			</conflictingPreceptDefs>
+			<!--Animals-->
+			<allowAnimals>true</allowAnimals>			
+			<animalObligationTrigger Class="AlphaMemes.RitualObiligationTrigger_Animals">
+				<bondedAnimals>true</bondedAnimals>
+				<veneratedAnimals>true</veneratedAnimals>
+				<namedanimals>false</namedanimals><!--This is pushing it-->
+				<allAnimals>false</allAnimals> <!--Probably shouldnt turn this on but you do you-->
+			</animalObligationTrigger>
 		</li>
 		</modExtensions>		
 	</PreceptDef>

@@ -35,7 +35,10 @@ namespace AlphaMemes
                 
                 foreach (FuneralFramework_ThingToSpawn spawner in data.outcomeSpawners)
                 {
-                    
+                    if(spawner.stuffDefToSpawn == null)
+                    {
+                        continue;
+                    }
                     foreach (Thing thing in Find.CurrentMap.listerThings.AllThings.Where(x => spawner.stuffOptions.Contains(x.def)))
                     {
                         stuffOptions.Add(thing, spawner.stuffCount);
@@ -47,7 +50,10 @@ namespace AlphaMemes
 
                     }
                 }
-
+                if (stuffOptions.Count() == 0)
+                {
+                    return;
+                }
                 var selectStuffToUse = new Rect(inRect.xMax - buttonDimensions.x, inRect.yMax - 76f - buttonDimensions.y, buttonDimensions.x, buttonDimensions.y);
                 
                 DrawButton(selectStuffToUse, behavior.stuffCount.ToString() + " " + behavior.stuffToUse.label, delegate

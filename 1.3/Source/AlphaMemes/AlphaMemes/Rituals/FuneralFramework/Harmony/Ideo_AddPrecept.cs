@@ -29,7 +29,7 @@ namespace AlphaMemes
             {
                 return true;
             }
-            //**No longer trying to fix vanilla bug. To many headaches know issue Reform Ideology adds null rituals if they have required memes have to remove the one it adds and add back happens with gladiator in vanilla
+            
             //Fix for vanilla bug, adding arguments for rituals that dont get passed during reform when they are need
             if (fillWith == null)
             {

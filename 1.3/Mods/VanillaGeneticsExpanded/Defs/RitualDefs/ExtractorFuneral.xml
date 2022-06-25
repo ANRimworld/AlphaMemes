@@ -47,6 +47,14 @@
 			<corpse>True</corpse>			
 			<countsAsParticipant>False</countsAsParticipant>
 		  </li>
+		  <li Class="RitualRoleColonist">
+			<label>crafter</label>
+			<id>AM_Crafter</id>        
+			<maxCount>1</maxCount>
+			<allowOtherIdeos>false</allowOtherIdeos>
+			<required>true</required>		
+			<countsAsParticipant>true</countsAsParticipant>
+		  </li>
 		</roles>
 		<stages>
 			<li Class="RitualStage_InteractWithRole">
@@ -56,6 +64,7 @@
 					<li Class="StageEndTrigger_RolesArrived">
 						<roleIds>
 						  <li>moralist</li>
+						  <li>AM_Crafter</li>
 						</roleIds>
 					</li>	
 				</endTriggers>				
@@ -63,6 +72,10 @@
 				  <li>
 					<roleId>moralist</roleId>
 					<dutyDef>AM_DeliverCorpseToCellDuty</dutyDef>
+				  </li>
+				  <li>
+					<roleId>AM_Crafter</roleId>
+					<dutyDef>ArriveToCell</dutyDef>
 				  </li>				  
 				</roleBehaviors>
 			</li>    
@@ -85,12 +98,13 @@
 				</roleBehaviors>
 				<visualEffectDef>Funeral</visualEffectDef>
 				<postAction Class="RitualStageAction_Message">
-					<text>{0}: The speech is over, and the extraction is beginning.</text>
+					<text>{0}: The speech is over, and the cremation is beginning.</text>
 					<messageTypeDef>NeutralEvent</messageTypeDef>
 				</postAction>
 				<preAction Class="AlphaMemes.RitualStageAction_FuneralEffectSound">				
 					  <sound>Recipe_Cremate</sound>
-					  <effect>Cremate</effect>
+					  <effect>ButcherFlesh</effect>
+					  <roleID>AM_Crafter</roleID>
 				</preAction>				
 			</li>
 			<li>
@@ -103,6 +117,14 @@
 				<roleBehaviors>
 				  <li>
 					<roleId>moralist</roleId>
+					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
+					<speakerInteraction>Speech_Funeral</speakerInteraction>
+					<customPositions>					  
+					  <li Class="AlphaMemes.RitualPosition_BesideInteract" />
+					</customPositions>
+				  </li>				
+				  <li>
+					<roleId>AM_Crafter</roleId>
 					<dutyDef>ArriveToCell</dutyDef>				  
 					<customPositions>					  
 					  <li Class="AlphaMemes.RitualPosition_InterctingOnCell"/>
@@ -171,15 +193,34 @@
 		  </points>
 		</curve>
 	</li>
-	<li Class="AlphaMemes.RitualOutcomeComp_FuneralFramework">
-		<thingDefToSpawn>GR_HumanoidGenetic</thingDefToSpawn>
-		<bestOutcomeMulti>2</bestOutcomeMulti>
-		<worstOutcomeMulti>0</worstOutcomeMulti>
-		<thingCount>1</thingCount>
-		<bestOutcomeDesc>{RITUAL} was spectacular! {CORPSE} miraculously produced 2 genomes, perhaps they did eat their twin in the womb</bestOutcomeDesc>
-		<worstOutcomeDesc>{{RITUAL} was a disaster! {CORPSE}'s genome was destroyed; colonists are having to say goodbye</worstOutcomeDesc>
+	<li Class="AlphaMemes.RitualOutcomeComp_Crafter">
+		<roleId>AM_Crafter</roleId>
+		<label>Geneticist present</label>
+		<skill>Intellectual</skill>
+		<curve>
+		  <points>
+			<li>(1,  0.0)</li>
+			<li>(10, 0.15)</li>
+			<li>(20, 0.4)</li>
+		  </points>
+		</curve>
 	</li>
     </comps>
+	<modExtensions>
+		<li Class="AlphaMemes.OutcomeEffectExtension">
+			<stripcorpse>false</stripcorpse>
+			<roleToSpawnOn>AM_RitualRoleCorpse</roleToSpawnOn>
+			<!--Spawners-->
+			<outcomeSpawners>
+				<li Class="AlphaMemes.FuneralFramework_ThingToSpawn">				
+					<thingDefToSpawn>GR_HumanoidGenetic</thingDefToSpawn>	
+					<thingCount>1</thingCount>
+					<bestOutcomeMulti>2</bestOutcomeMulti>
+					<worstOutcomeMulti>0</worstOutcomeMulti>
+				</li>
+			</outcomeSpawners>
+		</li>
+	</modExtensions>
   </RitualOutcomeEffectDef>
  
    <!--Ritual Obligation-->
@@ -189,5 +230,6 @@
 		<thingDefs>
 		  <li>GR_GeneticExtractionTable</li>		  
 		</thingDefs>
+		
 	</RitualObligationTargetFilterDef>
 </Defs>

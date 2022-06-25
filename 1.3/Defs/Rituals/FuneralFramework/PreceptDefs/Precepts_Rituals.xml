@@ -31,10 +31,9 @@
 			<animalObligationTrigger Class="AlphaMemes.RitualObiligationTrigger_Animals">
 				<bondedAnimals>true</bondedAnimals>
 				<veneratedAnimals>true</veneratedAnimals>
-				<namedanimals>true</namedanimals><!--This is pushing it-->
+				<namedanimals>false</namedanimals><!--This is pushing it-->
 				<allAnimals>false</allAnimals> <!--Probably shouldnt turn this on but you do you-->
 			</animalObligationTrigger>
-
 		</li>
 		</modExtensions>
 	</PreceptDef>
