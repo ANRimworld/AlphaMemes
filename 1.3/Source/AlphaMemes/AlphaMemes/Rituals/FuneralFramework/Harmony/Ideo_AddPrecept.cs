@@ -17,16 +17,24 @@ namespace AlphaMemes
     [HarmonyPatch("AddPrecept")]
     //This patch is to prevent the game from adding 2 funerals
     //Im sure there's a better spot/way for this but i cant find it T_T since IdeoFoundation Canadd doesnt feel like being used for rituals
+    //Does some other stuff now too handling replacing and removing ritual when adding conflcit
     public static class FuneralFramework_Ideo_AddPrecept
     {
 
-        [HarmonyPrefix]
-        //Prefix is for a vanilla bug with required memes and Ideo reformation
+        [HarmonyPrefix]        
         public static bool Prefix(Ideo __instance, Precept precept, ref RitualPatternDef fillWith, ref bool init)
         {
 
             if (precept.def.issue.defName != "Ritual")
             {
+                //check if the precept being added creates a conflict if so, remove the ritual ideally id warn person first but a bit difficult to do so
+                foreach(Precept p in __instance.PreceptsListForReading.Where(x=>x.def.HasModExtension<FuneralPreceptExtension>()))
+                {
+                    if (p.def.GetModExtension<FuneralPreceptExtension>().specialConflicts?.AddingConflict(__instance, precept) ?? false)
+                    {
+                        __instance.RemovePrecept(p);
+                    }
+                }
                 return true;
             }
             
@@ -40,58 +48,39 @@ namespace AlphaMemes
                     fillWith = ritual.def.ritualPatternBase;
                 }
             }
-            //Determination Logic for multiple funerals
+            //Determination Logic for conflicts
             if (precept.def.HasModExtension<FuneralPreceptExtension>())
             {
-                if (precept.def == InternalDefOf.AM_FuneralNoCorpse)
+                FuneralPreceptExtension extension = precept.def.GetModExtension<FuneralPreceptExtension>();
+                List<PreceptDef> ritualConflict = new List<PreceptDef>();
+                if (precept.def == InternalDefOf.AM_FuneralNoCorpse)//little hack to make the no corpse name == main ritual name without creating a unique def for each one
                 {
-                    precept.def.GetModExtension<FuneralPreceptExtension>().SetNoCorpseFuneralDefName(__instance, precept.def);
+                    extension.SetNoCorpseFuneralDefName(__instance, precept.def);
                 }
-                //This will add a 2nd funeral, have to decide who wins
-                bool replaceRituals = precept.def.GetModExtension<FuneralPreceptExtension>().replaceConflictRituals;
-                List<PreceptDef> preceptConflicts = precept.def.GetModExtension<FuneralPreceptExtension>().PreceptConflicts(__instance);
-                if (!replaceRituals && preceptConflicts.Count > 0)
+                AcceptanceReport report = extension.specialConflicts?.PreceptConflicts(__instance, out ritualConflict, extension) ?? true;
+                if (report.Accepted)//Checks precepts first then research to not clog up small ritual UI by concatting
                 {
-                    return false; //There's a conflict and we aren't replacing so dont add
+                    report = extension.specialConflicts?.ResearchConflicts(__instance)?? true;
                 }
-                foreach (PreceptDef p in preceptConflicts)
+                if(ritualConflict.Count > 0 && report.Accepted) //Remove the conflicts then go ahead
                 {
-                    __instance.RemovePrecept(__instance.GetPrecept(p));//Remove Conflicts
+                    foreach (PreceptDef p in ritualConflict)
+                    {
+                        __instance.RemovePrecept(__instance.GetPrecept(p));//Remove Conflicts
+                    }
+                    return true;
+                }
+                
+                if (!report.Accepted)
+                {
+                    return false; //Dont add it
                 }
 
             }
             return true;
 
         }
-        //Moved it all to prefix with thought of dont add a precept just to immediately remove it
-        //Pretty sure there's no situation where it can cause compatability issues I hope
-        //[HarmonyPostfix]
-        /*        public static void Postfix(Ideo __instance, Precept precept)
-                {
-                    if (precept.def.issue.defName != "Ritual") return;
 
-
-                    if (precept.def.HasModExtension<FuneralPreceptExtension>())
-                    {
-                        if (precept.def == InternalDefOf.FF_FuneralNoCorpse)
-                        {
-                            precept.def.GetModExtension<FuneralPreceptExtension>().SetNoCorpseFuneralDefName(__instance, precept.def);
-                        }
-                        //This will add a 2nd funeral, have to decide who wins
-                        bool replaceRituals = precept.def.GetModExtension<FuneralPreceptExtension>().replaceConflictRituals;
-                        List<PreceptDef> preceptConflicts = precept.def.GetModExtension<FuneralPreceptExtension>().PreceptConflicts(__instance);
-                        if (!replaceRituals && preceptConflicts.Count > 0)
-                        {
-                            __instance.RemovePrecept(__instance.GetPrecept(precept.def)); //There's a conflict and we aren't replacing so dont add
-                        }
-                        foreach (PreceptDef p in preceptConflicts)
-                        {
-                            __instance.RemovePrecept(__instance.GetPrecept(p));//Remove Conflicts
-                        }
-                        return;
-                    }
-
-                }*/
     }
 }
 

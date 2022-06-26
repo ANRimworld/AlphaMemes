@@ -33,7 +33,7 @@ namespace AlphaMemes
             RitualObligation obligationToUse = obligation;
             foreach (RitualObligation obligationTemp in ritual.activeObligations)
             {
-                if (obligationTemp.targetA.Thing == assignments.AssignedPawns(extension.corpseRitualRoleID).First().Corpse)//it aint pretty but it works assignments sucks I can maybe remove the hardcode with typeof or is loop on roles but meh corpse should always be that role
+                if (obligationTemp.targetA.Thing == assignments.AssignedPawns(extension.corpseRitualRoleID).First().Corpse)
                 {
                     obligationToUse = obligationTemp;
                 }
@@ -88,7 +88,7 @@ namespace AlphaMemes
             foreach (RitualObligation obligation in ritual.activeObligations)
             {
                 Corpse corpse = (Corpse)obligation.targetA.Thing;
-                if (corpse != null)
+                if (corpse != null && !corpse.Destroyed)
                 {
                     if (corpse.InnerPawn.CanBeBuried())
                     {
@@ -140,21 +140,13 @@ namespace AlphaMemes
                 effecter.Cleanup();
                 effecter = null;
             }
-
-/*            Corpse corpse = ritual.assignments.AllPawns.First(x => x.Dead).Corpse;
-            if (ritual.Ritual.activeObligations != null) //handling the cleanup of corpse rituals myself to ensure the obligation is gone as it wasnt always being removed for animals
+            foreach(Thing thing in spawnEffectThings)
             {
-                if(ritual.TicksLeft == 0)
+                if (!thing.Destroyed)
                 {
-                    foreach (RitualObligation obligation in ritual.Ritual.activeObligations)
-                    {
-                        if (obligation.targetA.Thing is Corpse ? (Corpse)obligation.targetA.Thing == corpse : false)
-                        {
-                            ritual.Ritual.activeObligations.Remove(obligation);
-                        }
-                    }
-                }                
-            }*/
+                    thing.Destroy();
+                }
+            }
         }
         protected override void PostExecute(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
         {
@@ -182,7 +174,7 @@ namespace AlphaMemes
             Scribe_Defs.Look<ThingDef>(ref stuffToUse, "stuffToUse");
             Scribe_Values.Look(ref stuffCount, "stuffCount");
         }
-
+        public List<Thing> spawnEffectThings = new List<Thing>();//things spawned that need cleanup just in case
         public Sustainer soundPlaying; //Cant override set        
         public Effecter effecter;
         public RitualRole leader;

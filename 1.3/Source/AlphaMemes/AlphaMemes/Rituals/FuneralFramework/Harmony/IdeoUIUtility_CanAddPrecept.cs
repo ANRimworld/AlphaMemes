@@ -24,12 +24,27 @@ namespace AlphaMemes
     
             if (def.HasModExtension<FuneralPreceptExtension>())
             {
-                List<PreceptDef> preceptConflicts = def.GetModExtension<FuneralPreceptExtension>().PreceptConflicts(ideo);
-                if (preceptConflicts.Any())
-                {  
-                    string conflicts = string.Join(", ", preceptConflicts.Select(s => s.label));
-                    __result = "Funeral_ConflictingPrecepts".Translate(conflicts.Named("CONFLICTS"));
+                FuneralPreceptExtension extension = def.GetModExtension<FuneralPreceptExtension>();
+                List<PreceptDef> ritualconflict = new List<PreceptDef>();
+                AcceptanceReport report = extension.specialConflicts?.PreceptConflicts(ideo, out ritualconflict, extension)?? true;
+                if(report.Accepted && ritualconflict.Count > 0)
+                {
+                    __result = "Funeral_WillReplace".Translate(string.Join(", ", ritualconflict.Select(x => x.LabelCap)).Named("REPLACING"));
+                    return;
                 }
+                if (report.Accepted)//Checks precepts first then research to not clog up small ritual UI by concatting
+                {
+                    report = extension.specialConflicts?.ResearchConflicts(ideo) ?? true; ;
+                }
+                if (!report.Accepted)
+                {
+                    __result = report.Reason;
+                }
+                else
+                {
+                    __result = true;
+                }
+                
             }
 
 

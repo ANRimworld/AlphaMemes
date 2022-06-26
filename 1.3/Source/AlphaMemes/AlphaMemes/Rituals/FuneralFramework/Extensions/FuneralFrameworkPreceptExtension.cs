@@ -14,33 +14,14 @@ namespace AlphaMemes
         public bool replaceConflictRituals = false; //Decides whether to replace vanilla funeral on generation
         public bool addNoCorpseFuneral = true;//Adds the base game funeral for no corpse (empty grave)
         public string corpseRitualRoleID = "AM_RitualRoleCorpse"; //add the role here if its not default
-        public List<PreceptDef> conflictingPreceptDefs = new List<PreceptDef>();
 
         //Animals
         public RitualObiligationTrigger_Animals animalObligationTrigger;
         public bool allowAnimals = false;
 
-   
-        
+        //Special Conflicts
+        public FuneralFramework_SpecialConflicts specialConflicts;
 
-        public List<PreceptDef> PreceptConflicts(Ideo ideo)
-        {
-
-            List<PreceptDef> conflicts = new List <PreceptDef>();
-            foreach (Precept p in ideo.PreceptsListForReading.Where<Precept>(x => x.def.HasModExtension<FuneralPreceptExtension>()))
-            {
-                if(isColonistFuneral && p.def.GetModExtension<FuneralPreceptExtension>().isColonistFuneral)
-                {
-                    conflicts.Add(p.def);
-                    continue;
-                }
-                if (conflictingPreceptDefs.Contains<PreceptDef>(p.def))
-                {
-                    conflicts.Add(p.def);
-                }
-            }
-            return conflicts;
-        }
         public void SetNoCorpseFuneralDefName(Ideo ideo,PreceptDef precept)
         {
             //Used to make No Corpse Funeral have the same name as main funeral

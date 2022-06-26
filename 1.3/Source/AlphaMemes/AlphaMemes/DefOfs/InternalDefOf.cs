@@ -100,8 +100,10 @@ namespace AlphaMemes
 		public static DesignatorDropdownGroupDef AM_Floor_SteampunkTiles;
 		public static DesignatorDropdownGroupDef AM_Floor_NeolithicTiles;
 
-
-
+		[MayRequireRoyalty]
+		public static ThoughtDef AM_AnimaScreamLesser;
+		[MayRequireRoyalty]
+		public static JobDef AM_AnimaBurialLink;
 		[MayRequireRoyalty]
 		public static ThoughtDef AM_DeathKnellThought;
 

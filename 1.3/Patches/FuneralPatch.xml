@@ -14,6 +14,9 @@
 					<namedanimals>false</namedanimals><!--This is pushing it-->
 					<allAnimals>false</allAnimals> <!--Probably shouldnt turn this on but you do you-->
 				</animalObligationTrigger>
+				<specialConflicts Class="AlphaMemes.FuneralFramework_SpecialConflicts">
+
+				</specialConflicts>
 			</li>
 		</value>
 	</Operation>

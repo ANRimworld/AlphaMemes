@@ -34,7 +34,7 @@ namespace AlphaMemes
                 foreach (RitualObligation obligation in ritual.activeObligations)
                 {
                     Corpse corpse = (Corpse)obligation.targetA.Thing;
-                    if (corpse != null)
+                    if (corpse != null && !corpse.Destroyed)
                     {
                         if(!allPawns.Contains(corpse.InnerPawn) && corpse.InnerPawn.CanBeBuried())
                         {
