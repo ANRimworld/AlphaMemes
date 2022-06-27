@@ -22,7 +22,7 @@ namespace AlphaMemes
         {
             //I need things and they are all private =(
             Precept_Ritual ritual = (Precept_Ritual)AccessTools.Field(typeof(Dialog_BeginRitual), "ritual").GetValue(__instance);
-            if (!ritual.def.HasModExtension<FuneralPreceptExtension>())
+            if (!ritual?.def.HasModExtension<FuneralPreceptExtension>()??true)//stupid rituals not being rituals
             {
                 return;
             }
