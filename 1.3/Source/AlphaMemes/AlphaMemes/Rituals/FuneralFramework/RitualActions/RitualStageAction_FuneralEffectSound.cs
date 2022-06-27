@@ -39,10 +39,20 @@ namespace AlphaMemes
 		{
 
 			Effecter effecter = behavior.effecter;
+			TargetInfo cell = new TargetInfo(pawn.Dead ? pawn.Corpse.Position : pawn.Position, ritual.Map);
+
 			if (effecter == null)
 			{
 				effecter = effect.Spawn();
-				effecter.Trigger(pawn, selectedtarget);
+                if (targetRitual)
+                {
+					effecter.Trigger(cell, selectedtarget);
+				}
+                else
+                {
+					effecter.Trigger(cell, cell);
+				}
+				
 				behavior.effecterpawn = pawn;
 				behavior.effecter = effecter;
 			}
@@ -62,6 +72,7 @@ namespace AlphaMemes
 		private TargetInfo selectedtarget;
 		private RitualBehaviorWorker_FuneralFramework behavior;
 		public SoundDef sound;
+		public bool targetRitual = true;
 		public string roleID;
 
 		public EffecterDef effect;

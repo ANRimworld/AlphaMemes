@@ -15,6 +15,7 @@ namespace AlphaMemes
 
         public AcceptanceReport PreceptConflicts(Ideo ideo, out List<PreceptDef> ritualConflicts, FuneralPreceptExtension preceptExtension = null)
         {
+           
             List<PreceptDef> preceptConflicts = new List<PreceptDef>();
             ritualConflicts = new List<PreceptDef>();
             foreach (Precept p in ideo.PreceptsListForReading.Where<Precept>(x => x.def.HasModExtension<FuneralPreceptExtension>()))
@@ -28,7 +29,7 @@ namespace AlphaMemes
                     preceptConflicts.Add(p.def);
                     continue;
                 }
-                if (conflictingPreceptDefs.Contains<PreceptDef>(p.def))
+                if (conflictingPreceptDefs?.Contains<PreceptDef>(p.def)?? false)
                 {
                     preceptConflicts.Add(p.def);
                 }
@@ -45,10 +46,19 @@ namespace AlphaMemes
 
             return true;
         }
+        public bool PreceptConflictSimple(Ideo ideo)
+        {
+            if(ideo.PreceptsListForReading.Any(x=> conflictingPreceptDefs?.Contains(x.def)??false))
+            {
+                return false;
+            }
+
+            return true;
+        }
         public bool AddingConflict(Ideo ideo, Precept addingPrecept)
         {
 
-            if (conflictingPreceptDefs.Contains(addingPrecept.def))
+            if (conflictingPreceptDefs?.Contains(addingPrecept.def)?? false)
             {
                 return true;
             }
@@ -57,7 +67,7 @@ namespace AlphaMemes
         }
         public AcceptanceReport MemeConflicts(Ideo ideo)
         {
-            if(conflictingMemes.Any(x => ideo.memes.Contains(x)))
+            if(conflictingMemes?.Any(x => ideo.memes.Contains(x))?? false)
             {
                 return "Funeral_ConflictingMemes".Translate(string.Join(", ", conflictingMemes.Where(x => ideo.memes.Contains(x)).Select(x => x.LabelCap)).Named("CONFLICTS"));
             }

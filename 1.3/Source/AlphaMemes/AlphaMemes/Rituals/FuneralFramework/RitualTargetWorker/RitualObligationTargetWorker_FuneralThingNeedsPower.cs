@@ -19,7 +19,7 @@ namespace AlphaMemes
             
             if (!base.CanUseTargetInternal(target, obligation).canUse)
             {                
-                return false;               
+                return base.CanUseTargetInternal(target, obligation).failReason;               
             }
             
             Thing thing = target.Thing;

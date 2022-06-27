@@ -36,6 +36,23 @@
     </thinkNode>
   </DutyDef>
    <DutyDef>
+    <defName>AM_DeliverCorpseToHopper</defName>
+    <hook>HighPriority</hook>
+    <socialModeMax>Off</socialModeMax>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <!-- Goto pawn -->
+        <li Class="AlphaMemes.JobGiver_LoadCorpseToHopper">
+          <exactCell>true</exactCell>
+          <locomotionUrgency>Jog</locomotionUrgency>
+        </li>
+		<li Class="JobGiver_Idle">
+          <ticks>60</ticks>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+   <DutyDef>
     <defName>AM_LoadCorpseToThing</defName>
     <hook>HighPriority</hook>
     <socialModeMax>Off</socialModeMax>

@@ -29,7 +29,7 @@
 	<AM_MakeChangeStyleAbilityUseAllStyles>Make the "Change Style" ability use styles not possessed by the player's main ideoligion</AM_MakeChangeStyleAbilityUseAllStyles>
 	<AM_MakeChangeStyleAbilityUseAllStyles_Tooltip>Make the "Change Style" ability use styles not possessed by the player's main ideoligion. By default this leader role ability will swap an item's style through the styles present in the colony's main ideo. By activating this toggle you will make it use ALL styles currently present in the game (vanilla or modded)</AM_MakeChangeStyleAbilityUseAllStyles_Tooltip>
 	<Funeral_NeedsPower>{0} is not powered</Funeral_NeedsPower>
-	<Funeral_ThingInfoPower>Needs {0} for last rites. Which must be powered</Funeral_ThingInfoPower>
+	<Funeral_ThingInfoPower>Needs {0} for last rites. Which must be powered or fueled</Funeral_ThingInfoPower>
 	<Funeral_WorstResult>{RITUAL} was a disaster!</Funeral_WorstResult>
 	<Funeral_BestResult>{RITUAL} was spectacular!</Funeral_BestResult>
 	<Funeral_RoleNotDead>{0} Requires the pawn to be dead</Funeral_RoleNotDead>
@@ -46,4 +46,6 @@
 	<Funeral_LaunchableRoofed>Unable to launch due to roof above pod</Funeral_LaunchableRoofed>
 	<Funeral_LaunchableNoFuel>Unable to launch due to no fuel for pod</Funeral_LaunchableNoFuel>
 	<Funeral_ThingLaunchable>A fueled and unroofed: {0}</Funeral_ThingLaunchable>
+	<Funeral_NoHopper>No reachable hopper around the nutrient paste dispenser</Funeral_NoHopper>
+	<Funeral_NutrientPaste>A nutrient paste dispenser, powered and with hoppers</Funeral_NutrientPaste>
 </LanguageData>

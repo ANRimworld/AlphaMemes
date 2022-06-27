@@ -21,20 +21,24 @@ namespace AlphaMemes
         {
             //check if conflicting precept/meme
             target2 = null;
-            List<PreceptDef> conflicts = new List<PreceptDef>();//Has no use here
-            AcceptanceReport report = animalConflicts?.MemeConflicts(ideo) ?? true;
-            if (report.Accepted)
+            if(animalConflicts != null)
             {
-                report = animalConflicts?.PreceptConflicts(ideo, out conflicts) ?? true;
-                if (!report.Accepted)
+                List<PreceptDef> conflicts = new List<PreceptDef>();//Has no use here
+                AcceptanceReport report = animalConflicts?.MemeConflicts(ideo) ?? true;
+                if (report.Accepted)
+                {
+                    report = animalConflicts?.PreceptConflictSimple(ideo) ?? true;
+                    if (!report.Accepted)
+                    {
+                        return false;
+                    }
+                }
+                else
                 {
                     return false;
                 }
             }
-            else
-            {
-                return false;
-            }
+
             
             bool flag = false;
             bool bonded = TrainableUtility.GetAllColonistBondsFor(pawn).Any(x => x.Ideo == ideo);
