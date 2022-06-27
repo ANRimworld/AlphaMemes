@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 namespace AlphaMemes
 {
 	public class JobGiver_DeliverCorpseToCell : JobGiver_DeliverPawnToCell
@@ -27,6 +28,12 @@ namespace AlphaMemes
             {
 				return null;
             }
+			Lord lord = pawn.GetLord();//adding this cause somehow its still job spamming ughhh
+			LordJob_Ritual lordJob_Ritual = ((lord != null) ? lord.LordJob : null) as LordJob_Ritual;
+			if (lordJob_Ritual.PawnTagSet(pawn, "Arrived"))
+			{
+				return null;
+			}
 			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.Position;
 
 			Job job = JobMaker.MakeJob(InternalDefOf.AM_DeliverCorpseToCell, pawn2, cell, pawn.mindState.duty.focusThird);
