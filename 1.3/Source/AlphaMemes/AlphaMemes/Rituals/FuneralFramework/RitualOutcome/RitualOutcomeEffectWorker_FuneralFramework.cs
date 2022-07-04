@@ -44,6 +44,7 @@ namespace AlphaMemes
                 foreach (FuneralFramework_ThingToSpawn getThing in outcomeExtension.outcomeSpawners)
                 {
                     Thing thingToSpawn = getThing?.GetThingToSpawn(jobRitual, bestOutcome, worstOutcome, pawn, corpse);
+                    getThing.DestroyThingsUsed(jobRitual, bestOutcome, worstOutcome);
                     if (thingToSpawn != null)
                     {
                         thingsToSpawn.Add(thingToSpawn);

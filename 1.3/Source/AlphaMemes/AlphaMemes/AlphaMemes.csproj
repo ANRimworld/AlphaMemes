@@ -14,8 +14,8 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="VFECore">
       <HintPath>References\VFECore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VFEPirates">
+      <HintPath>..\..\..\..\..\VanillaFactionsExpanded-Pirates\1.3\Assemblies\VFEPirates.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -91,10 +95,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rituals\Behaviours\RitualBehaviorWorker_MaddeningChant.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_AnimaBurialLinking.cs" />
+    <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverThingsToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_LoadCorpseToThing.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverStuffToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobDriver\JobDriver_DeliverCorpseToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_AnimaBurialLinking.cs" />
+    <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverThingsToCell.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_LoadCorpseToHopper.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_LoadCorpseToThing.cs" />
     <Compile Include="Rituals\FuneralFramework\AI\JobGiver\JobGiver_DeliverStuffToCell.cs" />
@@ -104,6 +110,7 @@
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFramework_ObligationTargetExtension.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFrameworkPreceptExtension.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFramework_SpecialConflicts.cs" />
+    <Compile Include="Rituals\FuneralFramework\Extensions\FuneralHaulUtility.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_DoWindowContents_Patch.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_CalculatePawnPortraitIcons.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\IdeoFoundation._RandomizePrecepts.cs" />
@@ -117,6 +124,7 @@
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_ExposeData.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_FillPawns.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\RitualRoleAssignments_Setup.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_StripCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_BlastOff.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_ThingEffects.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />
@@ -131,18 +139,25 @@
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\OutcomeComp\RitualOutcomeComp_FuneralFramework.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_AnimaBurial.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralBlastOff.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralDreadnought.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\RitualOutcomeEffectWorker_FuneralFramework.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualPositions\RitualPosition_BesideThing.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualPositions\RitualPosition_InterctingOnCell.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualRoles\RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualStage\RitualStage_AnimaBurial.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_DreadnoughtCorpseStillValid.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_CorpseStillValid.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_HaveRequiredThings.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_NutrientPaste.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingExtended.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralLaunchable.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_HaveRequiredStuff.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTargetWorker\RitualObligationTargetWorker_FuneralThingNeedsPower.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObligationTrigger_DreadnoughtCapableProps.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObligationTrigger_DreadnoughtCapable.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualTriggers\RitualObiligationTrigger_Animals.cs" />
+    <Compile Include="Rituals\FuneralFramework\Ritual\RitualBehaviorWorker_FuneralFrameworkDreadnought.cs" />
     <Compile Include="Rituals\FuneralFramework\Ritual\RitualBehaviorWorker_FuneralFramework.cs" />
     <Compile Include="Rituals\Outcomes\RitualOutcomeEffectWorker_MaddeningChant.cs" />
     <Compile Include="Rituals\Outcomes\RitualOutcomeEffectWorker_RelicDestruction.cs" />

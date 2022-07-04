@@ -68,6 +68,7 @@ namespace AlphaMemes
 		{
 			Scribe_Defs.Look<SoundDef>(ref this.sound, "sound");
 			Scribe_Defs.Look<EffecterDef>(ref this.effect, "effect");
+			Scribe_Values.Look(ref roleID, "roleID");
 		}
 		private TargetInfo selectedtarget;
 		private RitualBehaviorWorker_FuneralFramework behavior;

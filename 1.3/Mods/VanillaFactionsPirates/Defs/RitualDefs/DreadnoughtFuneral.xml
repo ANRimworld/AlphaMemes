@@ -5,24 +5,24 @@
 	
 	<!--Ritual Pattern-->
 	<RitualPatternDef>
-		<defName>GR_ExtractorFuneralPattern</defName>
+		<defName>AM_DreadnoughtFuneralPattern</defName>
 		<nameMaker>NamerRitualFuneral</nameMaker>
-		<ritualExpectedDesc>Once a {IDEO} member dies, other {MEMBERS} witnesss {RITUAL_labelDef} to ensure they live on.</ritualExpectedDesc>
+		<ritualExpectedDesc>Once a {IDEO} member dies, other {MEMBERS} witnesss {RITUAL_labelDef} to see the deceased turned into a true machine of war.</ritualExpectedDesc>
 		<ritualObligationTriggers>
-		  <li Class="RitualObligationTrigger_MemberDiedProperties">
+		  <li Class="AlphaMemes.RitualObligationTrigger_DreadnoughtCapableProps">
 			<mustBePlayerIdeo>true</mustBePlayerIdeo>
 		  </li>
 		</ritualObligationTriggers>
-		<ritualObligationTargetFilter>GR_ExtractGenomeObligation</ritualObligationTargetFilter>
-		<ritualBehavior>GR_ExtractorFuneralBehavior</ritualBehavior>
-		<ritualOutcomeEffect>GR_ExtractorFuneralOutcome</ritualOutcomeEffect>
+		<ritualObligationTargetFilter>AM_DreadnoughtFuneralObligation</ritualObligationTargetFilter>
+		<ritualBehavior>AM_DreadnoughtFuneralBehavior</ritualBehavior>
+		<ritualOutcomeEffect>AM_DreadnoughtFuneralOutcome</ritualOutcomeEffect>
 	</RitualPatternDef>
 
 	<!--Ritual Behavior-->
 		<RitualBehaviorDef>
-		<defName>GR_ExtractorFuneralBehavior</defName>
-		<durationTicks>5000</durationTicks>
-		<workerClass>AlphaMemes.RitualBehaviorWorker_FuneralFramework</workerClass>
+		<defName>AM_DreadnoughtFuneralBehavior</defName>
+		<durationTicks>4500</durationTicks>
+		<workerClass>AlphaMemes.RitualBehaviorWorker_FuneralFrameworkDreadnought</workerClass>
 		<spectatorFilter Class="AlphaMemes.RitualRoleFuneralCorpse_RitualSpectatorFilterNotCorpse">
 		<description>Spectators must be alive.</description>
 		</spectatorFilter>
@@ -48,7 +48,7 @@
 			<countsAsParticipant>False</countsAsParticipant>
 		  </li>
 		  <li Class="RitualRoleColonist">
-			<label>crafter</label>
+			<label>Apothecary</label>
 			<id>AM_Crafter</id>        
 			<maxCount>1</maxCount>
 			<allowOtherIdeos>false</allowOtherIdeos>
@@ -75,9 +75,12 @@
 				  </li>
 				  <li>
 					<roleId>AM_Crafter</roleId>
-					<dutyDef>ArriveToCell</dutyDef>
+					<dutyDef>AM_DeliverThingsToCellDuty</dutyDef>
 				  </li>				  
 				</roleBehaviors>
+				<postAction Class="AlphaMemes.RitualStageAction_StripCorpse">
+
+				</postAction>
 			</li>    
 			<li>
 				<defaultDuty>Spectate</defaultDuty>
@@ -94,16 +97,16 @@
 					<customPositions>					  
 					  <li Class="AlphaMemes.RitualPosition_BesideInteract" />
 					</customPositions>
-				  </li>
+				  </li>				  
 				</roleBehaviors>
 				<visualEffectDef>Funeral</visualEffectDef>
-				<postAction Class="RitualStageAction_Message">
-					<text>{0}: The speech is over, and the extraction is beginning.</text>
+				<postAction Class="AlphaMemes.RitualStageAction_Dreadnought">
+					<text>{0}: The speech is over, and the welding has commenced.</text>
 					<messageTypeDef>NeutralEvent</messageTypeDef>
 				</postAction>
 				<preAction Class="AlphaMemes.RitualStageAction_FuneralEffectSound">				
 					  <sound>Recipe_Cremate</sound>
-					  <effect>ButcherFlesh</effect>
+					  <effect>ConstructMetal</effect>
 					  <roleID>AM_Crafter</roleID>
 				</preAction>				
 			</li>
@@ -120,14 +123,16 @@
 					<dutyDef>SpeakOnCellFacingSpectators</dutyDef>
 					<speakerInteraction>Speech_Funeral</speakerInteraction>
 					<customPositions>					  
-					  <li Class="AlphaMemes.RitualPosition_BesideInteract" />
+					  <li Class="AlphaMemes.RitualPosition_BesideInteract" />						
 					</customPositions>
 				  </li>				
 				  <li>
 					<roleId>AM_Crafter</roleId>
 					<dutyDef>ArriveToCell</dutyDef>				  
 					<customPositions>					  
-					  <li Class="AlphaMemes.RitualPosition_InterctingOnCell"/>
+					  <li Class="AlphaMemes.RitualPosition_CenterPos">
+						<offset>(0,0,-1)</offset>
+					  </li>
 					</customPositions>
 				  </li>
 				</roleBehaviors>
@@ -142,37 +147,37 @@
    
   <!--Ritual Outcome-->
     <RitualOutcomeEffectDef>
-	<defName>GR_ExtractorFuneralOutcome</defName>
+	<defName>AM_DreadnoughtFuneralOutcome</defName>
     <description>Depending on ritual quality, participants will get between {MINMOOD} and {MAXMOOD} mood for {MOODDAYS} days.</description>
-    <workerClass>AlphaMemes.RitualOutcomeEffectWorker_FuneralFramework</workerClass>
+    <workerClass>AlphaMemes.RitualOutcomeEffectWorker_FuneralDreadnought</workerClass>
     <allowAttachableOutcome>false</allowAttachableOutcome>
     <outcomeChances>
       <li>
         <label>Terrible</label>
-        <chance>0.1</chance>
-        <memory>GR_TerribleExtraction</memory>
-        <description>The {0} was a terrible! Everyone felt devestated for having to see the genomes destroyed.</description>
+        <chance>0.2</chance>
+        <memory>AM_TerribleDreadnought</memory>
+        <description>The {0} was a terrible! The entombing failed and they are lost to us forever.</description>
         <positivityIndex>-2</positivityIndex>
       </li>
       <li>
         <label>Lackluster</label>
-        <chance>0.1</chance>
-        <memory>GR_LacklusterExtraction</memory>
-        <description>The {0} was lackluster. The speech was long-winded and failed to invoke the imagination.</description>
+        <chance>0.2</chance>
+        <memory>AM_LacklusterDreadnought</memory>
+        <description>The {0} was messy, I hope if I ever end up in that situation they do a better job.</description>
         <positivityIndex>-1</positivityIndex>
       </li>
       <li>
         <label>Good</label>
-        <chance>0.6</chance>
-        <memory>GR_GoodExtraction</memory>
-        <description>The {0} was good. The speaker's final words provided hope for the creations.</description>
+        <chance>0.5</chance>
+        <memory>AM_GoodDreadnought</memory>
+        <description>The {0} was good. I'm sure they'll be up on their feet any time now.</description>
         <positivityIndex>1</positivityIndex>
       </li>
       <li>
         <label>Amazing</label>
-        <chance>0.2</chance>
-        <memory>GR_AmazingExtraction</memory>
-        <description>The {0} was Amazing. The speech was captivating, and everyone came away focused on the creations that could be made.</description>
+        <chance>0.1</chance>
+        <memory>AM_AmazingDreadnought</memory>
+        <description>The {0} was Amazing. I've never seen such skill, they walked right out as if nothing had happened.</description>
         <positivityIndex>2</positivityIndex>
       </li>
     </outcomeChances>
@@ -188,38 +193,51 @@
 		<curve>
 		  <points>
 			<li>(1,  0.0)</li>
-			<li>(5,  0.4)</li>
-			<li>(10, 0.6)</li>
+			<li>(5,  0.15)</li>
+			<li>(10, 0.3)</li>
 		  </points>
 		</curve>
 	</li>
 	<li Class="AlphaMemes.RitualOutcomeComp_Crafter">
 		<roleId>AM_Crafter</roleId>
-		<label>Geneticist</label>
-		<skill>Intellectual</skill>
+		<label>Apothecary</label>
+		<skill>Medicine</skill>
 		<curve>
 		  <points>
 			<li>(1,  0.0)</li>
 			<li>(10, 0.15)</li>
-			<li>(20, 0.4)</li>
+			<li>(20, 0.5)</li>
 		  </points>
 		</curve>
 	</li>
     </comps>
 	<modExtensions>
 		<li Class="AlphaMemes.OutcomeEffectExtension">
-			<stripcorpse>false</stripcorpse>
+			<stripcorpse>true</stripcorpse>
 			<roleToSpawnOn>AM_RitualRoleCorpse</roleToSpawnOn>
-			<bestOutcomeDesc>{RITUAL} was spectacular! {CORPSE} miraculously produced 2 genomes, perhaps they did eat their twin in the womb</bestOutcomeDesc>
-			<worstOutcomeDesc>{{RITUAL} was a disaster! {CORPSE}'s genome was destroyed; colonists are having to say goodbye</worstOutcomeDesc>
+			<bestOutcomeDesc>{RITUAL} was spectacular! {CORPSE} had 0 side effects</bestOutcomeDesc>
+			<worstOutcomeDesc>{{RITUAL} was a disaster! {CORPSE} has been lost forever.</worstOutcomeDesc>
 			<!--Spawners-->
 			<outcomeSpawners>
-				<li Class="AlphaMemes.FuneralFramework_ThingToSpawnGenetics">				
-					<thingDefToSpawn>GR_HumanoidGenetic</thingDefToSpawn>	
-					<thingCount>1</thingCount>
-					<bestOutcomeMulti>2</bestOutcomeMulti>
-					<worstOutcomeMulti>0</worstOutcomeMulti>
-
+				<li Class="AlphaMemes.FuneralFramework_ThingToSpawn">				
+					<thingsRequired>
+						<li>
+							<key>Plasteel</key>
+							<value>265</value>
+						</li>
+						<li>
+							<key>Uranium</key>
+							<value>50</value>
+						</li>
+						<li>
+							<key>ComponentSpacer</key>
+							<value>8</value>
+						</li>
+						<li>
+							<key>MedicineUltratech</key>
+							<value>10</value>
+						</li>							
+					</thingsRequired>
 				</li>
 			</outcomeSpawners>
 		</li>
@@ -228,11 +246,36 @@
  
    <!--Ritual Obligation-->
 	<RitualObligationTargetFilterDef>
-		<defName>GR_ExtractGenomeObligation</defName>
+		<defName>AM_DreadnoughtFuneralObligation</defName>
+		<workerClass>AlphaMemes.RitualObligationTargetWorker_FuneralThingExtended</workerClass>
+		<modExtensions>
+			<li Class="AlphaMemes.ObligationTargetExtension">
+				<filters>			
+					<li>AM_DreadnoughtFuneralObligationFoundry</li>
+					<li>AM_DreadnoughtFuneralObligationThings</li>				
+				</filters>
+			<!--Custom Target-->
+			<validCorpse Class="AlphaMemes.RitualObligationTarget_DreadnoughtCorpseStillValid">
+				<allowDesiccated>false</allowDesiccated>
+			</validCorpse>				
+			</li>
+		</modExtensions>
+	</RitualObligationTargetFilterDef>
+	
+	<RitualObligationTargetFilterDef>
+		<defName>AM_DreadnoughtFuneralObligationFoundry</defName>
 		<workerClass>AlphaMemes.RitualObligationTargetWorker_FuneralThingNeedsPower</workerClass>		
 		<thingDefs>
-		  <li>GR_GeneticExtractionTable</li>		  
+		  <li>VFEP_WarcasketFoundry</li>		  
 		</thingDefs>
-		
 	</RitualObligationTargetFilterDef>
+	
+	<RitualObligationTargetFilterDef>
+		<defName>AM_DreadnoughtFuneralObligationThings</defName>
+		<workerClass>AlphaMemes.RitualObligationTargetWorker_HaveRequiredThings</workerClass>		
+		<thingDefs>
+		  <li>VFEP_WarcasketFoundry</li>		  
+		</thingDefs>
+	</RitualObligationTargetFilterDef>
+
 </Defs>

@@ -12,8 +12,6 @@ namespace AlphaMemes
     public class FuneralFramework_ThingToSpawn
     {
 
-
-
         //spawning properties of the outcome
 
         public ThingDef thingDefToSpawn = null;
@@ -23,39 +21,65 @@ namespace AlphaMemes
         public int stuffCount = 0;
         public float bestOutcomeMulti = 1;
         public float worstOutcomeMulti = 1;
-        public List<ThingDef> stuffOptions = new List<ThingDef>(); //If I solve above this will be better
+        public List<ThingDef> stuffOptions = new List<ThingDef>(); 
         public List<StuffCategoryDef> stuffCategoryDefs;
-
+        public Dictionary<ThingDef, int> thingsRequired = new Dictionary<ThingDef, int>();//For specific things needed to start a ritual
+     
         
-        public virtual bool CanStart(bool recheck = true)
+        public virtual bool CanStartStuff(bool recheck = true)
         {
             Map map = Find.CurrentMap;
-            if (stuffDefToSpawn != null && !recheck)
+            if (stuffDefToSpawn != null && recheck)
             {
                 recheck = map.resourceCounter.GetCount(stuffDefToSpawn) <= stuffCount;
                 if (!recheck)
                 {
                     recheck = !stuffOptions.Any(x => map.resourceCounter.GetCount(x) >= stuffCount);
-                }
-               
-                
+                }              
             }
+
+
             if (recheck)
             {
-                FindStuffForThing(recheck);
-                foreach(ThingDef thing in stuffOptions)
+                if(stuffCategoryDefs.Count>0 || stuffToUse != null)
                 {
-                    if (map.resourceCounter.GetCount(thing) >= stuffCount)
+                    FindStuffForThing(recheck);
+                    foreach (ThingDef thing in stuffOptions)
                     {
-                        return true;
+                        if (map.resourceCounter.GetCount(thing) >= stuffCount)
+                        {
+                            return true;
+                        }
                     }
+                    return false;
                 }
-                return false;
+
             }
             return true;
             
         }
-
+        //Maybe need to use listerthings as not all things are in resource. But if I have a ritual where I come across that might do something different as I fear perfomance
+        //Can use target gets called seemingly every tick when selecting a building with gizmos 
+        public virtual AcceptanceReport CanStartThings()
+        {
+            Map map = Find.CurrentMap;
+            StringBuilder missing = new StringBuilder();
+            if (thingsRequired.Count > 0)
+            {
+                foreach (KeyValuePair<ThingDef, int> thing in thingsRequired)
+                {
+                    if (map.resourceCounter.GetCount(thing.Key) <= thing.Value) 
+                    {
+                        missing.AppendLine(thing.Key.LabelCap + ": " + thing.Value);                        
+                    }
+                }                
+            }
+            if(missing.Length > 0)
+            {
+                return missing.ToString();
+            }
+            return true;
+        }
         public virtual void FindStuffForThing(bool recheck)
         {//
             
@@ -85,12 +109,26 @@ namespace AlphaMemes
             }            
             
         }
+        public virtual void DestroyThingsUsed(LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome)
+        {
+            RitualBehaviorWorker_FuneralFramework behaivor = (RitualBehaviorWorker_FuneralFramework)ritual.Ritual.behavior;            
+            foreach (Thing thing in ritual.usedThings) //Handles removing things used to spawn 
+            {
+                if (thing.def == behaivor.stuffToUse)
+                {
+                    stuffDefToSpawn = thing.def;
+                    thing.DeSpawn(DestroyMode.Vanish);
+                }
+                if (thingsRequired?.ContainsKey(thing.def)?? false)
+                {
+                    thing.DeSpawn(DestroyMode.Vanish);
+                }
+            }
+        }
 
         public virtual Thing GetThingToSpawn(LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome,Pawn pawnToSpawnOn, Corpse corpse)
         {
-            //This shit is wonky and I have no idea if it'll work. But itd be kinda neat if it did.
-            //Though I should find a better way            
-
+         
             ThingDef thingDef = CustomThingDefLogic(ritual,pawnToSpawnOn,corpse);
             thingDef = thingDef == null ? thingDefToSpawn : thingDef;
             if (thingDef == null)
@@ -98,24 +136,14 @@ namespace AlphaMemes
                 return null;               
             }            
             int stacksize = thingCount;
-            RitualBehaviorWorker_FuneralFramework behaivor = (RitualBehaviorWorker_FuneralFramework)ritual.Ritual.behavior;
-            ThingDef stuff = stuffDefToSpawn;//fallback
-            foreach (Thing thing in ritual.usedThings)
-            {
-                if(thing.def == behaivor.stuffToUse)
-                {
-                    stuff = thing.def;
-                    thing.DeSpawn(DestroyMode.Vanish);
-                    break;
-                }
-            }
-            
+            DestroyThingsUsed(ritual, bestOutcome, worstOutcome);//Separated this out so it can be used without having to spawn things
+            ThingDef stuff = stuffDefToSpawn;
             if (thingDef.MadeFromStuff ? !GenStuff.AllowedStuffsFor(thingDef, TechLevel.Undefined).Contains(stuff) :false)
             {
                 stuff = GenStuff.DefaultStuffFor(thingDefToSpawn);
             }
             Thing thingToSpawn = ThingMaker.MakeThing(thingDef, stuff);
-            initComps(thingToSpawn, corpse);
+            initComps(thingToSpawn, corpse, ritual,bestOutcome,worstOutcome);
             if (thingToSpawn is Building)
             {
                 thingToSpawn = thingToSpawn.MakeMinified();
@@ -141,7 +169,7 @@ namespace AlphaMemes
             return null;
         }
 
-        public virtual void initComps(Thing thing,Corpse corpse)//Probably going to need more
+        public virtual void initComps(Thing thing,Corpse corpse, LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome)//Probably going to need more
         {
             Comp_CorpseContainer comp = thing.TryGetComp<Comp_CorpseContainer>();
             if(comp != null)

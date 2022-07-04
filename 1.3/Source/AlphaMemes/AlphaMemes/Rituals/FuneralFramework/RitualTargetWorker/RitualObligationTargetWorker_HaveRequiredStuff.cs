@@ -29,7 +29,7 @@ namespace AlphaMemes
             StringBuilder failReasons = new StringBuilder();
             foreach (FuneralFramework_ThingToSpawn spawner in data.outcomeSpawners.Where(x=> x.stuffCount>0))
             {
-                if (!spawner.CanStart())
+                if (!spawner.CanStartStuff())
                 {                    
                     failReasons.AppendInNewLine("Funeral_NotEnoughStuff".Translate(string.Join(", ", spawner.stuffCategoryDefs.Select(x => x.label)).Named("STUFF"), spawner.stuffCount.ToString().Named("COUNT")));
                 }

@@ -35,7 +35,7 @@ namespace AlphaMemes
             {
                 if (obligationTemp.targetA.Thing == assignments.AssignedPawns(extension.corpseRitualRoleID).First().Corpse)
                 {
-                    corpse = assignments.AssignedPawns(extension.corpseRitualRoleID).First();
+                    
                     obligationToUse = obligationTemp;
                 }
             }
@@ -43,7 +43,7 @@ namespace AlphaMemes
             {
                 return;
             }
-            LordJob_Ritual lordJob = (LordJob_Ritual)this.CreateLordJob(target, organizer, ritual, obligationToUse, assignments);            
+            LordJob_Ritual_FuneralFramework lordJob = (LordJob_Ritual_FuneralFramework)CreateLordJob(target, organizer, ritual, obligationToUse, assignments);            
             LordMaker.MakeNewLord(Faction.OfPlayer, lordJob, target.Map, assignments.Participants.Where(delegate (Pawn p)
             {
                 bool flag = p.Dead;
@@ -63,6 +63,11 @@ namespace AlphaMemes
                 }
             }
 
+        }
+        protected override LordJob CreateLordJob(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
+        {
+            corpse = assignments.AssignedPawns(extension.corpseRitualRoleID).First();
+            return new LordJob_Ritual_FuneralFramework(target, ritual, obligation, def.stages, assignments, corpse, organizer);
         }
         public override string CanStartRitualNow(TargetInfo target, Precept_Ritual ritual, Pawn selectedPawn = null, Dictionary<string, Pawn> forcedForRole = null)
         {
@@ -149,9 +154,6 @@ namespace AlphaMemes
         }
         protected override void PostExecute(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
         {
-            leader = assignments.RoleForPawn(organizer);
-       
-
         }
         public void FuneralFramework_PreparePawn(RitualRoleAssignments assignments)
         {
@@ -179,7 +181,6 @@ namespace AlphaMemes
         public List<Thing> spawnEffectThings = new List<Thing>();//things spawned that need cleanup just in case
         public Sustainer soundPlaying; //Cant override set        
         public Effecter effecter;
-        public RitualRole leader;
         public Pawn effecterpawn;
         public FuneralPreceptExtension extension;
         public ThingDef stuffToUse;
