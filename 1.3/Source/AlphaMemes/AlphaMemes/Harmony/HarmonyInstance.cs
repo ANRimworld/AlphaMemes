@@ -37,6 +37,12 @@ namespace AlphaMemes
             {
                 harmony.Patch(AccessTools.Method("VFEPirates.Building_WarcasketFoundry:Draw"), postfix: new HarmonyMethod(postfix));
             }
+            //Hediff patch
+            postfix = typeof(RecipeWorker_WarcasketRemoval_AvailableOnNow_Patch).GetMethod("Postfix");
+            if (postfix != null)
+            {
+                harmony.Patch(AccessTools.Method("VFEPirates.RecipeWorker_WarcasketRemoval:AvailableOnNow"), postfix: new HarmonyMethod(postfix));
+            }
         }
     }
 

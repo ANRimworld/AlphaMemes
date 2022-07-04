@@ -108,6 +108,7 @@
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralFramework_SpecialConflicts.cs" />
     <Compile Include="Rituals\FuneralFramework\Extensions\FuneralHaulUtility.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Building_WarcasketFoundry_Draw.cs" />
+    <Compile Include="Rituals\FuneralFramework\Harmony\RecipeWorker_WarcasketRemoval_AvailableOnNow.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Building_WarcasketFoundry_OccupantAliveAndPresent.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_DoWindowContents_Patch.cs" />
     <Compile Include="Rituals\FuneralFramework\Harmony\Dialog_BeginRitual_CalculatePawnPortraitIcons.cs" />

@@ -28,7 +28,8 @@ namespace AlphaMemes
                     vector += new Vector3(0, 0, 0.67f);
                     vector.y = ___occupant.def.Altitude;
                     ___occupant.Drawer.renderer.wiggler.SetToCustomRotation(0f);
-                    ___occupant.Corpse.DrawAt(vector);
+                    ___occupant.Drawer.renderer.RenderPawnAt(vector,Rot4.South);//Trying render at directly cause DrawAt doesnt give me rot4 override
+                    //___occupant.Corpse.DrawAt(vector);
                 }
                 
                 

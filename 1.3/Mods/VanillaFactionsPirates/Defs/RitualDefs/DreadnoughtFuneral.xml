@@ -216,7 +216,7 @@
 			<stripcorpse>true</stripcorpse>
 			<roleToSpawnOn>AM_RitualRoleCorpse</roleToSpawnOn>
 			<bestOutcomeDesc>{RITUAL} was spectacular! {CORPSE} had 0 side effects</bestOutcomeDesc>
-			<worstOutcomeDesc>{{RITUAL} was a disaster! {CORPSE} has been lost forever.</worstOutcomeDesc>
+			<worstOutcomeDesc>{RITUAL} was a disaster! {CORPSE} has been lost forever.</worstOutcomeDesc>
 			<!--Spawners-->
 			<outcomeSpawners>
 				<li Class="AlphaMemes.FuneralFramework_ThingToSpawn">				
