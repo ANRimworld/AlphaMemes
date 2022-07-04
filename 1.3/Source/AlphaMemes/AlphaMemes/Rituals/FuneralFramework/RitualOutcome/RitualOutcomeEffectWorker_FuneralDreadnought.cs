@@ -51,7 +51,7 @@ namespace AlphaMemes
 
                 }
             }
-            Hediff lifeSupport = HediffMaker.MakeHediff(DefDatabase<HediffDef>.GetNamed("AM_WarCasketLifeSupport"), pawn);
+            Hediff lifeSupport = HediffMaker.MakeHediff(FuneralFrameWork_StaticStartup.AM_WarCasketLifeSupport, pawn);
             pawn.health.hediffSet.hediffs.Add(lifeSupport);//So they cant be removed from the warcasket
             RitualBehaviorWorker_FuneralFrameworkDreadnought behavior = jobRitual.Ritual.behavior as RitualBehaviorWorker_FuneralFrameworkDreadnought;
             object project = behavior.project;

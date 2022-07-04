@@ -6,6 +6,7 @@ using Verse;
 
 
 
+
 namespace AlphaMemes
 {
     //Setting the Harmony instance
@@ -42,6 +43,18 @@ namespace AlphaMemes
             if (postfix != null)
             {
                 harmony.Patch(AccessTools.Method("VFEPirates.RecipeWorker_WarcasketRemoval:AvailableOnNow"), postfix: new HarmonyMethod(postfix));
+            }
+            //OskarPotocki.VFECore
+            //Patch to let resurecttion penalties affect sarco casket
+            postfix = typeof(PawnCapacityUtility_CalculateCapacityLevel_Patch).GetMethod("Postfix");
+            if (postfix != null)
+            {
+                var harmonyPostfix = new HarmonyMethod(postfix)
+                {
+                    after = new[] { "OskarPotocki.VFECore" }
+                };
+
+                harmony.Patch(AccessTools.Method("Verse.PawnCapacityUtility:CalculateCapacityLevel"), postfix: harmonyPostfix);
             }
         }
     }

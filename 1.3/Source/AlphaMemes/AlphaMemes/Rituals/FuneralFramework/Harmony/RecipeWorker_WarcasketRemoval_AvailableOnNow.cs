@@ -11,17 +11,15 @@ using System;
 namespace AlphaMemes
 {
 
-/*    [HarmonyPatch(typeof(Building_WarcasketFoundry))]
-    [HarmonyPatch("OccupantAliveAndPresent")]
-    [HarmonyPatch(MethodType.Getter)]*/
-    //To get the mesh to work on dreadnought funeral
+
+    //To prevent the pawn resurrected via sacro ritual from being removed from casket so it cant be used as just a cheapish mech serum
     public static class RecipeWorker_WarcasketRemoval_AvailableOnNow_Patch
     {
        /* [HarmonyPostfix]*/
         public static void Postfix(ref bool __result,Thing thing, BodyPartRecord part = null)
         {
             if (__result == false) { return; }
-            if (thing is Pawn pawn && pawn.health.hediffSet.HasHediff(DefDatabase<HediffDef>.GetNamed("AM_WarCasketLifeSupport")))
+            if (thing is Pawn pawn && pawn.health.hediffSet.HasHediff(FuneralFrameWork_StaticStartup.AM_WarCasketLifeSupport))
             {
                 __result = false;
             }

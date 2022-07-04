@@ -17,12 +17,16 @@ namespace AlphaMemes
                 funeralDefs.Add(precept);
             }
             VFEPLoaded = ModsConfig.IsActive("OskarPotocki.VFE.Pirates");
+            if (VFEPLoaded)
+            {
+                AM_WarCasketLifeSupport = DefDatabase<HediffDef>.GetNamed("AM_WarCasketLifeSupport");
+            }
         }
 
         
         public static List<PreceptDef> funeralDefs = new List<PreceptDef>();
         public static bool VFEPLoaded;
-
+        public static HediffDef AM_WarCasketLifeSupport;
     }
 
 

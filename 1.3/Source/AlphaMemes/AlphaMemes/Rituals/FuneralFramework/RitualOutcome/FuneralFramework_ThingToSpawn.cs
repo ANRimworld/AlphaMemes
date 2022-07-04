@@ -135,8 +135,7 @@ namespace AlphaMemes
             {
                 return null;               
             }            
-            int stacksize = thingCount;
-            DestroyThingsUsed(ritual, bestOutcome, worstOutcome);//Separated this out so it can be used without having to spawn things
+            int stacksize = thingCount;            
             ThingDef stuff = stuffDefToSpawn;
             if (thingDef.MadeFromStuff ? !GenStuff.AllowedStuffsFor(thingDef, TechLevel.Undefined).Contains(stuff) :false)
             {
