@@ -20,12 +20,17 @@ namespace AlphaMemes
 		{
 
 			//Get things
-			LordJob_Ritual ritual = Find.IdeoManager.GetActiveRituals(pawn.Map).First();
+			Lord lord = pawn.GetLord();
+			LordJob_Ritual lordJob_Ritual = ((lord != null) ? lord.LordJob : null) as LordJob_Ritual;
+			if (lordJob_Ritual.PawnTagSet(pawn, "Arrived"))
+			{
+				return null;
+			}
 			IntVec3 cell = pawn.mindState.duty.focusThird.Thing.InteractionCell;
 			Dictionary<ThingDef, int> thingsToGet = new Dictionary<ThingDef, int>();
 			List<ThingCount> chosen = new List<ThingCount>();
 			List<IngredientCount> thingCounts = new List<IngredientCount>();
-			OutcomeEffectExtension extension = ritual.Ritual.outcomeEffect.def.GetModExtension<OutcomeEffectExtension>();
+			OutcomeEffectExtension extension = lordJob_Ritual.Ritual.outcomeEffect.def.GetModExtension<OutcomeEffectExtension>();
 			foreach(FuneralFramework_ThingToSpawn spawner in extension.outcomeSpawners)
             {
 				foreach(KeyValuePair<ThingDef,int> kv in spawner.thingsRequired)
@@ -50,14 +55,6 @@ namespace AlphaMemes
 				return null;
 			else
 			{ 
-				Lord lord = pawn.GetLord();
-				LordJob_Ritual lordJob_Ritual = ((lord != null) ? lord.LordJob : null) as LordJob_Ritual;
-				if (lordJob_Ritual.PawnTagSet(pawn, "Arrived"))
-				{
-					return null;
-				}
-			
-
 				Job job = JobMaker.MakeJob(InternalDefOf.AM_DeliverThingsToCell);
 				job.locomotionUrgency = PawnUtility.ResolveLocomotion(pawn, this.locomotionUrgency);
 				job.expiryInterval = jobMaxDuration;
