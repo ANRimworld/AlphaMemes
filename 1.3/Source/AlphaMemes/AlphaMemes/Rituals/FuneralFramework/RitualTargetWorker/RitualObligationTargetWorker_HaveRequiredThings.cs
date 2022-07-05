@@ -19,9 +19,12 @@ namespace AlphaMemes
         
         protected override RitualTargetUseReport CanUseTargetInternal(TargetInfo target, RitualObligation obligation)
         {
-            if (!base.CanUseTargetInternal(target, obligation).canUse)
+            if (!def.thingDefs.NullOrEmpty())
             {
-                return false;           
+                if (!base.CanUseTargetInternal(target, obligation).canUse)
+                {
+                    return false;
+                }
             }
             OutcomeEffectExtension data = parent.outcomeEffect.def.GetModExtension<OutcomeEffectExtension>();            
             StringBuilder failReasons = new StringBuilder();

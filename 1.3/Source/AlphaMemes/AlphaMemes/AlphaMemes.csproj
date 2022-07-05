@@ -130,6 +130,7 @@
     <Compile Include="Rituals\FuneralFramework\RitualActions\RitualStageAction_FuneralEffectSound.cs" />
     <Compile Include="Rituals\FuneralFramework\Comp\CompProperties_FFContains.cs" />
     <Compile Include="Rituals\FuneralFramework\Comp\Comp_FFContains.cs" />
+    <Compile Include="Rituals\FuneralFramework\RitualOutcome\FuneralFramework_ThingToSpawnMummy.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\FuneralFramework_ThingToSpawnPaste.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\FuneralFramework_ThingToSpawnGenetics.cs" />
     <Compile Include="Rituals\FuneralFramework\RitualOutcome\FuneralFramework_ThingToSpawn.cs" />

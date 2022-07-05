@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Verse;
+using UnityEngine;
 using RimWorld;
 using System.Threading.Tasks;
 
@@ -142,7 +143,7 @@ namespace AlphaMemes
                 stuff = GenStuff.DefaultStuffFor(thingDefToSpawn);
             }
             Thing thingToSpawn = ThingMaker.MakeThing(thingDef, stuff);
-            initComps(thingToSpawn, corpse, ritual,bestOutcome,worstOutcome);
+            //initComps(thingToSpawn, corpse, ritual,bestOutcome,worstOutcome);
             if (thingToSpawn is Building)
             {
                 thingToSpawn = thingToSpawn.MakeMinified();
@@ -163,20 +164,60 @@ namespace AlphaMemes
             
             return thingToSpawn;
         }
+
+        
+        //Seperated out so all processing is done on thing first.
+        //Was going to put it in the effect worker but this allows making a separte thingToSpawn class rather then a full worker for variations
+        public virtual void initComps(Thing thing, Corpse corpse, LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome, OutcomeChance outcome, RitualOutcomeEffectWorker_FuneralFramework worker)
+        {
+            //Im using the crafter outcome comp for this but it's not strictly required
+
+            Thing thingTemp = thing.GetInnerIfMinified();
+            RitualOutcomeComp_Crafter crafterComp = worker.GetComp<RitualOutcomeComp_Crafter>();
+            int skill = 1;
+            Pawn pawn = null;
+            if (crafterComp != null)
+            {
+                pawn = ritual.assignments.FirstAssignedPawn(crafterComp.roleId);
+                skill = pawn?.skills?.GetSkill(crafterComp.skill).levelInt ?? 1;
+            }
+            Comp_CorpseContainer corpseContainer = thingTemp.TryGetComp<Comp_CorpseContainer>();
+            if (corpseContainer != null)
+            {
+                corpseContainer.InitComp_CorpseContainer(corpse);
+            }
+            CompQuality quality = thingTemp.TryGetComp<CompQuality>();
+            if (quality != null)
+            {                 
+
+                QualityCategory thingQuality = QualityUtility.GenerateQualityCreatedByPawn(skill, bestOutcome);//If its best outcome its counted as inspired
+                if (worstOutcome)
+                {
+                    //Going to slap whoever made qualityutility Addlevels private
+                    int levels = -2;
+                    thingQuality = (QualityCategory)Mathf.Min((int)(thingQuality + (byte)levels), 1);
+                }
+                quality.SetQuality(thingQuality, ArtGenerationContext.Colony);
+                //Art generation doesnt matter we init below
+
+            }
+            CompArt art = thingTemp.TryGetComp<CompArt>();
+            if (art != null)
+            {
+                art.InitializeArt(corpse.InnerPawn);
+                if (pawn != null)
+                {
+                    art.JustCreatedBy(pawn);
+                }
+
+            }
+
+        }
         public virtual ThingDef CustomThingDefLogic(LordJob_Ritual ritual, Pawn pawnToSpawnOn, Corpse corpse)
         {
             return null;
         }
 
-        public virtual void initComps(Thing thing,Corpse corpse, LordJob_Ritual ritual, bool bestOutcome, bool worstOutcome)//Probably going to need more
-        {
-            Comp_CorpseContainer comp = thing.TryGetComp<Comp_CorpseContainer>();
-            if(comp != null)
-            {
-                comp.InitComp_CorpseContainer(corpse);
-            }
-                
 
-        }
     }
 }

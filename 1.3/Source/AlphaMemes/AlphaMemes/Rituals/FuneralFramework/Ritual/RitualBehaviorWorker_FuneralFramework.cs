@@ -150,7 +150,9 @@ namespace AlphaMemes
                     thing.Destroy();
                 }
             }
+            stuffToUse = null;
             corpse = null;
+            stuffCount = 0;
         }
         protected override void PostExecute(TargetInfo target, Pawn organizer, Precept_Ritual ritual, RitualObligation obligation, RitualRoleAssignments assignments)
         {

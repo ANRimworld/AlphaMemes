@@ -16,15 +16,19 @@ namespace AlphaMemes
         public RitualObligationTargetWorker_HaveRequiredStuff(RitualObligationTargetFilterDef def) : base(def)
         {
         }
-        
+        public override IEnumerable<TargetInfo> GetTargets(RitualObligation obligation, Map map)
+        {
+            return base.GetTargets(obligation, map);
+        }
         protected override RitualTargetUseReport CanUseTargetInternal(TargetInfo target, RitualObligation obligation)
         {
-            if (!base.CanUseTargetInternal(target, obligation).canUse)
+            if (!def.thingDefs.NullOrEmpty()) //Only check base if we passed thingdef. This doesnt have to have a thing def
             {
-                return false;           
+                if (!base.CanUseTargetInternal(target, obligation).canUse)
+                {
+                    return false;
+                }
             }
-
-
             OutcomeEffectExtension data = parent.outcomeEffect.def.GetModExtension<OutcomeEffectExtension>();            
             StringBuilder failReasons = new StringBuilder();
             foreach (FuneralFramework_ThingToSpawn spawner in data.outcomeSpawners.Where(x=> x.stuffCount>0))

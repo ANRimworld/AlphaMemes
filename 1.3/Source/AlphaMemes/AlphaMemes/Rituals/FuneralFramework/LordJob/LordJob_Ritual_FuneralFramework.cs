@@ -42,7 +42,10 @@ namespace AlphaMemes
             }
 
         }
-        public override void Cleanup()
+		public LordJob_Ritual_FuneralFramework()
+        {
+        }
+		public override void Cleanup()
         {
             base.Cleanup();
 
