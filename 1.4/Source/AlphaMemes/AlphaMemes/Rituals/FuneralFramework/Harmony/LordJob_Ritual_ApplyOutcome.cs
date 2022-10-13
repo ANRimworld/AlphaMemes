@@ -28,7 +28,7 @@ namespace AlphaMemes
             }
             if (__instance.obligation?.targetA.HasThing ?? false) //All funeral obligations target A is corpse
             {
-                Corpse corpse = __instance.obligation.targetA.Thing as Corpse;
+                Corpse corpse = (__instance.obligation.targetA.Thing as Pawn)?.Corpse;
                 if (corpse == null) { return; }
                 if(__instance.Ritual.activeObligations.Any(x=>x == __instance.obligation)) { return; }//Only do it if the obligation is removed from this ritual. Otherwise it means it failed in some way
                 foreach (Ideo ideo in Faction.OfPlayer.ideos.AllIdeos) //Cleanup all ideos not just the ritual on incase there was multiple ideos with this obligation

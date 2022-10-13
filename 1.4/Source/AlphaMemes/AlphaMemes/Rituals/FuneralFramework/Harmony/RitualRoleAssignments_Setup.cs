@@ -33,7 +33,7 @@ namespace AlphaMemes
                 //Better idea then to recheck all criteria
                 foreach (RitualObligation obligation in ritual.activeObligations)
                 {
-                    Corpse corpse = (Corpse)obligation.targetA.Thing;
+                    Corpse corpse = (obligation.targetA.Thing as Pawn)?.Corpse;
                     if (corpse != null && !corpse.Destroyed)
                     {
                         if (!allPawns.Contains(corpse.InnerPawn) && corpse.ParentHolder as Building_Casket == null && !corpse.Bugged)

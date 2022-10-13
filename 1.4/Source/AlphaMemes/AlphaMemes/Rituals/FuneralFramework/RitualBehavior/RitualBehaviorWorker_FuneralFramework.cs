@@ -51,7 +51,7 @@ namespace AlphaMemes
             RitualObligation obligationToUse = obligation;
             foreach (RitualObligation obligationTemp in ritual.activeObligations)
             {
-                if (obligationTemp.targetA.Thing == assignments.AssignedPawns(extension.corpseRitualRoleID).First().Corpse)
+                if (obligationTemp.targetA.Thing == assignments.AssignedPawns(extension.corpseRitualRoleID).First())
                 {
                     
                     obligationToUse = obligationTemp;
@@ -132,7 +132,7 @@ namespace AlphaMemes
             //Same as harmony patch use obligation as that basically saved our criteria for animals so no need to recheck everything
             foreach (RitualObligation obligation in ritual.activeObligations)
             {
-                Corpse corpse = obligation.targetA.Thing as Corpse;
+                Corpse corpse = (obligation.targetA.Thing as Pawn)?.Corpse;
                 if (corpse != null && !corpse.Destroyed)
                 {
                     if (corpse.ParentHolder as Building_Casket == null)//Can be buried is a lie

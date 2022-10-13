@@ -25,7 +25,7 @@ namespace AlphaMemes
                 if (Find.IdeoManager.classicMode) { return; }
                 if (!FuneralFramework_ObligationUtility.obligations.NullOrEmpty())
                 {
-                    if (FuneralFramework_ObligationUtility.obligations.Any(x => x.targetA.Thing == member.Corpse))
+                    if (FuneralFramework_ObligationUtility.obligations.Any(x => x.targetA.Thing == member))
                     {
                         FuneralFramework_ObligationUtility.SendLetter(__instance, member);
                     }
@@ -77,7 +77,7 @@ namespace AlphaMemes
                 if (Find.IdeoManager.classicMode) { return; }
                 if (!FuneralFramework_ObligationUtility.obligations.NullOrEmpty())
                 {
-                    if (FuneralFramework_ObligationUtility.obligations.Any(x => x.targetA.Thing == member.Corpse))
+                    if (FuneralFramework_ObligationUtility.obligations.Any(x => x.targetA.Thing == member))
                     {
                         FuneralFramework_ObligationUtility.SendLetter(__instance, member);
                     }

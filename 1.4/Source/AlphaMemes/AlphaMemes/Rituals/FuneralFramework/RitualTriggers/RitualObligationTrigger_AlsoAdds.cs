@@ -37,7 +37,7 @@ namespace AlphaMemes
         }
         public override void Notify_MemberDied(Pawn p)
         {
-            RitualObligation obligation = new RitualObligation(ritual, p.Corpse, true)
+            RitualObligation obligation = new RitualObligation(ritual, p, true)
             {
                 sendLetter = !p.IsSlave
             };
@@ -54,7 +54,7 @@ namespace AlphaMemes
                     Precept_Ritual othRitual = p.ideo.Ideo.GetAllPreceptsOfType<Precept_Ritual>().FirstOrDefault(x => x.def == otherRitualDef);
                     if (ShouldTrigger(p) && othRitual != null)
                     {
-                        othRitual.AddObligation(new RitualObligation(othRitual, p.Corpse, true)
+                        othRitual.AddObligation(new RitualObligation(othRitual, p, true)
                         {
                             sendLetter = !p.IsSlave
                         });

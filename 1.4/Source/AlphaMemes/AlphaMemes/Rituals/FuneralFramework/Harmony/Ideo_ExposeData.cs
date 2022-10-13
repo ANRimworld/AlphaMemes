@@ -16,13 +16,13 @@ namespace AlphaMemes
 
     [HarmonyPatch(typeof(Ideo))]
     [HarmonyPatch("ExposeData")]
+    [HarmonyDebug]
 
     //Fixing a vanilla issue on expose data that adds precepts in expose data without checking if they can be added to that ideo first.
     public static class FuneralFramework_Ideo_ExposeData_Patch 
     {
-
         static MethodInfo AddPrecept = AccessTools.Method(typeof(Ideo), "AddPrecept");
-        static MethodInfo DebugLog = AccessTools.Method(typeof(Debug), "LogWarning", new Type[] { typeof(object)});
+        static MethodInfo DebugLog = AccessTools.Method(typeof(Log), "Warning", new Type[] { typeof(string)});
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             List<CodeInstruction> codes = instructions.ToList();
@@ -31,10 +31,10 @@ namespace AlphaMemes
             for (int i = 0; i < codes.Count; i++)
             {
                 yield return codes[i];
-                if (!found && codes[i].Calls(AddPrecept)) //Expose data only calls Add Precept in one case
+                //Local builder 5 is where it stores the Ritual Pattern Def. 1.4 added an additional place AddPrecept is used so this became necesarry
+                if (!found && codes[i].Calls(AddPrecept) && codes[i - 1].opcode == OpCodes.Ldloc_S && codes[i - 1].operand is LocalBuilder lb && lb.LocalIndex == 5) 
                 {                    
-                    found = true;
-                    
+                    found = true;                    
                     codes[i].opcode = OpCodes.Nop;
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(FuneralFramework_Ideo_ExposeData_Patch), nameof(CheckIfCanAdd)));
                     //Noping the next set to remove debug log as long its where I expect
@@ -51,7 +51,7 @@ namespace AlphaMemes
             }
             if (!found)
             {
-                Log.Message("AlphaMemes Transpiler on Ideo:ExposeData could not find hook");
+                Log.Warning("AlphaMemes Transpiler on Ideo:ExposeData could not find hook");
             }
         }
         public static void CheckIfCanAdd(Ideo ideo, Precept precept, bool init = false, FactionDef generatingFor = null, RitualPatternDef ritualPatternBase = null)

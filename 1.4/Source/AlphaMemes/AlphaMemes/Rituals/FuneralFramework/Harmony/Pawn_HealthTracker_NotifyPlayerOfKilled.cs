@@ -42,12 +42,12 @@ namespace AlphaMemes
                     bool canAdd = trigger.CanAddPawn(pawn, ideo, ritual, out target2);
                     if (canAdd && target2 != null)
                     {
-                        ritual.AddObligation(new RitualObligation(ritual, pawn.Corpse, target2, sendLetter));
+                        ritual.AddObligation(new RitualObligation(ritual, pawn, target2, sendLetter));
                         createdObligation = true; //Target 2 is not used at all currently, but added in case I wanted to make something where target 2 replaces the moralist role for quality eg animal's master does the service
                     }                  
                     else if (canAdd)
                     {
-                        ritual.AddObligation(new RitualObligation(ritual, pawn.Corpse, sendLetter));//Obligation Utility will get set when we send this
+                        ritual.AddObligation(new RitualObligation(ritual, pawn, sendLetter));//Obligation Utility will get set when we send this
                         createdObligation = true;
                     }
 

@@ -23,7 +23,7 @@ namespace AlphaMemes
             if (Find.IdeoManager.classicMode) { return; }
             if (obligation.targetA.HasThing)
             {
-                Corpse corpse = obligation.targetA.Thing as Corpse;
+                Corpse corpse = (obligation.targetA.Thing as Pawn)?.Corpse;
                 if(corpse == null) { return; }
                 if (obligation.sendLetter) //If its not sending a letter we dont need it
                 {

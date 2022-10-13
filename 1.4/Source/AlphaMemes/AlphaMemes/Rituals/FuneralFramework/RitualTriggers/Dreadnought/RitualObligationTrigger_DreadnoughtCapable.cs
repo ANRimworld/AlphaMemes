@@ -22,7 +22,7 @@ namespace AlphaMemes
                 Messages.Message("Funeral_DreadnoughtBrainGoneMessage".Translate(p.NameShortColored.Named("PAWN"),ritual.Label.Named("RITUAL")),MessageTypeDefOf.NeutralEvent);//Trying to convey why obligation was not created
                 return;
             }
-            RitualObligation obligation = new RitualObligation(ritual, p.Corpse, false)//Not expiring automatically. I'll handle the removal of obligation
+            RitualObligation obligation = new RitualObligation(ritual, p, false)//Not expiring automatically. I'll handle the removal of obligation
             {
                 sendLetter = !p.IsSlave
             };
