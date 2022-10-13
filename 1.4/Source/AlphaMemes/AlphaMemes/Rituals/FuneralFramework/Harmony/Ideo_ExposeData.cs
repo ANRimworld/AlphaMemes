@@ -16,7 +16,6 @@ namespace AlphaMemes
 
     [HarmonyPatch(typeof(Ideo))]
     [HarmonyPatch("ExposeData")]
-    [HarmonyDebug]
 
     //Fixing a vanilla issue on expose data that adds precepts in expose data without checking if they can be added to that ideo first.
     public static class FuneralFramework_Ideo_ExposeData_Patch 
