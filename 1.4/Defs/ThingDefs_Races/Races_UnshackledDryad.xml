@@ -5,7 +5,7 @@
 		<label>unshackled dryad</label>
 		<description>Dryads are small mammalian creatures that have a symbiotic relationship with the Gauranlen tree.\n\nThis particular dryad seems to be unshackled, and it will not leave the region if no Gauranlen trees are around. It seems to be bound to the colonists.</description>
 		<statBases>
-			<ToxicSensitivity>0</ToxicSensitivity>
+			<ToxicResistance>1</ToxicResistance> <!--Changed from 0 to 1 with changing stat def as it looked like the implmentation changed with the stat def name as well-->
 			<MeatAmount>2</MeatAmount>
 			<MoveSpeed>3</MoveSpeed>
 			<LeatherAmount>0</LeatherAmount>

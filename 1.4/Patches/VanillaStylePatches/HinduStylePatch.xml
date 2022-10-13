@@ -35,22 +35,6 @@
 					<styleDef>AM_Hindu_StandingLamp</styleDef>
 				</li>
 				<li>
-					<thingDef>StandingLamp_Red</thingDef>
-					<styleDef>AM_Hindu_StandingLamp_Red</styleDef>
-				</li>
-				<li>
-					<thingDef>StandingLamp_Green</thingDef>
-					<styleDef>AM_Hindu_StandingLamp_Green</styleDef>
-				</li>
-				<li>
-					<thingDef>StandingLamp_Blue</thingDef>
-					<styleDef>AM_Hindu_StandingLamp_Blue</styleDef>
-				</li>
-				<li>
-					<thingDef>Darklamp</thingDef>
-					<styleDef>AM_Hindu_DarklampStanding</styleDef>
-				</li>
-				<li>
 					<thingDef>Stool</thingDef>
 					<styleDef>AM_Hindu_Stool</styleDef>
 				</li>

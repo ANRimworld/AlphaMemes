@@ -56,22 +56,6 @@
 				<styleDef>AM_Jewish_StandingLamp</styleDef>
 			</li>
 			<li>
-				<thingDef>StandingLamp_Red</thingDef>
-				<styleDef>AM_Jewish_StandingLamp_Red</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Green</thingDef>
-				<styleDef>AM_Jewish_StandingLamp_Green</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Blue</thingDef>
-				<styleDef>AM_Jewish_StandingLamp_Blue</styleDef>
-			</li>
-			<li>
-				<thingDef>Darklamp</thingDef>
-				<styleDef>AM_Jewish_DarklampStanding</styleDef>
-			</li>
-			<li>
 				<thingDef>Ideogram</thingDef>
 				<styleDef>AM_Jewish_IdeogramA</styleDef>
 			</li>
@@ -211,22 +195,6 @@
 			<li>
 				<thingDef>StandingLamp</thingDef>
 				<styleDef>AM_Kemetic_StandingLamp</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Red</thingDef>
-				<styleDef>AM_Kemetic_StandingLamp_Red</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Green</thingDef>
-				<styleDef>AM_Kemetic_StandingLamp_Green</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Blue</thingDef>
-				<styleDef>AM_Kemetic_StandingLamp_Blue</styleDef>
-			</li>
-			<li>
-				<thingDef>Darklamp</thingDef>
-				<styleDef>AM_Kemetic_DarklampStanding</styleDef>
 			</li>
 			<li>
 				<thingDef>Stool</thingDef>
@@ -554,22 +522,6 @@
 				<styleDef>AM_SteampunkRevival_StandingLamp</styleDef>
 			</li>
 			<li>
-				<thingDef>StandingLamp_Red</thingDef>
-				<styleDef>AM_SteampunkRevival_StandingLamp_Red</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Green</thingDef>
-				<styleDef>AM_SteampunkRevival_StandingLamp_Green</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Blue</thingDef>
-				<styleDef>AM_SteampunkRevival_StandingLamp_Blue</styleDef>
-			</li>
-			<li>
-				<thingDef>Darklamp</thingDef>
-				<styleDef>AM_SteampunkRevival_DarklampStanding</styleDef>
-			</li>
-			<li>
 				<thingDef>TorchLamp</thingDef>
 				<styleDef>AM_SteampunkRevival_TorchLamp</styleDef>
 			</li>
@@ -808,22 +760,6 @@
 			<li>
 				<thingDef>StandingLamp</thingDef>
 				<styleDef>AM_Corsair_StandingLamp</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Red</thingDef>
-				<styleDef>AM_Corsair_StandingLamp_Red</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Green</thingDef>
-				<styleDef>AM_Corsair_StandingLamp_Green</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Blue</thingDef>
-				<styleDef>AM_Corsair_StandingLamp_Blue</styleDef>
-			</li>
-			<li>
-				<thingDef>Darklamp</thingDef>
-				<styleDef>AM_Corsair_DarklampStanding</styleDef>
 			</li>
 			<li>
 				<thingDef>Apparel_PowerArmorHelmet</thingDef>
@@ -1133,22 +1069,6 @@
 			<li>
 				<thingDef>StandingLamp</thingDef>
 				<styleDef>AM_Scavenger_StandingLamp</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Red</thingDef>
-				<styleDef>AM_Scavenger_StandingLamp_Red</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Green</thingDef>
-				<styleDef>AM_Scavenger_StandingLamp_Green</styleDef>
-			</li>
-			<li>
-				<thingDef>StandingLamp_Blue</thingDef>
-				<styleDef>AM_Scavenger_StandingLamp_Blue</styleDef>
-			</li>
-			<li>
-				<thingDef>Darklamp</thingDef>
-				<styleDef>AM_Scavenger_DarklampStanding</styleDef>
 			</li>
 			<li>
 				<thingDef>EndTable</thingDef>
